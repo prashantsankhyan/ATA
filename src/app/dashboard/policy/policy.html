@@ -1,0 +1,248 @@
+
+<div class="container-fluid">
+  <div *ngIf="showSpiner" class="spinner-container">
+  <app-spinner></app-spinner>
+</div>
+  <div *ngIf="!showSpiner" class="row align-items-center mb-3 g-2">
+
+  <!-- 🔍 Search Box -->
+  <div class="col-md-4">
+    <div class="search-box">
+      <i class="fa fa-search"></i>
+      <input 
+        type="search" 
+        class="form-control"
+       [(ngModel)]="searchText"
+  (input)="applyFilters()"
+        placeholder="Search by  Name..."
+        autofocus
+      />
+      <button class="btn-search">Search</button>
+    </div>
+  </div>
+ <div class="col-md-4 text-end">
+    
+  </div>
+
+
+  <!-- ➕ Add Button -->
+  <!-- <div class="col-md-4 text-end">
+    <button class="btn btn-add" (click)="addEditData()">
+      <i class="fa fa-plus me-1"></i> Add POLICY
+    </button>
+  </div> -->
+
+</div>
+
+
+
+
+<div class="table-container shadow-sm">
+  <div class="table-header">
+    <h5 class="mb-0">QUOTE & POLICY  LIST</h5>
+  </div>
+
+  <div class="scrollingPolicy">
+    <table class="table custom-table">
+      <thead>
+        <tr>
+          <th>Account Name</th>
+           <th>Code </th>
+          <th>Policy Type</th>
+          
+          <th>Effective & Exprice Date</th>
+          
+          <th>Carrier</th>
+          <th>Agent Name</th>
+           <th>State</th>
+          <th>Policy Number</th>
+          
+          
+          <th></th>
+          
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor ="let data of listOfPolcy">
+          <td class="fw-semibold"  class="fw-semibold"
+  [ngClass]="{ 'disabled-cell': data.StageType === 'Issue' }"
+  (click)="data.StageType !== 'Issue' && nextToDetails(data)">{{data.AccountName}}</td>
+          <td>{{data.LookUpCode}}</td>
+          <td>{{data.LineName}}</td>
+    
+          <td>{{data.Effective | date:'MM-dd-yyyy'}}- {{data.Expiration | date:'MM-dd-yyyy'}}</td>
+          
+         
+          <td>{{data.CarrierName}}</td>
+           <td>{{data.AgentName}}</td>
+            <td>{{data.City}}</td>
+              <td>
+  <span 
+    [ngClass]="{
+      'stage-btn': data.StageType === 'Issue'
+    }">
+    {{ data.ChildPolicyName }}
+  </span>
+</td>
+         <td>
+
+        
+   <button matIconButton  [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" >
+  <mat-icon>more_vert</mat-icon>
+</button>
+  
+<mat-menu #menu="matMenu" style="background-color: white;">
+ 
+  <button mat-menu-item (click)="updateStage(data)" style="background-color: white;" >
+    <mat-icon>check</mat-icon>
+    <span>CONFIRM</span>
+  </button>
+
+  <button mat-menu-item   *ngIf="data.StageType === 'Issue'" (click)="nextToEndrosement(data)" style="background-color: white;">
+    <mat-icon>add</mat-icon>
+    <span>ENDORSEMENT</span>
+  </button>
+   <button mat-menu-item (click)="nextToAttachemnt(data)" style="background-color: white;">
+    <mat-icon>add</mat-icon>
+    <span>ATTACHMENT</span>
+  </button>
+  <button mat-menu-item (click)="addEditData(data)" style="background-color: white;" >
+    <mat-icon>edit</mat-icon>
+    <span>EDIT</span>
+  </button>
+   <button mat-menu-item (click)="nextToFile(data)" style="background-color: white;">
+    <mat-icon>description</mat-icon>
+    <span>FILE</span>
+  </button>
+   <!-- <button mat-menu-item (click)="monthlyPolicy(data)" style="background-color: white;">
+    <mat-icon>description</mat-icon>
+    <span>MONTHLY INVOCE</span>
+  </button>
+
+   <button mat-menu-item (click)="extandPolicy(data)" style="background-color: white;">
+    <mat-icon>description</mat-icon>
+    <span>Extand Invoce</span>
+  </button> -->
+   
+ 
+</mat-menu>
+ </td>
+        </tr>
+
+        <!-- Empty State -->
+        <!--
+        <tr *ngIf="listOfData.length === 0">
+          <td colspan="7" class="text-center text-muted py-4">
+            No data found
+          </td>
+        </tr>
+        -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+</div>
+
+
+
+
+
+<!-- 
+<div class="container-fluid">
+  <div class="row mt-2">
+    <div class="col-sm-3">
+<div class="mb-2">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search By Name"
+   
+    
+  />
+</div>
+
+    </div>
+    <div class="col-sm-3">
+
+    </div>
+      <div class="col-sm-6" style="text-align: right;">
+<button type="button" class="btn btn-primary btn-m btn-block"(click)="addEditData()" > + ADD  POLCIY</button>
+    </div>
+    
+  </div>
+
+
+
+
+<div class="table-scroll">
+      <table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+            <th>DOT</th>
+            <th>Policy  Name</th>
+            <th>Account Name</th>
+            <th >Effective  & Expire Date </th>
+            <th >State</th>
+             <th >Agent</th>
+              <th ></th>
+            
+          
+
+           
+           
+          
+
+            
+          </tr>
+  </thead>
+
+  <tbody>
+  <tr (dblclick)="nextToDetails()">
+      <td>
+        Al Policy
+      </td>
+       <td>
+       JATT WAYS XPRESS INC
+      </td>
+      <td>
+        3678293
+      </td>
+      <td>
+       05-05-2026 - 05-05-2027
+     </td>
+      <td>
+       CA
+     </td>
+      <td>
+       Agent Name
+     </td>
+     <td>
+        <button matIconButton [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="nextToDetails()">
+    <mat-icon>add</mat-icon>
+    <span>ENDORSEMENT</span>
+  </button>
+ 
+</mat-menu>
+     </td>
+     
+     
+  </tr>
+
+
+    
+  </tbody>
+</table>
+</div>
+
+
+
+</div>
+ -->

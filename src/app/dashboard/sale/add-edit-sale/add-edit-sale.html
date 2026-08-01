@@ -1,0 +1,142 @@
+<form [formGroup]="accountForm">
+
+<div class="container-fluid" style="background-color: white;">
+
+  <!-- 🔹 Form Row -->
+  <div class="row g-3 mt-2">
+
+    <div class="col-md-6">
+      <label>DOT</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="DOT"  (blur)="loadDOTData()">
+    </div>
+
+    <div class="col-md-6">
+      <label>Account Name</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="accountName">
+    </div>
+   <div class="col-md-6">
+  <label>Agent Name</label>
+
+<select class="form-select form-control form-control-sm custom-input" formControlName="agentID"  [ngClass]= "{ 'is-invalid': submit && f['agentID'].errors }">
+  <option value="">Select</option>
+  <option *ngFor="let a of listOfAgent" [value]="a.AgentID.toString()">
+    {{ a.AgentName }} - ({{a.AgencyName}}) -{{a.AgentCode}}
+  </option>
+</select>
+  <div *ngIf ="submit && f['agentID'].errors" class="invalid-feedback">
+                         <div *ngIf ="f['agentID'].errors">DriverName is required</div>
+                     </div>
+</div>
+
+    <div class="col-md-6">
+      <label>Email</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="emailID">
+    </div>
+<div class="col-md-6">
+  <label>Effective Date</label>
+<input type="text"
+       class="form-control form-control-sm custom-input"
+       formControlName="effectiveDate"
+       placeholder="MM-DD-YYYY">
+</div>
+
+    <div class="col-md-6">
+      <label>Year in Business</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="yearInBusiness">
+    </div>
+     <div class="col-md-6">
+      <label>Phone Number</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="MobileNumber">
+    </div>
+
+    <div class="col-md-6">
+      <label>Mailing Address</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="mailingAddress">
+    </div>
+
+    <div class="col-md-6">
+      <label>Zip</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="zip">
+    </div>
+
+    <div class="col-md-6">
+      <label>Garaging Address</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="garagingAddress">
+    </div>
+
+    <div class="col-md-6">
+      <label>Radius</label>
+      <select class="form-select form-control form-control-sm custom-input" formControlName="radius"  >
+  <option value="">Select</option>
+     <option value="11 Western">11 Western</option>
+                      <option value="11 Western+TX">11 Western+TX</option>
+                      <option value="48 States">48 States</option>
+                      <option value="500 Miles">500 Miles</option>
+                      <option value="1000 Miles">1000 Miles</option>
+                      <option value="CA">CA</option>
+                      <option value="Other">Other</option>
+</select>
+      
+            
+    </div>
+
+    <div class="col-md-6">
+      <label>No Of Unit</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="no_of_Unit">
+    </div>
+
+    <div class="col-md-6">
+      <label>No Of Driver</label>
+      <input type="text" class="form-control form-control-sm custom-input"
+             formControlName="no_of_driver">
+    </div>
+
+    <div class="col-md-6">
+      <label>Policy Type</label>
+      <select class="form-select form-select-sm custom-input"
+              formControlName="policyType">
+     <option hidden value="" disabled selected>Select Policy Type</option>
+                      <option value="Package">Package</option>
+                      <option value="AL">AL - Auto Liability</option>
+                      <option value="PD">PD</option>
+                      <option value="MTC">MTC - Motor Truck Cargo</option>
+                      <option value="General Liability">General Liability</option>
+                      <option value="Contingent Auto Liability">Contingent Auto Liability</option>
+                      <option value="Contingent Motor Truck Cargo">Contingent Motor Truck Cargo</option>
+                      <option value="Non-Trucking Liability">Non-Trucking Liability</option>
+                      <option value="Excess Liability">Excess Liability</option>
+                      <option value="Umbrella Liability">Umbrella Liability</option>
+                      <option value="Contingent Excess Liability">Contingent Excess Liability</option>
+                      <option value="Occupational Accidental">Occupational Accidental</option>
+                      <option value="Worker Compensation">Worker Compensation</option>
+      </select>
+    </div>
+
+   
+
+  </div>
+
+  <!-- 🔘 Buttons -->
+  <div class="text-end mt-3 mb-3">
+    <button type="button" class="btn  btn-sm me-2" [disabled]="isLoading" style="background-color: #232324c0;color: white;"
+            (click)="onSubmit()">
+      
+
+       {{ AccountID ? 'UPDATE  ACCOUNT' : ' ADD  ACCOUNT' }}
+    </button>
+
+   
+  </div>
+
+</div>
+
+</form>

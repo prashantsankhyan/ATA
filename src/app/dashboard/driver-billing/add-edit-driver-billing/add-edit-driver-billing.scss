@@ -1,0 +1,224 @@
+@use 'sass:color';
+
+/* ================= GLOBAL ================= */
+
+body {
+  font-family: 'Montserrat', 'Open Sans', sans-serif;
+  font-size: 14px;
+  background-color: #f0f2f5;
+}
+
+/* ================= TABLE ================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    color: #000;
+    font-size: small;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+  }
+
+  td {
+    color: #000;
+    font-size: small;
+    font-weight: 500;
+    padding: 10px;
+  }
+
+  tbody tr {
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background-color: #f1f1f1;
+    }
+
+    &.highlight {
+      background-color: #bdeff9 !important;
+      color: red !important;
+    }
+
+    &.selected-row {
+      background-color: #d1ecf1;
+      border-left: 4px solid green;
+    }
+  }
+}
+
+/* ================= SCROLL ================= */
+
+.scrolling {
+  height: 280px;
+  overflow: auto;
+  background-color: #fff;
+  border-radius: 1rem;
+  border: 1px dashed #00000067;
+}
+
+.scrollingMarketd { height: 280px; overflow: auto; }
+.scrollingPolicy { height: 300px; overflow: auto; }
+
+/* ================= INPUT ================= */
+
+.custom-input {
+  margin: 0 5px;
+  padding: 0 12px;
+  border-radius: 50px;
+}
+
+/* ================= SEARCH ================= */
+
+.search__input {
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #575756;
+  border-radius: 50px;
+  border: 1px solid #57565670;
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position: 95% center;
+
+  &::placeholder {
+    color: rgba(87, 87, 86, 0.8);
+    text-transform: uppercase;
+  }
+
+  &:hover,
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid #575756;
+    border-radius: 0;
+  }
+}
+
+/* ================= COLORS ================= */
+
+$table-background-color: #ffffff;
+$table-hover-background-color: color.adjust($table-background-color, $lightness: -8%);
+$table-even-background-color: color.adjust($table-background-color, $lightness: -4%);
+
+$pagination-background-color: #8f8f8f;
+
+$pagination-label-active-background-color:
+  color.adjust($pagination-background-color, $lightness: -15%);
+
+$pagination-label-disabled-background-color:
+  color.adjust($pagination-background-color, $lightness: 15%);
+
+/* ================= MIXIN ================= */
+
+@mixin button($bg) {
+  background-color: $bg;
+
+  &:hover {
+    background-color: color.adjust($bg, $lightness: 10%);
+  }
+
+  &:active {
+    background-color: color.adjust($bg, $lightness: -10%);
+  }
+}
+
+/* ================= BUTTON ================= */
+
+.btn {
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+
+  &--primary {
+    @include button(#147eff);
+    color: #fff;
+  }
+
+  &--danger {
+    @include button(#d11800);
+    color: #fff;
+  }
+}
+
+/* ================= CARD ================= */
+
+.card {
+  transition: 0.3s;
+
+  &:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* ================= STATUS COLORS ================= */
+
+.going-to-expire {
+  background-color: green;
+  color: #fff;
+}
+
+.equal-to-today {
+  background-color: yellow;
+}
+
+.expired {
+  background-color: red;
+  color: #fff;
+}
+
+/* ================= FORM ================= */
+
+.form-select {
+  &:hover {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }
+
+  &:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-height: 700px) {
+  .scrolling {
+    height: 150px;
+  }
+
+  th, td {
+    font-size: x-small;
+  }
+}
+
+@media (min-height: 701px) and (max-height: 900px) {
+  .scrolling {
+    height: 220px;
+  }
+}
+
+.scrollingServices{
+ height:200px;  
+ overflow:scroll;
+}
+
+.dialog-content {
+  height: 85vh;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 10px 20px;
+}
+
+.selected-row {
+  background: #cfe2ff !important;
+  color: #000 !important;
+  font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+  background: #e9ecef;
+}

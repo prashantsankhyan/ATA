@@ -1,0 +1,300 @@
+<div class="container" id="print-section">
+    <a style="text-align: center;"  [useExistingCss]="true"
+    printSectionId="print-section"
+    printTitle="Invoice"
+    ngxPrint></a>
+    
+
+<div class="invoice-container mb-0" *ngFor="let data of listForPdf">
+<div style="text-align: center;">
+ <a   [useExistingCss]="true"
+    printSectionId="print-section"
+    printTitle="Invoice"
+    ngxPrint><img src="/assets/image001.png" style="height: 100px;"></a> 
+
+</div>
+  <!-- Header -->
+  <div class="header">
+    <div class="company">
+      <h2>Alkaid Transportation Association LLC (ATA)</h2>
+      <p>4730 S FORT APACHE RD</p>
+      <p>#300, LAS VEGAS</p>
+      <p>NV,89147</p>
+      <p>510-294-8607</p>
+    </div>
+
+    <div class="title">
+      <h1>INVOICE </h1>
+
+      <table>
+        <tr>
+          <td>Date</td>
+          <td>{{currentDate | date:'MM/dd/yyyy'}}</td>
+        </tr>
+        <tr>
+          <td>Balance  Date</td>
+          <td>{{data.ARDue | date:'MM/dd/yyyy'}}</td>
+        </tr>
+        <!-- <tr>
+          <td>Entered By</td>
+          <td>05/05/2026</td>
+        </tr> -->
+      </table>
+    </div>
+  </div>
+
+  <!-- Producer / Insured -->
+
+  <div class="section">
+
+    <div class="box">
+
+      <h4>AGENT DETAIL   </h4>
+      <p class="mb-0">AGENT CODE - <span style="color: white;background-color: black;"> {{data.AgentCode}}</span></p>
+      <p class="mb-0">{{data.AgencyName}}</p>
+      <p class="mb-0">{{data.AgentName}}</p>
+      <p class="mb-0">{{data.Agent_Address}}</p>
+      <p class="mb-0">{{data.Agent_PhoneNumber}}</p>
+
+    </div>
+
+    <div class="box">
+
+      <h4>ACCOUNT DETAIL</h4>
+
+      <p class="mb-0">{{data.AccountName}}</p>
+      <p class="mb-0">{{data.MobileNumber}}</p>
+      <p class="mb-0">{{data.MailingAddress}}</p>
+     
+
+    </div>
+
+  </div>
+
+  <!-- Policy Information -->
+<ng-container *ngFor="let data1 of data.Detail; let i = index" class="invoice-block">
+  <table class="policy-table mt-5 ">
+
+    <thead>
+
+      <tr>
+        <th>Policy Number</th>
+        <th>Effective</th>
+        <th>Expiration</th>
+       
+        <th>Invoice Date</th>
+        <th>Invoice No.</th>
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr >
+
+        <td>{{data1.ChildPolicyName}}</td>
+        <td>{{data1.Effective | date:'MM/dd/yyyy'}} </td>
+        <td>{{data1.Expiration | date:'MM/dd/yyyy'}}</td>
+        <td>{{data1.GenerateInvoice | date:'MM/dd/yyyy'}}</td>
+        
+        <td >{{InvoiceID}}</td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+  <!-- Detail Table -->
+
+  <table class="detail-table">
+
+    <thead>
+
+      <tr>
+
+        <th>Company</th>
+        <th>Classification</th>
+        <th>Transaction</th>
+        <!-- <th>Details :</th> -->
+        <th >Premium</th>
+        <th>Credit</th>
+      
+      </tr>
+
+    </thead>
+
+  
+<tbody>
+ <tr *ngFor="let row of getDisplayRows(data1)">
+
+  <td>{{ row.company }}</td>
+
+  <td>{{ row.classification }}</td>
+
+  <!-- Transaction -->
+  <td>
+    <strong *ngIf="
+        row.transaction === 'Total Premium' ||
+        row.transaction === 'Total Received' ||
+        row.transaction === 'Amount Due' ||
+        row.transaction === 'Company Financed' ||
+        row.transaction === 'Agency Discount';
+        else normalTran">
+
+      {{ row.transaction }}
+
+    </strong>
+
+    <ng-template #normalTran>
+      {{ row.transaction }}
+    </ng-template>
+  </td>
+
+  <!-- Description -->
+  <!-- <td>
+
+    <ng-container *ngIf="row.transaction === 'Commission'; else otherDesc">
+      {{ row.description }}
+      <br>
+      <small>{{ row.credit | currency:'USD':'symbol':'1.2-2' }}</small>
+    </ng-container>
+
+    <ng-template #otherDesc>
+      {{ row.description }}
+    </ng-template>
+
+  </td> -->
+
+  <!-- Premium -->
+  <td class="text-end">
+
+    <strong *ngIf="row.transaction === 'Total Premium'; else normalPremium">
+      {{ row.premium | currency:'USD':'symbol':'1.2-2' }}
+    </strong>
+
+    <ng-template #normalPremium>
+      {{ row.premium | currency:'USD':'symbol':'1.2-2' }}
+    </ng-template>
+
+  </td>
+
+  <!-- Credit -->
+  <td class="text-end">
+
+    <!-- Commission / Company Financed / Agency Discount -->
+    <ng-container *ngIf="
+        row.transaction === 'Commission' ||
+        row.transaction === 'Company Financed' ||
+        row.transaction === 'Agency Discount';
+        else otherCredit">
+
+      <span class="text-danger fw-bold">
+        {{ row.credit | currency:'USD':'symbol':'1.2-2' }}
+      </span>
+
+    </ng-container>
+
+    <ng-template #otherCredit>
+
+      <!-- Amount Due -->
+      <strong *ngIf="row.transaction === 'Amount Due'"
+              class="text-danger">
+        {{ row.credit | currency:'USD':'symbol':'1.2-2' }}
+      </strong>
+
+      <!-- Total Received -->
+      <strong *ngIf="row.transaction === 'Total Received'"
+              class="text-success">
+        {{ row.credit | currency:'USD':'symbol':'1.2-2' }}
+      </strong>
+
+      <!-- All Other Rows -->
+      <span *ngIf="
+          row.transaction !== 'Amount Due' &&
+          row.transaction !== 'Total Received'">
+
+        {{ row.credit | currency:'USD':'symbol':'1.2-2' }}
+
+      </span>
+
+    </ng-template>
+
+  </td>
+
+</tr>
+</tbody>
+   
+
+ 
+
+  </table>
+  <div class="total">
+
+    <div>
+
+      <strong>PAYMENT IS DUE BY</strong>
+
+    {{ data.ARDue | date:'MM/dd/yyyy' }}
+
+    </div>
+
+    <div class="amount">
+
+      Please Pay This Amount
+
+      <span>{{
+        (
+          getCalculatedValues(data1).totalDue > 0
+            ? getCalculatedValues(data1).totalDue
+            : data.TotalOpeningBalance
+        ) | currency:'USD':'symbol':'1.2-2'
+      }}</span>
+
+    </div>
+
+  </div>
+  <div class="comments" *ngIf="data1.Notes">
+  <h4>Comments / Notices</h4>
+
+ <p>{{ data1.Notes }}</p>
+</div>
+ <div class="page-break" *ngIf="i > 0 && i % 2 === 0"></div>
+
+</ng-container>
+
+  <!-- Total -->
+
+  
+
+  <!-- Comments -->
+
+
+  <!-- Remit -->
+
+  <!-- <div class="remit">
+
+    <h4>Remit Payment To</h4>
+
+    <p>BSR - TX</p>
+
+    <p>2113 Greenbriar Drive</p>
+
+    <p>Suite D</p>
+
+    <p>Southlake, TX 76092</p>
+
+    <p>Phone : 877-282-7637</p>
+
+  </div> -->
+
+  <!-- Footer -->
+
+  <!-- <div class="footer">
+
+    BSR - TX, 2113 Greenbriar Drive, Suite D, Southlake, TX 76092
+
+  </div> -->
+
+</div>
+</div>

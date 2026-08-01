@@ -1,0 +1,197 @@
+import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { MaterialModule } from '../../../../material.module';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AllApiService } from '../../../../_service/all-api.service';
+import { ApiUrl } from '../../../../_core/apiUrl';
+
+@Component({
+  selector: 'app-add-edit-transaction-attachement',
+   imports: [CommonModule,MaterialModule,RouterModule,ReactiveFormsModule,],
+  templateUrl: './add-edit-transaction-attachement.html',
+  styleUrl: './add-edit-transaction-attachement.scss',
+})
+export class AddEditTransactionAttachement {
+ addEditAttachmentForm!:FormGroup ;
+  submit = false ;
+  accountId:any;
+  FileDisplay!: string | ArrayBuffer;
+  files: any;
+  file:any
+  listOfAllFolder:any =[];
+  fileName ='';
+   showFiv = true;
+   userPermission:any;
+   name =''
+   detail =''
+   myFile:string [] =[]
+   saveButtonShow = true;
+   userName:any;
+   accountName:any;
+   teamName:any;
+
+   constructor(@Inject(MAT_DIALOG_DATA) public data:any,private fb: FormBuilder, private http:AllApiService ,private cRouter:ActivatedRoute,private router: Router,public dialog: MatDialog,public dialogRef: MatDialogRef<AddEditTransactionAttachement>){
+ 
+   }
+  ngOnInit(): void {
+    
+   
+       this.accountId = localStorage.getItem('AccountID') ;
+   this.accountName = localStorage.getItem('AccountName') ;
+    this.teamName =localStorage.getItem('teamName');
+    this.userName = sessionStorage.getItem('UserName');
+ 
+    
+    this.getAllFileDetail()
+    this.makeForm();
+   
+   
+   
+    
+   
+  }
+  getAllFileDetail(){
+    this.http.getAllData(ApiUrl.getListOfAllFilder).subscribe(
+      data=>{
+       let response  = JSON.stringify(data)
+       let obj = JSON.parse(response)
+       this.listOfAllFolder = obj.Folders
+      }
+    )
+  }
+
+  makeForm(){
+    this.addEditAttachmentForm = this.fb.group({
+      abc:['',[Validators.required,]],
+      AccountID:[this.accountId ,[Validators.required,]],
+      AttachedBy:[this.userName,],
+      Description:['',],
+      EnteredBy:[this.userName],
+      PolicyType:[''],
+      TransactionType:[''],
+      
+     
+     
+      
+      
+    });
+  }
+    
+
+
+
+  get productForm() {
+    return this.addEditAttachmentForm.controls;
+  }
+
+
+  onSubmit(): void {
+    this.submit  = true ;
+    this.showFiv = !this.showFiv
+   
+    if(this.addEditAttachmentForm.invalid){
+     this.showFiv = true
+      return ;
+    }
+    const productFormData = new FormData();
+
+    for(let i=0 ; i< this.myFile.length; i++){
+      productFormData.append('abc',this.myFile[i])
+      
+    }
+   
+    productFormData.append('AccountID',this.addEditAttachmentForm.get('AccountID')?.value);
+    // productFormData.append('FolderID',this.addEditAttachmentForm.get('FolderID')?.value);
+    productFormData.append('AttachedBy',this.addEditAttachmentForm.get('AttachedBy')?.value);
+    productFormData.append('Description',this.addEditAttachmentForm.get('Description')?.value);
+    // productFormData.append('ChangeType',this.addEditAttachmentForm.get('ChangeType')?.value);
+    productFormData.append('PolicyType',this.addEditAttachmentForm.get('PolicyType')?.value);
+    productFormData.append('TransactionType',this.addEditAttachmentForm.get('TransactionType')?.value);
+    productFormData.append('EnteredBy',this.addEditAttachmentForm.get('EnteredBy')?.value);
+
+    // Object.keys(this.productForm).map((key) =>{
+    //   productFormData.append(key,this.productForm[key].value);
+    // });
+    
+    
+    this._addProduct(productFormData);
+  
+  }
+
+
+
+  private _addProduct(productData: FormData): void {
+  this.http.addEditFormData(ApiUrl.uploadTransactionFile, productData)
+    .subscribe({
+      next: (data) => {
+        console.log('Saved successfully', data);
+
+        this.showSuccess();
+
+        // ✅ CLOSE dialog with success flag
+        this.dialogRef.close('saved');
+      },
+      error: (err) => {
+        console.error('Error while saving', err);
+        this.showFiv = true;
+      }
+    });
+}
+
+  
+  onFileUpload(event:any): void {
+    this.files = event.target.files[0];
+    for(let i=0 ; i<(event.target.files.length);i++){
+      this.file = event.target.files[i]
+      this.myFile.push(event.target.files[i])
+      this.addEditAttachmentForm.get('abc')?.setValue(this.myFile);
+    }
+    // if (this.files) {
+    //   this.addEditAttachmentForm.patchValue({ abc: this.files });
+    //   this.addEditAttachmentForm.get('abc')?.setValue(this.myFile);
+    //   const fileReader = new FileReader();
+    //   fileReader.onload = () => {
+    //     this.FileDisplay =fileReader.result!;
+    //   };
+    //   fileReader.readAsDataURL(this.files);
+    // }
+    console.log("filer", this.myFile)
+
+    this.detail  = this.files.name
+  }
+
+
+  
+
+  showSuccess() {
+  
+    this.changeLocation()
+    this.showFiv = true
+    
+  } 
+
+
+
+
+  get f() {
+    return this.addEditAttachmentForm.controls; }
+  
+    onNoClick1(): void {
+      this.dialogRef.close();
+     
+    }
+  
+  
+  
+    changeLocation() {
+  
+      // save current route first
+      let currentRoute = this.router.url;
+      console.log("rute" , currentRoute)
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentRoute]); // navigate to same route
+      }); 
+    }
+}

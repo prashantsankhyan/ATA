@@ -1,0 +1,181 @@
+<form [formGroup]="addEditPolicyForm">
+
+<mat-dialog-content style="background-color: white;">
+<div class="container-fluid" style="background-color: white;">
+<div class="row">
+
+<!-- ACCOUNT -->
+<mat-form-field appearance="outline" style="width: 100%;">
+  <mat-label>Select Account</mat-label>
+
+  <mat-select
+    formControlName="AccountID"
+    (selectionChange)="onSelectAccount($event)">
+
+    <!-- SEARCH -->
+    <mat-option (click)="$event.stopPropagation()">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search account..."
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="searchText"
+        (ngModelChange)="applyFilter($event)"
+        (click)="$event.stopPropagation()"
+      />
+    </mat-option>
+
+    <!-- LIST -->
+    <mat-option *ngFor="let item of filteredList"
+                [value]="item.AccountID">
+      {{ item.AccountName }}
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+
+
+<!-- LINE NAME -->
+<div class="col-sm-12 mt-2">
+  <label>Select Policy</label>
+
+  <select class="form-control" formControlName="LineID">
+    <option value="">-- Select Policy --</option>
+    <option *ngFor="let item of listOFLineName" [value]="item.ID">
+      {{ item.LineName }}
+    </option>
+  </select>
+</div>
+
+
+<!-- POLICY NAME -->
+<div class="col-sm-12 mt-2">
+  <label>Policy Number</label>
+  <input type="text" class="form-control" formControlName="ChildPolicyName">
+</div>
+
+
+<!-- EFFECTIVE -->
+<div class="col-sm-6 mt-2">
+  <label>Effective Date</label>
+  <input type="text"
+         class="form-control"
+         formControlName="Effective"
+         (keyup)="onEffectiveChange()">
+</div>
+
+<div class="col-sm-6 mt-2">
+  <label>Expire Date</label>
+  <input type="text"
+         class="form-control"
+         formControlName="Expiration"
+         readonly>
+</div>
+
+
+<!-- CARRIER -->
+<div class="col-sm-6 mt-2">
+  <label>Carrier</label>
+
+  <select class="form-control" formControlName="CarrierSubmissionID" (change)="getListOfSuCarrierb()">
+    <option value="">-- Select Carrier --</option>
+    <option *ngFor="let item of listOfCarrier" [value]="item.ID">
+      {{ item.CarrierName }}
+    </option>
+  </select>
+</div>
+<div class="col-sm-6 mt-2">
+  <label>Sub-Carrier</label>
+
+  <select class="form-control" formControlName="SubCarrierID">
+    <option value="">-- Select Carrier --</option>
+    <option *ngFor="let cc of listOfSubCarrier" [ngValue]="cc.ID">
+      {{ cc.Address }} - {{cc.NAIC}}
+    </option>
+  </select>
+</div>
+
+
+<!-- BROKER -->
+<div class="col-sm-12 mt-2 mb-2">
+  <label>State</label>
+    <select class="form-select formControl mt-1"  formControlName ="City"  >
+                            <option hidden value=""    >Select City </option>
+                            <option  value="AL">AL</option>
+                            <option value="Ak">Ak</option>
+                            <option value="AZ">AZ</option>
+                            <option value="AR">AR</option>
+                            <option value="CA">CA</option>
+                            <option value="CO">CO</option>
+                            <option value="CT">CT</option>
+                            <option value="DE">DE</option>
+                            <option value="FL">FL</option>
+                            <option value="GA">GA</option>
+                            <option value="HI">HI</option>
+                            <option value="ID">ID</option>
+                            
+                            <option value="IL">IL</option>
+                            <option value="IN">IN</option>
+                            <option value="IA">IA</option>
+                            <option value="KS">KS</option>
+                            <option value="KY">KY</option>
+                            <option value="LA">LA</option>
+                            <option value="ME">ME</option>
+                            <option value="MD">MD</option>
+            
+                            <option value="MA">MA</option>
+                            <option value="MI">MI</option>
+                            <option value="MN">MN</option>
+                            <option value="MS">MS</option>
+                            <option value="MO">MO</option>
+                            <option value="MT">MT</option>
+                            <option value="NE">NE</option>
+                            <option value="NV">NV</option>
+                            <option value="NH">NH</option>
+                            <option value="NJ">NJ</option>
+                            <option value="NM">NM</option>
+                            <option value="NY">NY</option>
+                            <option value="NM">NM</option>
+                            <option value="NY">NY</option>
+                            <option value="NC"> NC</option>
+            
+                            <option value="ND">ND</option>
+                            <option value="OH">OH</option>
+                            <option value="OK">OK</option>
+                            <option value="OR">OR</option>
+                            <option value="PA">PA</option>
+                            <option value="RI">RI</option>
+                            <option value="SC">SC</option>
+                            <option value="SD">SD</option>
+                            <option value="TN">TN</option>
+                            <option value="TX">TX</option>
+                            <option value="UT">UT</option>
+                            <option value="VT">VT</option>
+                            <option value="VA">VA</option>
+                            <option value="WA">WA</option>
+                            <option value="WV">WV</option>
+                            <option value="WI">WI</option>
+                            <option value="WY">WY</option>
+
+                            
+                           
+                          </select>
+
+  
+</div>
+
+</div>
+</div>
+</mat-dialog-content>
+
+
+<!-- ACTIONS -->
+<mat-dialog-actions align="end" style="background-color: white;">
+  <button class="btn  btn-sm mr-2" style="background-color: #232324c0; color: white;" (click)="onSubmit()">
+
+
+    {{ ChildPolicyID ? 'UPDATE  POLICY DETAIL' : ' ADD  POLICY DETAIL' }}
+  </button>
+</mat-dialog-actions>
+
+</form>

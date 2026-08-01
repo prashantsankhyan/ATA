@@ -1,0 +1,69 @@
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="card mt-2">
+    <div class="card-header text-white" style="background-color:#232324c0;">
+      <b>Confirm Policy </b>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <form [formGroup]="updateForm">
+
+    <div class="row">
+
+      <!-- STAGE DROPDOWN -->
+      <div class="col-12 mt-2">
+        <label class="form-label">Please Select</label>
+
+        <select
+          class="form-select"
+          formControlName="StageType"
+          [ngClass]="{ 'is-invalid': submit && f['StageType'].errors }">
+
+          <option value="" disabled>Please select</option>
+          <option value="Issue">Issue</option>
+          <option value="Not Issue">Not Issue</option>
+          
+
+        </select>
+
+        <!-- VALIDATION -->
+       <div *ngIf="submit && f['StageType']?.errors" class="invalid-feedback">
+  Stage Type is required
+</div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <!-- BUTTONS -->
+  <div class="text-end mt-4 mb-3">
+
+    <!-- UPDATE BUTTON -->
+    <button style="background-color: #232324c0; color: white;"
+      type="button"
+      class="btn btn-success me-2"
+      (click)="onSubmit()"
+      [disabled]="loading">
+
+      <span *ngIf="!loading">Confirm Policy</span>
+
+      <!-- LOADER -->
+      <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+
+    </button>
+
+    <!-- CANCEL BUTTON -->
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="closeModel()">
+
+      Cancel
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,54 @@
+<div class="dialog-container">
+
+  <!-- TITLE -->
+  <h2 mat-dialog-title>
+    {{ actionType === 'PERMANENT' ? 'Delete Permanently' : 'Delete Record' }}
+  </h2>
+
+  <!-- MESSAGE -->
+  <div *ngIf="message"
+       style="margin:10px 0; padding:10px; border-radius:5px;"
+       [ngStyle]="{
+         'background-color': isSuccess ? '#d4edda' : '#f8d7da',
+         'color': isSuccess ? '#155724' : '#721c24'
+       }">
+    {{ message }}
+  </div>
+
+  <!-- CONTENT -->
+  <mat-dialog-content>
+
+    <!-- Normal Delete -->
+    <p *ngIf="actionType === 'DELETE'">
+      Are you sure you want to delete this record?
+    </p>
+
+    <!-- Permanent Delete -->
+    <p *ngIf="actionType === 'PERMANENT'"
+       style="color:red; font-weight:600;">
+      ⚠ This will permanently delete the file. This action cannot be undone.
+    </p>
+
+  </mat-dialog-content>
+
+  <!-- ACTIONS -->
+  <mat-dialog-actions align="end">
+
+    <button mat-button (click)="close()" [disabled]="isLoading">
+      Cancel
+    </button>
+
+    <button
+      mat-raised-button
+      [color]="actionType === 'PERMANENT' ? 'warn' : 'primary'"
+      (click)="confirmDelete()"
+      [disabled]="isLoading">
+
+      {{ isLoading ? 'Processing...' :
+         (actionType === 'PERMANENT' ? 'Delete Permanently' : 'Delete') }}
+
+    </button>
+
+  </mat-dialog-actions>
+
+</div>

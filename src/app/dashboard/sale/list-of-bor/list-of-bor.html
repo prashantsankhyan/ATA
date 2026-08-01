@@ -1,0 +1,123 @@
+
+<div class="container-fluid" style="background-color: white;">
+ <div >
+
+
+        <!-- <div class="col-sm-2 ">
+        
+           <a (click)="backToMainAccount()" href="javascript:void(0)"> <img src="assets/back.png" width="50px" /></a>
+        
+        </div> -->
+  <div class="card-header mt-2">
+    <div class="row p-1">
+      <div class="col-sm-3 mt- mb-1">
+        <div class="search-box">
+      <i class="fa fa-search"></i>
+     <input
+  type="search"
+  [(ngModel)]="searchCriteria.FileName"
+  (ngModelChange)="onFileNameChange($event)"
+  placeholder="File Name"
+/>
+      <button class="btn-search">Search</button>
+    </div>
+      
+      </div> 
+      <div class="col-sm-3 mt- mb-1">
+       <div class="search-box">
+      <i class="fa fa-search"></i>
+    <input
+  type="search"
+  [(ngModel)]="searchCriteria.Description"
+  (ngModelChange)="onDescriptionChange($event)"
+  placeholder="Description"
+/>
+      <button class="btn-search">Search</button>
+    </div>
+       
+      </div>
+       <div class="col-sm-3 mt- mb-1">
+          <div class="search-box">
+      <i class="fa fa-search"></i>
+    <input
+  type="search"
+  [(ngModel)]="searchCriteria.AttachmentDate"
+  (ngModelChange)="onAttachmentDateChange($event)"
+  placeholder="MM/DD/YYYY"
+/>
+      <button class="btn-search">Search</button>
+    </div>
+        
+       </div>
+     
+      
+      
+      <div class="col-md-3 text-end"  >
+        
+    <button class="btn btn-add" (click)="addEditAttachement($event)">
+      <i class="fa fa-plus me-1"></i> Add BOR
+    </button>
+ 
+      
+        
+       
+       
+    
+       </div>
+    </div>
+  </div>
+ 
+  
+ 
+
+
+   
+   <div class="table-container shadow-sm">
+  <div class="table-header">
+    <h5 class="mb-0">BOR   FILE</h5>
+  </div>
+
+  <div class="scrollingPolicy">
+    <table class="table custom-table">
+             <thead >
+               <tr>
+                 <th style="width: 200px;">File Path</th>
+                 <th style="width: 150px;">Date </th>
+                 <th style="width: 500px;">Description</th>
+                 <th style="width: 150px;">Agent Name </th>
+                 <th style="width: 20px;"></th>
+                
+               </tr>
+             </thead>
+             <tbody>
+              <tr
+  *ngFor="let data of listOfAllFatchData "
+  (click)="onRowClick(data)"
+>
+              
+                 <td style="width: 350px;">{{data.FileName}}</td>
+               <td>{{ data.AttachmentDate | date:'MM/dd/yyyy hh:mm:ss a' }}</td>
+                
+                <td style="width: 500px;">{{data.Description}}</td>
+                <td style="width: 150px;"   [ngStyle]="{
+    'background-color': data.AgentName === agentName ? '#d4edda' : '',
+    'color': data.AgentName === agentName ? '#155724' : '',
+    'font-weight': data.AgentName === agentName ? '600' : '400'
+  }">{{data.AgentName}}</td>
+                
+                <td>
+  <a (click) ="updateBor(data); $event.stopPropagation()">
+    <mat-icon color="primary">edit_square</mat-icon>
+  </a>
+</td>
+             
+               </tr>
+             </tbody>
+           </table>
+     </div>
+   
+  
+ </div>
+</div>
+
+

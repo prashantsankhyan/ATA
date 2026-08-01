@@ -1,0 +1,71 @@
+<form [formGroup]="addEditCarrierForm" (ngSubmit)="onSubmit()">
+
+<div class="container-fluid" style="background-color: white;">
+<mat-dialog-content>
+  <!-- 🔹 Form Row -->
+  <div class="row g-1 mt-1">
+
+    <!-- Carrier -->
+    <div >
+      <label style="text-transform: uppercase;">Carrier</label>
+      <select class="form-control"
+          formControlName="CarrierID"
+          >
+    <option value="">-- Select Carrier --</option>
+
+    <option *ngFor="let item of listOfCarrier"
+            [value]="item.ID">
+      {{ item.CarrierName }}
+    </option>
+  </select>
+    </div>
+    
+      <div >
+      <label style="text-transform: uppercase;">Under Carrier</label>
+      <input type="text"
+             class="form-control form-control-sm custom-input"
+             formControlName="Address">
+             
+      <small class="text-danger" *ngIf="submit && f['CarrierName'].errors">
+        Carrier is required
+      </small>
+    </div>
+   
+
+
+    <!-- Phone -->
+   
+    
+
+    <!-- NAIC -->
+    <div style="text-transform: uppercase;">
+      <label>NAIC</label>
+      <input type="text"
+             class="form-control form-control-sm custom-input"
+             formControlName="NAIC">
+    </div>
+
+
+
+ 
+
+  </div>
+</mat-dialog-content>
+  <!-- 🔘 Buttons -->
+   <mat-dialog-actions align="end">
+  <div class="text-end mt-3 mb-3">
+
+    <button type="submit" [disabled]="isLoading" class="btn  btn-sm me-2" style="background-color: #232324c0; color: white;">
+      {{ ID ? 'UPDATE CARRIER' : 'ADD CARRIER' }}
+    </button>
+
+    <button type="button" class="btn btn-danger btn-sm" mat-dialog-close>
+      CLOSE
+    </button>
+
+  </div>
+  </mat-dialog-actions>
+
+</div>
+
+</form>

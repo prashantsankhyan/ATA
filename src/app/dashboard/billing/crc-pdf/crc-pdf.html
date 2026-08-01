@@ -1,0 +1,259 @@
+
+
+<div class="container" id="print-section">
+    <h3 style="text-align: center;"  [useExistingCss]="true"
+    printSectionId="print-section"
+    printTitle="Invoice"
+    ngxPrint> <img src="/assets/image001.png" style="height: 200px;"> </h3>
+
+<h5 style="text-align: center;">Alkaid Transportation Association LLC (ATA)</h5>
+
+<h5 style="text-align: center;">4730 S FORT APACHE RD<br/>
+#300, LAS VEGAS <br/>
+NV,89147</h5>
+
+
+
+
+<div class="row mt-5" *ngFor="let data of listForPdf">
+    <div class="col-sm-6">
+        Bill To: <span>{{data.AgentCode}}</span><br/>
+        {{data.AgencyName}}<br/>
+ Attn: {{data.AgentName}}<br/>
+
+<span class="address-cell">
+    {{data.Agent_Address}}
+</span>
+
+
+
+    </div>
+     <div class="col-sm-6">
+        Attn:<span>{{data.AgentName}}</span> 
+       <!-- <h4>Submission No: 14448398</h4>  -->
+
+    </div>
+
+</div>
+
+<table class="agent-table">
+  <tr>
+    <td>Agent:</td>
+    <td>CSR: &nbsp;Danny Smith</td>
+    <td>Producer: Sarbjit Reynolds </td>
+  </tr>
+  <tr *ngFor="let data of listForPdf">
+    <td>
+      <a >{{data.AgentCode}}</a>
+    </td>
+    <td>
+      <a >
+       submissions@atamga.com
+      </a>
+    </td>
+    <td>
+      <a >
+        sreynolds@atamga.com
+      </a>
+    </td>
+  </tr>
+</table>
+
+<div class="row">
+    <div class="col-sm-4 mt-4">
+    <h3 style="text-align: center;">INVOICE</h3>
+    </div>
+    <div class="col-sm-8 mt-4">
+<table class="agent-table">
+  <tr>
+    <td style="text-align: center;">Invoice Date:</td>
+    <td style="text-align: center;">Invoice Number</td>
+    <td style="text-align: center;">Page</td>
+  </tr>
+  <tr >
+    <td >
+      {{GenerateInvoice | date:'MM/dd/yyyy'}}
+    </td>
+    <td>
+     
+        {{InvoiceID}}
+     
+    </td>
+    <td>
+    
+       1
+     
+    </td>
+  </tr>
+</table>
+    </div>
+
+</div>
+
+<table class="mt-4" style="width:100%; border-collapse:collapse; border:2px solid #000; font-family:Arial, sans-serif;">
+    <tr *ngFor="let data of listForPdf">
+        <!-- Left Section -->
+        <td style="width:63%; border-right:2px solid #000; padding:0;">
+            <table style="width:100%; border-collapse:collapse;">
+                <tr>
+                    <td style="padding:6px 10px; border-bottom:1px solid #000; font-size:18px;">
+                        <span>Insured:</span>
+                        <span style="margin-left:20px;">{{data.AccountName}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 10px; font-size:18px;">
+                        <span>DBA:</span>
+                        <span style="margin-left:45px;">{{data.AccountName}}</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <!-- Right Section -->
+        <td style="width:37%; padding:8px 15px; vertical-align:top;">
+            <div style="font-size:22px; margin-bottom:18px;">
+                INVOICE PAYMENT
+            </div>
+
+            <div style="font-size:18px;">
+                <span>Payment Due On:</span>
+                <span style="margin-left:20px;">{{data.ARDue | date:'MM/dd/yyyy'}}</span>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<table class="agent-table mt-4" >
+  <tr>
+    <td>Insurance Company:</td>
+    <td>Policy Number:</td>
+    <td style="text-align: center;">Effective:</td>
+    <td style="text-align: center;">Expires:</td>
+  </tr>
+ <ng-container *ngFor="let account of listForPdf">
+
+  <tr *ngFor="let detail of account.Detail; let i = index">
+    
+    <td *ngIf="i === 0" [attr.rowspan]="account.Detail.length" style="text-align:left;">
+      {{ account.AccountName }}
+    </td>
+
+    <td style="text-align:left;">
+      {{ detail.ChildPolicyName }}
+    </td>
+
+    <td style="text-align: center;">
+      {{ detail.Effective | date:'MM/dd/yyyy' }}
+    </td>
+
+    <td  style="text-align: center;">
+      {{ detail.Expiration | date:'MM/dd/yyyy' }}
+    </td>
+
+  </tr>
+
+</ng-container>
+</table>
+
+
+<table class="mt-5" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:16px;">
+    <thead>
+        <tr>
+            <th style="text-align:left; padding:4px 8px; font-size:20px; font-weight:bold;">
+                Type of Transaction
+            </th>
+            <th style="text-align:left; padding:4px 8px; font-size:20px; font-weight:bold;">
+                Line of Business
+            </th>
+            <th style="text-align:left; padding:4px 8px; font-size:20px; font-weight:bold;">
+                Comp ID
+            </th>
+            <th style="text-align:right; padding:4px 8px; font-size:20px; font-weight:bold;">
+                Amount
+            </th>
+            <th style="text-align:right; padding:4px 8px; font-size:20px; font-weight:bold;">
+                Comm($)
+            </th>
+            <th style="text-align:right; padding:4px 8px; font-size:20px; font-weight:bold;">
+                Net Due
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr style="border-bottom:2px solid #000;" *ngFor="let data of invoiceDetails">
+            <td style="padding:4px 8px; width:270px; vertical-align:top;">
+                AUTO- {{data.LineName}}
+            </td>
+
+            <td style="padding:4px 8px; width:340px; vertical-align:top;">
+                {{data.Address}}
+            </td>
+
+            <td style="padding:4px 8px; width:110px; vertical-align:top;">
+                {{data.NAIC}}
+            </td>
+
+            <td style="padding:4px 8px; width:140px; text-align:right; vertical-align:top;">
+              {{ data.Amount | currency:'USD':'symbol':'1.2-2' }}
+            </td>
+
+            <td style="padding:4px 8px; width:130px; text-align:right; vertical-align:top;">
+              {{ data.CommissionAmount | currency:'USD':'symbol':'1.2-2' }}
+            </td>
+
+            <td style="padding:4px 8px; width:140px; text-align:right; vertical-align:top;">
+               {{ data.NetDue | currency:'USD':'symbol':'1.2-2' }}
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<table class="agent-table" style="margin-top: 120px;">
+  <tr>
+    <td>Amount Invoiced:</td>
+    <td>Comm %</td>
+    <td style="text-align: center;">Commission:</td>
+    <td style="text-align: center;">Total Net Due:</td>
+  </tr>
+  <tr>
+    <td>
+      {{ totalAmountInvoiced | currency:'USD' }}
+    </td>
+    <td style="text-align: left;">
+      
+        {{ totalCommissionPercent | number:'1.2-2' }}%
+     
+    </td>
+    <td>
+      
+        {{ totalCommissionAmount | currency:'USD' }}
+     
+    </td>
+      <td>
+      
+      {{ totalNetDue | currency:'USD' }}
+     
+    </td>
+     
+  </tr>
+</table>
+
+<!-- <p style="font-weight: 600;font-size: medium; margin-top: 40px;">Note:<span style="font-weight: 500;font-size: small;">CRC TO FILE TAXES! THANK YOU FOR THE ORDER! <br/>
+Special Bill - Net Due 05/08/26 Nirvana Invoice #13889</span></p>  -->
+
+<div class="row">
+    <div class="col-sm-6">
+     Agency Bill
+    </div>
+      <div class="col-sm-6" style="text-align: right;">
+
+    </div>
+
+
+</div>
+
+</div>
+

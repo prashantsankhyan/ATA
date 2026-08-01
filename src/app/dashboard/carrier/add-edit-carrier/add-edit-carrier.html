@@ -1,0 +1,91 @@
+<form [formGroup]="addEditCarrierForm" (ngSubmit)="onSubmit()">
+
+<div class="container-fluid" style="background-color: white;">
+<mat-dialog-content>
+
+
+  <!-- 🔹 Form Row -->
+  <div class="row g-1 mt-1">
+
+    <!-- Carrier -->
+    <div >
+      <label style="text-transform: uppercase;">Carrier</label>
+      <input type="text"
+             class="form-control form-control-sm custom-input"
+             formControlName="CarrierName">
+             
+      <small class="text-danger" *ngIf="submit && f['CarrierName'].errors">
+        Carrier is required
+      </small>
+    </div>
+
+    <!-- Phone -->
+    <div style="text-transform: uppercase;">
+      <label>Phone</label>
+      <input type="text"
+             class="form-control form-control-sm custom-input"
+             formControlName="PhoneNumber">
+    </div>
+     <div style="text-transform: uppercase;">
+      <label>Content Name</label>
+      <input type="text"
+             class="form-control form-control-sm custom-input"
+             formControlName="ContactNumber">
+    </div>
+
+    <!-- NAIC -->
+    <div style="text-transform: uppercase;">
+      <label>NAIC</label>
+      <input type="text"
+             class="form-control form-control-sm custom-input"
+             formControlName="NAIC">
+    </div>
+
+    <!-- Email -->
+    <div >
+      <label style="text-transform: uppercase;">EmailID</label>
+      <input type="text"
+             class="form-control form-control-sm custom-input"
+             formControlName="EmailID">
+    </div>
+
+    <!-- Fax -->
+    <div >
+      <label style="text-transform: uppercase;">FaxNo</label>
+      <input type="text"
+             class="form-control form-control-sm custom-input"
+             formControlName="FaxNo">
+    </div>
+     <div >
+      <label style="text-transform: uppercase;">Commission</label>
+      <input type="text"
+             class="form-control form-control-sm custom-input"
+             formControlName="Commission">
+    </div>
+
+    <!-- Address -->
+    <div >
+      <label style="text-transform: uppercase;">Address</label>
+      <textarea class="form-control"  formControlName="Address" rows="3"></textarea>
+    
+    </div>
+
+  </div>
+</mat-dialog-content>
+  <!-- 🔘 Buttons -->
+   <mat-dialog-actions align="end">
+  <div class="text-end mt-3 mb-3">
+
+    <button type="submit" [disabled]="isLoading" class="btn  btn-sm me-2" style="background-color: #232324c0; color: white;">
+      {{ carrierId ? 'UPDATE CARRIER' : 'ADD CARRIER' }}
+    </button>
+
+    <button type="button" class="btn btn-danger btn-sm" mat-dialog-close>
+      CLOSE
+    </button>
+
+  </div>
+</mat-dialog-actions>
+</div>
+
+</form>

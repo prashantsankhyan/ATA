@@ -1,0 +1,89 @@
+
+<div class="container-fluid">
+  <div *ngIf="showSpiner" class="spinner-container">
+  <app-spinner></app-spinner>
+</div>
+  
+  <div *ngIf="!showSpiner" class="row align-items-center mb-3 g-2">
+
+  <!-- 🔍 Search Box -->
+  <div class="col-md-4">
+    <div class="search-box">
+      <i class="fa fa-search"></i>
+      <input 
+        type="search" 
+        class="form-control"
+        placeholder="Search by Under..."
+         [(ngModel)]="searchText"
+  (input)="applyFilter()"
+        autofocus
+      />
+      <button class="btn-search">Search</button>
+    </div>
+  </div>
+
+  <!-- Empty space (auto handled now) -->
+  <div class="col-md-4"></div>
+
+  <!-- ➕ Add Button -->
+  <div class="col-md-4 text-end">
+    <button class="btn btn-add" (click)="addEditData()">
+      <i class="fa fa-plus me-1"></i> ADD Under CARRIER
+    </button>
+  </div>
+
+</div>
+
+
+
+
+<div class="table-container shadow-sm">
+  <div class="table-header">
+    <h5 class="mb-0">UNDER CARRIER LIST</h5>
+  </div>
+
+  <div class="scrollingPolicy">
+    <table class="table custom-table">
+      <thead>
+        <tr>
+          <th class="fw-semibold">Under Name</th>
+            
+             <th>NAIC </th>
+            
+              <th></th>
+          
+          
+        </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let item of listOfCarrier" >
+  <td>{{ item.Address }}</td>
+    <td>{{ item.NAIC }}</td>
+     
+   
+  
+   <td style="text-align: right;">
+    <button mat-icon-button color="primary" (click)="addEditData(item)">
+  <mat-icon>edit</mat-icon>
+</button>
+             
+            </td>
+</tr>
+        <!-- Empty State -->
+        <!--
+        <tr *ngIf="listOfData.length === 0">
+          <td colspan="7" class="text-center text-muted py-4">
+            No data found
+          </td>
+        </tr>
+        -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+</div>
+

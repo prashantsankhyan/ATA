@@ -1,0 +1,58 @@
+<div class="container-fluid">
+<form [formGroup]="addEditAgentForm" (ngSubmit)="onSubmit()"> 
+  <div class="row g-1 mt-1">
+
+    <div >
+      <label>AGENT NAME</label>
+      <input type="text" class="form-control form-control-sm custom-input"formControlName="AgentName">
+    </div>
+ <div>
+      <label style="text-transform: uppercase;">Agency  Name</label>
+      <input type="text" class="form-control form-control-sm custom-input" formControlName="AgencyName">
+    </div>
+    <div>
+      <label style="text-transform: uppercase;">AGENT CODE</label>
+      <input type="text" class="form-control form-control-sm custom-input" formControlName="AgentCode">
+    </div>
+     <div>
+      <label style="text-transform: uppercase;">Phone Number</label>
+      <input type="text" class="form-control form-control-sm custom-input" formControlName="PhoneNumber">
+    </div>
+    <div>
+      <label style="text-transform: uppercase;">Email</label>
+      <input type="text" class="form-control form-control-sm custom-input" formControlName="Email">
+    </div>
+
+     <div>
+      <label style="text-transform: uppercase;"> E&O Date</label>
+      <input type="text" class="form-control form-control-sm custom-input" formControlName="EODate">
+    </div>
+    
+      <div>
+      <label style="text-transform: uppercase;">Fax</label>
+      <input type="text" class="form-control form-control-sm custom-input" formControlName="Fax">
+    </div>
+     <div>
+      <label style="text-transform: uppercase;">Address</label>
+      <textarea class="form-control "formControlName="Address" rows="4"></textarea>
+     
+    </div>
+    
+  </div>
+
+  <!-- 🔘 Buttons -->
+  <div class="text-end mt-3 mb-3">
+    <button class="btn  btn-sm me-2" [disabled]="isLoading" style="background-color: #232324c0;color: white;">
+     
+       {{ AgentID ? 'UPDATE AGENT NAME' : ' ADD AGENT NAME' }}
+    </button>
+    <button class="btn btn-danger btn-sm" mat-dialog-close>
+      CLOSE
+    </button>
+  </div>
+  </form>
+
+ 
+  
+
+</div>

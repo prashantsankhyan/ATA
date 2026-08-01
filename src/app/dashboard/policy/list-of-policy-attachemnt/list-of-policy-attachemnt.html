@@ -1,0 +1,104 @@
+
+
+
+
+
+
+<div  class="container-fluid attachment-page" >
+ 
+  <!-- <a routerLink ="/policy"><i class="fa fa-angle-double-left" aria-hidden="true"></i> BACK TO</a> -->
+ 
+
+
+
+ 
+  
+ 
+   <div class="row mt-2" >
+  
+    
+   
+    <div class="col-sm-4">
+         <div class="search-box">
+      <i class="fa fa-search"></i>
+      <input 
+        type="search" 
+        class="form-control"
+        placeholder="Search by File Name..."
+        [(ngModel)]="searchTerm"
+
+      />
+      <button class="btn-search">Search</button>
+    </div>
+  
+
+    </div>
+     <div class="col-sm-4">
+      
+    </div>
+
+     <div class="col-sm-4 text-end" >
+       
+    <button class="btn btn-add" (click)="openAttachmentDialog()">
+      <i class="fa fa-plus me-1"></i> ATTACHMENT  HERE
+    </button>
+
+ 
+    </div>
+   </div>
+    <div class="table-container shadow-sm mt-2">
+  <div class="table-header">
+    <h5 class="mb-0">QUOTE & POLICY ATTACHMENT FILE-({{LineName}})</h5>
+  </div>
+
+   
+     <div class="scrollingPolicy">
+    <table class="table custom-table">
+             <thead >
+               <tr>
+                <th >Description</th>
+                 <th >File Path</th>
+                 
+                 <th >Policy Type</th>
+                 <th ></th>
+                  
+
+
+                 
+                 
+                 
+                 
+               
+                
+               </tr>
+             </thead>
+             <tbody>
+            <tr
+        *ngFor="let data of filteredAttachments"
+        (click)="onRowClick(data)"
+        style="cursor: pointer"
+      >
+        <td>{{ data.Description || '—' }}</td>
+        <td>{{ data.FileName }}</td>
+       <td>{{data.PolicyType}}</td>
+        
+        <td>{{ data.AttachmentDate | date:'MM/dd/yyyy' }}</td>
+        <td>{{ data.EnteredBy }}</td>
+      </tr>
+
+      <tr *ngIf="filteredAttachments.length === 0">
+        <td colspan="7" class="text-center text-muted">
+          No records found
+        </td>
+      </tr>
+             </tbody>
+           </table>
+     </div>
+   
+  
+ 
+</div>
+ 
+
+
+

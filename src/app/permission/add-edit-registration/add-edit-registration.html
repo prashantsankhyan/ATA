@@ -1,0 +1,83 @@
+<div class="container-fluid">
+ 
+
+  <section class="registration backgroundPage ">
+   
+   <form [formGroup]="addEditRegistrationForm" >
+    <div class="col-sm-12 mt-2">
+     <label>Select Team</label>
+     <select  aria-label="Default select example" formControlName ="Team" class="form-control"  [ngClass]= "{ 'is-invalid': submit && f['Team'].errors }">
+         <option hidden value="" disabled selected  > Select Team</option>
+         <option  value="Admin"> Admin </option>
+        
+       
+     </select>
+     <div *ngIf ="submit && f['Team'].errors" class="invalid-feedback">
+      <div *ngIf ="f['Team'].errors">select Team Is  Required</div>
+  </div> 
+   </div>
+      <div class="col-sm-12 mt-1">
+          <label style="text-align: center;">User Name</label>
+          <input type="text" class="form-control" formControlName ="UserName">
+       
+      </div>
+    
+    
+      
+     <div class="col-sm-12 mt-1">
+      <label>Passward</label>
+      <input type="text" class="form-control" formControlName ="Password">
+    
+    </div>
+    <div class="col-sm-12 mt-1">
+     <label>Email</label>
+     <input type="text" class="form-control" formControlName ="EmailID">
+    </div>
+ 
+    
+     
+     
+   
+     
+    
+    
+     
+      
+      
+      
+ 
+  
+      <div class="text-center mt-4 mb-4">
+ 
+       <div  >
+           <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+    >
+      <mat-icon>add</mat-icon>
+      Register  Account
+    </button>
+
+    <button
+      mat-raised-button
+      color="warn"
+      mat-dialog-close
+    >
+      Cancel
+    </button>
+     
+           
+          
+         
+         </div>
+      
+     </div>
+    
+    
+  </form>
+ 
+  </section>
+
+
+</div>

@@ -1,0 +1,92 @@
+
+ 
+
+<div class="container-fluid" style="background-color: white;">
+ <div >
+
+
+
+ 
+  
+ 
+   
+  <div class="row mt-2" >
+    <div class="col-sm-4 mt-1">
+       <button mat-stroked-button class="back-btn" (click)="goToTransation()">
+  <mat-icon>arrow_back</mat-icon>
+  BACK
+</button>
+
+    </div>
+    
+   
+    <div class="col-sm-3">
+    <input
+  type="text"
+  class="form-control mt-1 mb-3 text-center"
+  placeholder="Search File Here"
+  [(ngModel)]="searchTerm"
+/>
+
+    </div>
+     <div class="col-sm-2">
+      
+    </div>
+
+     <div class="col-sm-3 mt-2" style="text-align: right;">
+         <button class="btn btn-add" (click)="addEditAttachement()">
+      <i class="fa fa-plus me-1"></i> ADD ATTACHMENT
+    </button>
+    
+ 
+    </div>
+   </div>
+    
+   
+   
+
+   <div class="table-container shadow-sm">
+  <div class="table-header">
+    <h5 class="mb-0">ATTACHMENT  BILLING LIST</h5>
+  </div>
+      <div class="scrollingPolicy">
+    <table class="table custom-table">
+             <thead >
+               <tr>
+                 <th >File Path</th>
+                 <th >Finance Section</th>
+                 <th >Endorsement Section</th>
+                
+                 <th >AP Invoice Section </th>
+                 
+                 <th >Date</th>
+                 <th>Enter By </th>
+                 
+                
+               </tr>
+             </thead>
+             <tbody>
+               <tr  *ngFor ="let data of filteredAttachments | searchTransactionFilter:searchCriteria" (click)="onRowClick(data)">
+                <td>{{data.FileName}}</td>
+                <td>{{data.PolicyType}}</td>
+                <td>{{data.TransactionType}}</td>
+                <td>{{data.Description}}</td>
+
+                
+                <td>{{data.AttachmentDate | date: 'MM/dd/yyyy'}}</td>
+             
+                <td>{{data.AttachedBy}}</td>
+              
+               
+               
+                
+               </tr>
+             </tbody>
+           </table>
+     </div>
+   </div>
+  
+ </div>
+</div>
+
+

@@ -1,0 +1,108 @@
+<div class="container-fluid">
+  <div *ngIf="showSpiner" class="spinner-container">
+  <app-spinner></app-spinner>
+</div>
+</div>
+
+<mat-form-field appearance="outline" style="width: 100%;margin-top: 20px;">
+  <mat-label>Select Account</mat-label>
+
+  <mat-select
+  
+    (selectionChange)="onSelectAccount($event)">
+
+    <!-- SEARCH -->
+    <mat-option (click)="$event.stopPropagation()">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search account..."
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="searchText"
+        (ngModelChange)="applyFilter($event)"
+        (click)="$event.stopPropagation()"
+      />
+    </mat-option>
+
+    <!-- LIST -->
+    <mat-option *ngFor="let agent of listOfAgent"
+                [value]="agent.AgentID">
+      {{ agent.AgentName }} - {{ agent.AgencyName }}- {{ agent.AgentCode }}
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+
+<div class="table-container shadow-sm">
+  <div class="table-header">
+    <h5 class="mb-0">MONTHLY REPORT LIST</h5>
+  </div>
+
+  <div class="scrollingPolicy">
+    <table class="table custom-table">
+      <thead>
+        <tr>
+          <th>Policy Number</th>
+           <th>Name </th>
+           <th>In.No</th>
+          <th>ARDue</th>
+          
+       
+          <th>Amount</th>
+          <th>Policy Fee</th>
+           <th>Surplus Tax</th>
+          <th>Company Financed</th>
+           <th>Agency Discount</th>
+          <th>Agency Fees</th>
+          <th>Stamping Fees</th>
+          <th>Tria</th>
+          <th>Flat_Tira</th>
+          <th>Commission</th>
+          
+          
+          <th></th>
+          
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor ="let data of listOfTransaction">
+          <td class="fw-semibold"  class="fw-semibold" >{{data.ChildPolicyName}}</td>
+          <td>{{data.ChildLineName}}</td>
+           <td>{{data.InvoiceID}}</td>
+           <td>{{data.ARDue | date:'MM-dd-yyyy'}}</td>
+           
+          
+        
+
+
+
+          <td>{{data.Amount}}</td>
+           <td>{{data.PolicyFee}}</td>
+           <td>{{data.SurpluxTax}}</td>
+           <td>{{data.CompanyFinanced}}</td>
+           <td>{{data.AgencyDiscount}}</td>
+           <td>{{data.AgencyFees}}</td>
+           <td>{{data.StamingFee}}</td>
+           <td>{{data.Tria}}</td>
+    
+           <td>{{data.Flat_Tira}}</td>
+           <td>{{data.Commission}}</td>
+         
+ 
+
+      
+        </tr>
+      </tbody>
+       
+    </table>
+  </div>
+  <div class="p-2">
+ <div class="total-balance">
+  <strong>Total Balance:</strong>
+  {{ totalBalance | number:'1.2-2' }}
+</div>
+  </div>
+
+
+</div>

@@ -1,0 +1,31 @@
+.agent-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+.agent-table td {
+    border: 2px solid #000;
+    padding: 6px 10px;
+    vertical-align: middle;
+}
+
+.agent-table tr:first-child td {
+    font-weight: normal;
+}
+
+.agent-table tr:last-child td {
+    text-align: center;
+}
+
+.agent-table a {
+    color: black;
+    text-decoration: none;
+}
+
+
+.address-cell {
+  white-space: pre-line;
+}

@@ -1,0 +1,95 @@
+
+<div class="container-fluid" style="background-color: white;">
+  <div *ngIf="showSpiner" class="spinner-container">
+  <app-spinner></app-spinner>
+</div>
+
+  <div *ngIf="!showSpiner" class="row align-items-center mb-3 g-2">
+
+  <!-- 🔍 Search Box -->
+  <div class="col-md-4">
+    <div class="search-box">
+      <i class="fa fa-search"></i>
+      <input 
+        type="search" 
+        class="form-control"
+        placeholder="Search by Account Name..."
+        [(ngModel)]="searchText"
+  (input)="applyFilter()"
+
+      />
+      <button class="btn-search">Search</button>
+    </div>
+  </div>
+
+  <!-- Empty space (auto handled now) -->
+  <div class="col-md-4"></div>
+
+  <!-- ➕ Add Button -->
+  <!-- <div class="col-md-4 text-end">
+    <button class="btn btn-add">
+      <i class="fa fa-plus me-1"></i> Add Account
+    </button>
+  </div> -->
+
+</div>
+
+
+
+
+<div class="table-container shadow-sm">
+  <div class="table-header">
+    <h5 class="mb-0">ACCOUNT LIST FOR BILLING</h5>
+  </div>
+
+  <div class="scrollingPolicy">
+    <table class="table custom-table">
+      <thead>
+        <tr>
+          <th>Account Name</th>
+          <th>DOT</th>
+          <th>AgentName</th>
+          <th>Number</th>
+          
+          <th>Agent Name</th>
+         
+          
+          <th>Effective Date</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of listOfSale">
+          <td class="fw-semibold"(dblclick)="nextToListOfBilling(item)">{{item.AccountName}}</td>
+          <td >{{item.DOT}}</td>
+          <td>{{item.AgentName}}</td>
+          <td>{{item.MobileNumber}}</td>
+        
+          <td>{{item.AgentName}}</td>
+          
+          <td>
+  <span >
+    {{ fixDate(item.EffectiveDate) | date:'MM-dd-yyyy' }}
+  </span>
+</td>
+
+        </tr>
+
+        <!-- Empty State -->
+        <!--
+        <tr *ngIf="listOfData.length === 0">
+          <td colspan="7" class="text-center text-muted py-4">
+            No data found
+          </td>
+        </tr>
+        -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+</div>
+

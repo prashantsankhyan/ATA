@@ -1,0 +1,24 @@
+@media print {
+
+  html, body {
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #print-section {
+    height: auto !important;
+    overflow: hidden !important;
+    page-break-after: avoid !important;
+  }
+
+  .invoice-block {
+    page-break-inside: avoid !important;
+  }
+
+  table, tr, td {
+    page-break-inside: avoid !important;
+  }
+
+}

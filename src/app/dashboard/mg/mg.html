@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  
+  <!-- 🔍 Search + Add -->
+  <div class="row align-items-center mb-3 g-2">
+
+    <!-- 🔍 Search Box -->
+    <div class="col-md-4">
+      <div class="search-box">
+        <i class="fa fa-search"></i>
+        <input 
+          type="search" 
+          class="form-control"
+          placeholder="Search by MG..."
+          [(ngModel)]="searchText"
+          (ngModelChange)="applyFilter()"
+        />
+        <button class="btn-search">Search</button>
+      </div>
+    </div>
+
+    <div class="col-md-4"></div>
+
+    <!-- ➕ Add Button -->
+    <div class="col-md-4 text-end">
+      <button class="btn btn-add" (click)="addEditData()">
+        <i class="fa fa-plus me-1"></i> ADD MG
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 🔄 Spinner -->
+  <div *ngIf="showSpiner" class="text-center p-3">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- 📋 Table -->
+  <div class="table-container shadow-sm">
+    <div class="table-header">
+      <h5 class="mb-0">MG LIST</h5>
+    </div>
+
+    <div class="scrollingPolicy">
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <th>Broker Name</th>
+            <th>LookUpCode</th>
+            <th>Address</th>
+            <th>Website</th>
+            <th style="width: 100px;">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <!-- ✅ Dynamic Data -->
+          <tr *ngFor="let item of listOfBroker">
+
+            <td class="fw-semibold">
+              {{ item.AccountName || '-' }}
+            </td>
+
+            <td>
+              {{ item.LookUpCode || '-' }}
+            </td>
+
+            <td>
+              {{ item.Address1 || '-' }}
+            </td>
+
+            <td>
+              {{ item.PrimaryEmailAddress || '-' }}
+            </td>
+
+            <td>
+                <button mat-icon-button color="primary" (click)="addEditData(item)">
+  <mat-icon>edit</mat-icon>
+</button>
+           
+            </td>
+
+          </tr>
+
+          <!-- ❌ Empty State -->
+          <tr *ngIf="!showSpiner && listOfBroker.length === 0">
+            <td colspan="5" class="text-center text-muted py-4">
+              No data found
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

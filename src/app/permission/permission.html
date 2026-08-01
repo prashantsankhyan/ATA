@@ -1,0 +1,86 @@
+<div class="container-fluid">
+
+  <div class="row p-2 d-flex align-items-center">
+
+    <div class="col-md-4">
+      <div class="search-box position-relative">
+
+        <i class="fa fa-search search-icon"></i>
+
+        <input
+          type="search"
+          class="form-control"
+          placeholder="Search by Name..."
+          [(ngModel)]="searchText"
+          (input)="searchLogin()"
+        />
+
+        <button
+          class="btn-search"
+          (click)="searchLogin()">
+          Search
+        </button>
+
+      </div>
+    </div>
+
+    <div class="col-md-8 text-end">
+
+      <button class="btn btn-add" (click)="addEditRegistrationDetail($event)">
+        <i class="fa fa-plus me-1"></i>
+        REGISTER
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="scrollingPolicy">
+
+    <table class="table custom-table">
+
+      <thead>
+        <tr>
+          <th>Team Name</th>
+          <th>User Name</th>
+          <th>Password</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngIf="filteredLoginList.length === 0">
+          <td colspan="5" class="text-center">
+            No Data Found
+          </td>
+        </tr>
+
+        <tr *ngFor="let data of filteredLoginList">
+
+          <td>{{ data.Team }}</td>
+          <td>{{ data.UserName }}</td>
+          <td>{{ data.Password }}</td>
+          <td>{{ data.EmailID }}</td>
+
+          <td>
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="addEditRegistrationDetail(data)">
+
+              <mat-icon>edit</mat-icon>
+
+            </button>
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
