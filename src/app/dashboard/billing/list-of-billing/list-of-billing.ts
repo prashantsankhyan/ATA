@@ -14,6 +14,7 @@ import { Spinner } from '../../../spinner/spinner';
 import { CrcPdf } from '../crc-pdf/crc-pdf';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { NewInvoiceBilling } from '../new-invoice-billing/new-invoice-billing';
+import { DeleteEntryByTransactionId } from '../delete-entry-by-transaction-id/delete-entry-by-transaction-id';
 @Component({
   selector: 'app-list-of-billing',
    imports: [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule,SearchTransactionFilterPipe,Spinner],
@@ -116,6 +117,7 @@ return (
   `Amount: ${money(data.Amount)}\n` +
   `Policy Fee: ${money(data.PolicyFee)}\n` +
   `Surplus Tax: ${data.SurpluxTax || 0}%\n` +
+  `Manual Tax: ${data.SurpluxTax || 0}%\n` +
   `Stamping Fee: ${data.StamingFee || 0}%\n` +
   `TRIA: ${data.Tria || 0}%\n` +
   `Flat TRIA: ${money(data.Flat_Tira)}\n` +
@@ -253,6 +255,25 @@ return (
     this.tableSize = event.target.value;
     this.page = 1;
     this.getAllTransationByAccountId();
+  }
+
+
+
+  DeleteEntryByTransactionId(data:any){
+    
+    const dialogRef = this.dialog.open(DeleteEntryByTransactionId, {
+    width: '95vw',
+    maxWidth: '500px',
+     height: '60vh',        // 👈 add this
+     maxHeight: '60vh',
+    data: {TransactionID:data.TransactionID  }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+      this.getAllTransationByAccountId();
+    }
+  });
   }
 
  addEditData(data?: any) {

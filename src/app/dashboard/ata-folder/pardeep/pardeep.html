@@ -1,1 +1,100 @@
-<p>pardeep works!</p>
+
+<div class="container-fluid" style="background-color: white;">
+ <div >
+
+
+        <!-- <div class="col-sm-2 ">
+        
+           <a (click)="backToMainAccount()" href="javascript:void(0)"> <img src="assets/back.png" width="50px" /></a>
+        
+        </div> -->
+  <div class="card-header mt-2">
+    <div class="row p-1">
+      <div class="col-sm-3 mt- mb-1">
+        <div class="search-box">
+      <i class="fa fa-search"></i>
+     <input
+  type="search"
+  class="form-control"
+  placeholder="File Name"
+  [(ngModel)]="searchTerm">
+
+    </div>
+      
+      </div> 
+<div class="col-sm-3 mt- mb-1">
+      
+      
+      </div> 
+
+   <div class="col-sm-3 mt- mb-1">
+ 
+    </div>
+     <div class="col-md-3 text-end"  >
+    <button class="btn btn-add" (click)="addEditAttachement($event)">
+      <i class="fa fa-plus me-1"></i> Add Pardeep 
+    </button>
+       </div>
+      
+      </div> 
+     
+     
+      
+      
+     
+    </div>
+  </div>
+ 
+  
+ 
+
+
+   
+   <div class="table-container shadow-sm">
+  <div class="table-header">
+    <h5 class="mb-0">Pardeep   FILE</h5>
+  </div>
+
+  <div class="scrollingPolicy">
+    <table class="table custom-table">
+             <thead >
+               <tr>
+                 <th style="width: 200px;">File Path</th>
+                
+                
+                
+                 
+                 <th style="width: 500px;">Description</th>
+                  <th style="width: 150px;">Date </th>
+                 <th style="width: 150px;">Attached By </th>
+                 <th style="width: 20px;"></th>
+                
+               </tr>
+             </thead>
+             <tbody>
+               <tr *ngFor="let data of filteredAttachments"
+  (click)="onRowClick(data)">
+              
+                 <td style="width: 350px;">{{data.FileName}}</td>
+                 
+                
+                <td style="width: 500px;">{{data.Description}}</td>
+                <td style="width: 150px;">{{data.EnteredDate | date :'MM/dd/yyyy'}}</td>
+                <td style="width: 150px;">{{data.EnteredBy}}</td>
+                
+                <td>
+                  <!-- <a [href]="data.FileUrl" target="_blank">
+                    <mat-icon>visibility</mat-icon>
+                  </a> -->
+                </td>
+             
+               </tr>
+             </tbody>
+           </table>
+     </div>
+   
+  
+ </div>
+</div>
+
+

@@ -385,13 +385,25 @@ getOpeningBalance() {
   });
 }
 
+// getAllPolicyListByAccontId() {
+//   this.http.getAllDataId(ApiUrl.getPolicByAccountId,this.AccountID)
+//     .subscribe(data => {
+
+//       this.listOfPolicy = data?.ChildPolicys || [];
+//       this.showSpiner = false;
+
+//       this.cd.detectChanges();
+//     });
+// }
 getAllPolicyListByAccontId() {
-  this.http.getAllDataId(ApiUrl.getPolicByAccountId,this.AccountID)
+  this.http.getAllDataId(ApiUrl.getPolicByAccountId, this.AccountID)
     .subscribe(data => {
 
-      this.listOfPolicy = data?.ChildPolicys || [];
-      this.showSpiner = false;
+      this.listOfPolicy = (data?.ChildPolicys || []).filter(
+        (policy: any) => policy.StageType === 'Issue'
+      );
 
+      this.showSpiner = false;
       this.cd.detectChanges();
     });
 }
@@ -701,6 +713,7 @@ setArDate(){
   // }
 
   stateData: any = {
+     TaxManual: { taxRate: 0.000, stampingFee: 0.000 },
   AK: { taxRate: 2.700, stampingFee: 1.000 },
   AL: { taxRate: 6.000, stampingFee: 0.175 },
   AR: { taxRate: 4.000, stampingFee: 0.000 },
@@ -756,7 +769,29 @@ setArDate(){
   WY: { taxRate: 3.000, stampingFee: 0.175 }
 };
 
+// onStateChange(state: string) {
+
+//   const selected = this.stateData[state];
+
+//   if (selected) {
+//     this.addEditTransactionForm.patchValue({
+//       SurpluxTax: selected.taxRate,
+//       StamingFee: selected.stampingFee
+//     });
+//   }
+// }
+
 onStateChange(state: string) {
+
+  if (state === 'TaxManual') {
+
+    this.addEditTransactionForm.patchValue({
+      SurpluxTax: 0,
+      StamingFee: 0
+    });
+
+    return;
+  }
 
   const selected = this.stateData[state];
 

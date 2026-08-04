@@ -316,12 +316,51 @@ getConfirmBor:'Agents/ConfirmAgent',
 stuffAttachement:'FAttachmentReportTeam/UploadMultiFilesStuff',
 getStuff:'FAttachmentReportTeam/GetAllStuff',
 
- billindDelete:'api/TransactionNew/DeleteTransaction',
+ billindDelete:'TransactionNew/DeleteTransaction',
 
 // ATA ATTACHMENET
+ addLicence:"FAttachmentPM/UploadMultiFilesLicenceATA",
+ getLicenceAttachement:'FAttachmentPM/GetAllFileLicenceATA',
 
- getLicenceAttachement:'FAttachmentPM/GetFileLicenceATA',
+ addSurpul:'FAttachmentPM/UploadMultiFilesSurpulLine',
+ getSurpul:'FAttachmentPM/GetAllFileSurpulLine',
 
+ addPardeep:'FAttachmentPM/UploadMultiFilesPardeep',
+ getPardeep:'FAttachmentPM/GetAllFilePardeep',
+
+ addOtherCoverage:'FAttachmentPM/UploadMultiFilesOtherConverege',
+ getOtherCoverage:'FAttachmentPM/GetAllFileOtherConverege',
+ addEndo:'FAttachmentPM/UploadMultiFilesEnde',
+  getEndo:'FAttachmentPM/GetAllFileEnde',
+ addDyl:'FAttachmentPM/UploadMultiFilesDyl',
+ getDyl:'FAttachmentPM/GetAllFileDyl',
+ addW9:'FAttachmentPM/UploadMultiFilesWN',
+ getW9:'FAttachmentPM/GetAllFileWN',
+ addAgentOpt:'FAttachmentPM/UploadMultiFilesAgentOpit',
+ getAgentOpitment:'FAttachmentPM/GetAllFileAgentOpit',
+ addATAOpitmenet:'FAttachmentPM/UploadMultiFilesATAOPP',
+ getATAOpitment:'FAttachmentPM/GetAllFileATAOPP',
+ addATATax:'FAttachmentPM/UploadMultiFilesATATax',
+ getATATax:'FAttachmentPM/GetAllFileATATax'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// api/
+// api/
+// api/FAttachmentPM/GetAllFileATATax
+ 
 
 
 

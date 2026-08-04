@@ -218,6 +218,7 @@
    <select class="form-select formControl" formControlName="State" aria-label="Default select example"(change)="onStateChange($any($event.target).value)">
     <option hidden value="" disabled selected>Select State</option>
 
+  <option value="TaxManual">TaxManual</option>
     <option value="AK">AK</option>
     <option value="AL">AL</option>
     <option value="AR">AR</option>
@@ -289,7 +290,8 @@
         <div class="row">
           <div class="col-sm-6">
             <label>Surplus Tax</label>
-        <input type="number" class="form-control" formControlName ="SurpluxTax" >
+        <input type="number" class="form-control" formControlName ="SurpluxTax"
+         [readonly]="addEditTransactionForm.get('State')?.value !== 'TaxManual'" >
           </div>
            <div class="col-sm-6" style="margin-top: 25px;">
  <span style="color: black;">{{ surplusTaxAmount | currency:'USD':'symbol':'1.2-2' }} </span> 
@@ -329,7 +331,7 @@
          <input type="number"
          class="form-control"
          formControlName="StamingFee"
-         readonly>
+          [readonly]="addEditTransactionForm.get('State')?.value !== 'TaxManual'">
           </div>
  <div class="col-sm-6" style="margin-top: 25px;">
  <span style="color: black; ">{{ stampingAmount | currency:'USD':'symbol':'1.2-2' }} </span> 
