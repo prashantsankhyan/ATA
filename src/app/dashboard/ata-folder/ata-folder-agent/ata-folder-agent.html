@@ -1,0 +1,105 @@
+<div class="container-fluid">
+<div *ngIf="showSpiner" class="spinner-container">
+  <app-spinner></app-spinner>
+</div>
+  
+ 
+  <!-- 🔍 Search + Add -->
+  <div *ngIf ="!showSpiner" class="row align-items-center mb-3 g-2">
+
+    <!-- 🔍 Search Box -->
+    <div class="col-md-4">
+      <div class="search-box">
+        <i class="fa fa-search"></i>
+        <input 
+          type="search" 
+          class="form-control"
+          placeholder="Search by AGENT..."
+          [(ngModel)]="searchText"
+          (ngModelChange)="applyFilter()"
+        />
+        <button class="btn-search">Search</button>
+      </div>
+    </div>
+
+    <div class="col-md-4"></div>
+
+    <!-- ➕ Add Button -->
+    <div class="col-md-4 text-end">
+      <button class="btn btn-add" (click)="addEditData()">
+        <i class="fa fa-plus me-1"></i> ADD AGENT
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 🔄 Spinner -->
+
+
+  <!-- 📋 Table -->
+  <div class="table-container shadow-sm">
+    <div class="table-header">
+      <h5 class="mb-0">AGENT LIST</h5>
+    </div>
+
+    <div class="scrollingPolicy">
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <th>AgencyName</th>
+            <th style="width: 300px;">Agent Name</th>
+            <th style="width: 100px;">Code</th>
+            <th style="width: 100px;">EODate</th>
+            
+            <th>Address</th>
+              <th></th>
+           
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <!-- ✅ Dynamic Data -->
+          <tr *ngFor="let item of listOfAgent" (dblclick)="goTOAgentAttachemnt(item)">
+            
+            <td class="fw-semibold">
+              {{ item.AgencyName || '-' }}
+            </td>
+            
+
+            <td class="fw-semibold">
+              {{ item.AgentName || '-' }}
+            </td>
+
+            <td>
+              {{ item.AgentCode || '-' }}
+            </td>
+              <td>
+              {{ item.EODate || '-' }}
+            </td>
+             <td>
+              {{ item.Address || '-' }}
+            </td>
+           
+            <td style="text-align: right;">
+               <button mat-icon-button color="primary"(click)="addEditData(item)">
+  <mat-icon>edit</mat-icon>
+</button>
+
+            </td>
+
+          </tr>
+
+          <!-- ❌ Empty State -->
+          <tr *ngIf="!showSpiner && listOfAgent.length === 0">
+            <td colspan="5" class="text-center text-muted py-4">
+              No data found
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

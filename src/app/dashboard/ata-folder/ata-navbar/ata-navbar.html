@@ -5,64 +5,190 @@
     <div class="col-md-3 col-lg-2 sidebar">
 
       <ul class="menu-list">
+        <li class="menu-parent">
 
+  <!-- Main License -->
+  <a href="javascript:void(0)"
+     class="collapse-item license-main"
+     (click)="licenseOpen = !licenseOpen">
+    🪪  Licenses
+    <span class="float-end">
+      {{ licenseOpen ? '▲' : '▼' }}
+    </span>
+  </a>
+  <!-- License Dropdown -->
+  <ul class="submenu-list" *ngIf="licenseOpen">
+      <li>
+      <a routerLink="./surpulLine"
+         routerLinkActive="active"
+         class="collapse-item">
+        📄 SL License
+      </a>
+    </li>
+     <li>
+      <a routerLink="./pardeep"
+         routerLinkActive="active"
+         class="collapse-item">
+        📄  Pardeep licenses
+      </a>
+    </li>
+   
+    
         <li>
-          <a routerLink="./paymentMethod" routerLinkActive="active" class="collapse-item">
-           💳 Paymett method
-          </a>
-        </li>
-         <li>
-          <a routerLink="./Licence"   routerLinkActive="active" class="collapse-item">
-           🪪 Licence ATA
-          </a>
-        </li>
-          <li>
-          <a routerLink="./surpulLine"   routerLinkActive="active" class="collapse-item">
-           📄 Surpul line
+      <a routerLink="./ataSarb"
+         routerLinkActive="active"
+         class="collapse-item">
+        📄 Sarbjit Reynolds license
+      </a>
+    </li>
 
-          </a>
-          </li>
-           <li>
-            
-          <a routerLink="./pardeep"   routerLinkActive="active" class="collapse-item">
-          👤  Pardeep
-          </a>
-          </li>
-           <li>
-           <a routerLink="./otherConveragae"  routerLinkActive="active" class="collapse-item">
-           🔗 Other conversge
-          </a>
-          </li>
-          <li >
-           <a routerLink="./endo" routerLinkActive="active" class="collapse-item">
-          📝 Endo
+    <li>
+      <a routerLink="./Licence"   
+         routerLinkActive="active"
+         class="collapse-item">
+        📄 ATA Licenses
+      </a>
+    </li>
+
+   
+
+
+
+  </ul>
+
+</li>
+
+
+ <li class="menu-parent">
+
+  <!-- Main License -->
+  <a href="javascript:void(0)"
+     class="collapse-item license-main"
+     (click)="appointmentOpne = !appointmentOpne">
+    👔  Appointment
+    <span class="float-end">
+      {{ appointmentOpne ? '▲' : '▼' }}
+    </span>
+  </a>
+  <!-- License Dropdown -->
+  <ul class="submenu-list" *ngIf="appointmentOpne">
+     <li>
+      <a routerLink="./ataFolderCarrier"
+         routerLinkActive="active"
+         class="collapse-item">
+        📄  Carrier (MG)
+      </a>
+    </li>
+        <li>
+      <a routerLink="./underCarrierInsurance"
+         routerLinkActive="active"
+         class="collapse-item">
+        📄 Under carrier insurance
+      </a>
+    </li>
+
+   
+
+   
+
+
+
+  </ul>
+
+</li>
+   <li>
+           <a routerLink="./ataFolderAgent" routerLinkActive="active" class="collapse-item">
+          👔 Appointed Agents/Agencies
           </a>
           </li>
           <li>
-           <a routerLink="./dyl" routerLinkActive="active" class="collapse-item">
-         📋 Dyl
+           <a routerLink="./paymentMethod" routerLinkActive="active" class="collapse-item">
+          💳 Payment Method
           </a>
           </li>
-          <li>
+
+          
+            <li>
            <a routerLink="./w9" routerLinkActive="active" class="collapse-item">
-         📑 W9
+         📑 W-9 & W-4
           </a>
           </li>
+         <li >
+           <a routerLink="./endo" routerLinkActive="active" class="collapse-item">
+          📝 E&O Policy
+          </a>
+          </li>
+
            <li>
-           <a routerLink="./agentOp" routerLinkActive="active" class="collapse-item">
-          👔 Agent opitment
+           <a routerLink="./ataCrime" routerLinkActive="active" class="collapse-item">
+            💲 Cyber Crime Policy
+         
           </a>
           </li>
+
+          
            <li>
-           <a routerLink="./ataOp" routerLinkActive="active" class="collapse-item">
-          📅 Ata oppintmrnt
+           <a routerLink="./dyl" routerLinkActive="active" class="collapse-item">
+         📋 DYL PHONE
           </a>
           </li>
+
+          
            <li>
-           <a routerLink="./ataTax" routerLinkActive="active" class="collapse-item">
-          💲 Ata Tax
+    <a routerLink="./ataBond" routerLinkActive="active" class="collapse-item">
+      💲 ATA Bonds
+    </a>
+  </li>
+
+
+      <li>
+    
+    <a routerLink="./ataTax" routerLinkActive="active" class="collapse-item">
+      💲 ATA Tax
+    </a>
+  </li>
+    <li>
+    <a routerLink="./ataInfo" routerLinkActive="active" class="collapse-item">
+      💲 ATA Information
+    </a>
+  </li>
+        
+         
+            <li>
+    <a routerLink="./ataDocument" routerLinkActive="active" class="collapse-item">
+      💲 ATA Documents
+    </a>
+  </li>
+  
+  
+            <!-- <li>
+    <a routerLink="./ataOp" routerLinkActive="active" class="collapse-item">
+       📅 ATA Appointments
+    </a>
+  </li> -->
+   <!-- <li>
+          <a routerLink="./Licence"   routerLinkActive="active" class="collapse-item">
+           🪪  ATA Licenses
           </a>
-          </li>
+        </li> -->
+  
+
+
+
+
+ 
+
+       
+          
+          
+          
+         
+         
+        
+         
+          
+         
+       
        
 
         <!-- <li>

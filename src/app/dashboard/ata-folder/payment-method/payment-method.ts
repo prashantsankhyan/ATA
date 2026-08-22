@@ -10,6 +10,7 @@ import { ApiUrl } from '../../../_core/apiUrl';
 import { AllApiService } from '../../../_service/all-api.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { UpdatePaymentStage } from './update-payment-stage/update-payment-stage';
 
 @Component({
   selector: 'app-payment-method',
@@ -38,10 +39,7 @@ allAttachments: any[] = [];
 };
 
   constructor( private http:AllApiService,private router:Router,public dialog: MatDialog,private cdr: ChangeDetectorRef) { 
-    this.http.listen().subscribe((m:any)=>{
-      console.log(m)
-      this.getAllFile()
-    })
+   
    }
   
 ngOnInit(): void {
@@ -74,7 +72,7 @@ ngOnInit(): void {
 
   getAllFile() {
   this.http
-    .getAllData(ApiUrl.getStuff)
+    .getAllData(ApiUrl.getATAPay)
     .subscribe(data => {
       this.showSpiner = false;
 
@@ -196,6 +194,20 @@ trackByFile(index: number, item: any): any {
   })
 }
   
+  changeStatus(data?: any) {
+    const dialogRef = this.dialog.open(UpdatePaymentStage, {
+      
+     
+    
+     maxHeight: '100vh',   // only limit, not fixed height
+      data: data || null
+    });
   
+     dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+      this.getAllFile();
+    }
+      });
+    }
 
 }

@@ -70,6 +70,8 @@ addEditAttachmentForm!:FormGroup ;
     this.addEditAttachmentForm = this.fb.group({
       abc:['',[Validators.required,]],
       Description:['',[Validators.required,]],
+        Current:['Current'],
+      Expired:[''],
       EnteredBy:[this.userName],
     });
   }
@@ -99,6 +101,9 @@ addEditAttachmentForm!:FormGroup ;
     productFormData.append('AccountID',this.addEditAttachmentForm.get('AccountID')?.value);
 
     productFormData.append('Description',this.addEditAttachmentForm.get('Description')?.value);
+    
+  productFormData.append('Current',this.addEditAttachmentForm.get('Current')?.value);
+      productFormData.append('Expired',this.addEditAttachmentForm.get('Expired')?.value);
     productFormData.append('EnteredBy',this.addEditAttachmentForm.get('EnteredBy')?.value);
    
 

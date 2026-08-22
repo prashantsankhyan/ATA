@@ -10,5 +10,7 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
   styleUrl: './ata-navbar.scss',
 })
 export class AtaNavbar {
+  licenseOpen = false;
+  appointmentOpne = false;
 
 }

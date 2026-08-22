@@ -321,17 +321,21 @@ getStuff:'FAttachmentReportTeam/GetAllStuff',
 // ATA ATTACHMENET
  addLicence:"FAttachmentPM/UploadMultiFilesLicenceATA",
  getLicenceAttachement:'FAttachmentPM/GetAllFileLicenceATA',
+ updateATALicenceStatus:'FAttachmentPM/UpdateLicenceATAStatus',
 
  addSurpul:'FAttachmentPM/UploadMultiFilesSurpulLine',
  getSurpul:'FAttachmentPM/GetAllFileSurpulLine',
 
  addPardeep:'FAttachmentPM/UploadMultiFilesPardeep',
  getPardeep:'FAttachmentPM/GetAllFilePardeep',
+ prdeepStatgeUpdate:'FAttachmentPM/UpdateFilePardeep',
 
  addOtherCoverage:'FAttachmentPM/UploadMultiFilesOtherConverege',
  getOtherCoverage:'FAttachmentPM/GetAllFileOtherConverege',
  addEndo:'FAttachmentPM/UploadMultiFilesEnde',
+ updateEndo:'FAttachmentPM/UpdateFileEnde',
   getEndo:'FAttachmentPM/GetAllFileEnde',
+
  addDyl:'FAttachmentPM/UploadMultiFilesDyl',
  getDyl:'FAttachmentPM/GetAllFileDyl',
  addW9:'FAttachmentPM/UploadMultiFilesWN',
@@ -341,7 +345,28 @@ getStuff:'FAttachmentReportTeam/GetAllStuff',
  addATAOpitmenet:'FAttachmentPM/UploadMultiFilesATAOPP',
  getATAOpitment:'FAttachmentPM/GetAllFileATAOPP',
  addATATax:'FAttachmentPM/UploadMultiFilesATATax',
- getATATax:'FAttachmentPM/GetAllFileATATax'
+ getATATax:'FAttachmentPM/GetAllFileATATax',
+
+ addATAInfo:'FAttachmentPM/UploadMultiFilesATAInfo',
+ getATAInfo:'FAttachmentPM/GetAllFileATAInfo',
+
+ addATABond:'FAttachmentPM/UploadMultiFilesATABonds',
+ getATABond:'FAttachmentPM/GetAllFileATABonds',
+
+ addATADoc:'FAttachmentPM/UploadMultiFilesATADoc',
+ getATADoc:'FAttachmentPM/GetAllFileATADoc',
+
+ addUpoadSciberCrime:'FAttachmentPM/UploadMultiFilesCyberCrime',
+ getScriberCrime:'FAttachmentPM/GetAllFileCyberCrime',
+
+ addSarbjitFile:'FAttachmentPM/UploadMultiFilesSarbjit',
+ getSarbjitFile:'FAttachmentPM/GetAllFileSarbjit',
+ updateStatgeSarab:'FAttachmentPM/UpdateFileSarbjit',
+
+ addATAPay:'FAttachmentPM/UploadMultiFilesATAPay',
+ getATAPay:'FAttachmentPM/GetAllFileATAPay',
+ updateStagePayment:'FAttachmentPM/UpdateFileATAPay'
+
 
 
 
@@ -411,4 +436,14 @@ getStuff:'FAttachmentReportTeam/GetAllStuff',
 
 
  
+//  update ata folder Statas
+// api/FAttachmentPM/UpdateLicenceATAStatus
+// api/FAttachmentPM/UpdateFileEnde
+// api/FAttachmentPM/UpdateFileDyl
+// api/FAttachmentPM/UpdateFileWN
+// api/FAttachmentPM/UpdateFileATATax
+// api/FAttachmentPM/UpdateFileATAInfo
+// api/FAttachmentPM/UpdateFileATABonds
+// api/FAttachmentPM/UpdateFileATADoc
+// api/FAttachmentPM/UpdateFileATACyberCrime
 }

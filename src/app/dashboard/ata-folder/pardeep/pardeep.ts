@@ -11,6 +11,7 @@ import { AllApiService } from '../../../_service/all-api.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditPardeep } from './add-edit-pardeep/add-edit-pardeep';
+import { UpdatePardeepStatus } from './update-pardeep-status/update-pardeep-status';
 
 @Component({
   selector: 'app-pardeep',
@@ -39,10 +40,7 @@ allAttachments: any[] = [];
 };
 
   constructor( private http:AllApiService,private router:Router,public dialog: MatDialog,private cdr: ChangeDetectorRef) { 
-    this.http.listen().subscribe((m:any)=>{
-      console.log(m)
-      this.getAllFile()
-    })
+   
    }
   
 ngOnInit(): void {
@@ -192,5 +190,24 @@ trackByFile(index: number, item: any): any {
   
     
   })
+}
+
+
+changeStatus(data?: any) {
+
+  const dialogRef = this.dialog.open(UpdatePardeepStatus, {
+    maxHeight: '100vh',
+    data: data || null
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+
+    console.log('Dialog result:', result);
+
+    if (result === true) {
+      this.getAllFile();
+    }
+
+  });
 }
 }

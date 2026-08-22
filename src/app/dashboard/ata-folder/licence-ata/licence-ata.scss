@@ -122,3 +122,13 @@
  height:400px;  
  overflow:scroll;
 }
+
+.expired-row {
+  background-color: red !important;
+  color: white !important;
+}
+
+.normal-row {
+  background-color: white !important;
+  color: black !important;
+}

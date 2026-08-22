@@ -67,6 +67,15 @@ export class AllApiService {
     )
   } 
 
+    addEditDataUpdate(url:string,json:any,):Observable<any>{
+    const apiUrl = `${environment.apiBaseUrl}${url}`;
+    var params  = json;
+    return this.http.post<any>(apiUrl,params,).pipe((data=>{
+      return data;
+    })
+    )
+  }
+
   addEditDataDetail(url: string, body: any): Observable<any> {
   const apiUrl = `${environment.apiBaseUrl}${url}`;
   return this.http.post<any>(apiUrl, body);
@@ -211,6 +220,7 @@ deleteDriverFilePermanent(url: string, id: number): Observable<any> {
     )
   } 
 
+  
 
   private _listner = new Subject<any>();
   listen():Observable<any>{

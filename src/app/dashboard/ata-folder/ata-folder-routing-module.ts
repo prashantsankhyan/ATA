@@ -70,6 +70,39 @@ const routes: Routes = [
        {
         path:'ataTax',
         loadChildren:()=>import('./ata-tax/ata-tax-module').then(m=>m.AtaTaxModule)
+      } ,
+      {
+        path:'ataInfo',
+        loadChildren:()=>import('./ata-information/ata-information-module').then(m=>m.AtaInformationModule)
+      } ,
+      {
+        path:'ataBond',
+        loadChildren:()=>import('./ata-bond/ata-bond-module').then(m=>m.AtaBondModule)
+      } ,
+      {
+        path:'ataDocument',
+        loadChildren:()=>import('./ata-document/ata-document-module').then(m=>m.AtaDocumentModule)
+      },
+      {
+        path:'ataCrime',
+        loadChildren:()=>import('./ata-suiber-crime/ata-suiber-crime-module').then(m=>m.AtaSuiberCrimeModule)
+      } ,
+       {
+        path:'ataSarb',
+        loadChildren:()=>import('./ata-sarbjit/ata-sarbjit-module').then(m=>m.AtaSarbjitModule)
+      } ,
+      {
+        path:'ataFolderCarrier',
+        loadChildren:()=>import('./ata-folder-carrier/ata-folder-carrier-module').then(m=>m.AtaFolderCarrierModule)
+      },
+
+       {
+        path:'underCarrierInsurance',
+        loadChildren:()=>import('./ata-under-carrier-insurnce/ata-under-carrier-insurnce-module').then(m=>m.AtaUnderCarrierInsurnceModule)
+      } ,
+       {
+        path:'ataFolderAgent',
+        loadChildren:()=>import('./ata-folder-agent/ata-folder-agent-module').then(m=>m.AtaFolderAgentModule)
       } 
     ]
   }

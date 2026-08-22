@@ -39,7 +39,7 @@ isCarrierOpen = false;
   ngOnInit(){
  this.userName = (sessionStorage.getItem('UserName') || '').trim().toLowerCase();
 
-  this.showData = ['cj', 'sandy', 'srey'].includes(this.userName);
+  this.showData = ['cj', 'sandy', 'srey','prashant','Parmjit Dhami'].includes(this.userName);
  this.getNameOfTeam()
   }
  

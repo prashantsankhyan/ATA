@@ -57,7 +57,7 @@ addEditAttachmentForm!:FormGroup ;
    
   }
   getAllFileDetail(){
-    this.http.getAllData(ApiUrl.getListOfAllFilder).subscribe(
+    this.http.getAllData(ApiUrl.getATAPay).subscribe(
       data=>{
        let response  = JSON.stringify(data)
        let obj = JSON.parse(response)
@@ -71,6 +71,8 @@ addEditAttachmentForm!:FormGroup ;
       abc:['',[Validators.required,]],
       AccountID:[0,],
       Description:['',[Validators.required,]],
+       Current:['Current'],
+      Expired:[''],
       EnteredBy:[this.userName],
     });
   }
@@ -100,6 +102,8 @@ addEditAttachmentForm!:FormGroup ;
     productFormData.append('AccountID',this.addEditAttachmentForm.get('AccountID')?.value);
 
     productFormData.append('Description',this.addEditAttachmentForm.get('Description')?.value);
+         productFormData.append('Current',this.addEditAttachmentForm.get('Current')?.value);
+     productFormData.append('Expired',this.addEditAttachmentForm.get('Expired')?.value);
     productFormData.append('EnteredBy',this.addEditAttachmentForm.get('EnteredBy')?.value);
    
 
@@ -116,7 +120,7 @@ addEditAttachmentForm!:FormGroup ;
 
     private _addProduct(productData: FormData): void {
       this.changeLocation()
-    this.http.addEditFormData(ApiUrl.stuffAttachement,productData).pipe().subscribe(
+    this.http.addEditFormData(ApiUrl.addATAPay,productData).pipe().subscribe(
         data => {
 
          this.changeLocation()

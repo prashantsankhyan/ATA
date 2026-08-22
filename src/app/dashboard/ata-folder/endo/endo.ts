@@ -11,6 +11,7 @@ import { AllApiService } from '../../../_service/all-api.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditEndo } from './add-edit-endo/add-edit-endo';
+import { ChangeStatusEndo } from './change-status-endo/change-status-endo';
 
 @Component({
   selector: 'app-endo',
@@ -193,5 +194,22 @@ trackByFile(index: number, item: any): any {
     
   })
 }
+  changeStatus(data?: any) {
+  const dialogRef = this.dialog.open(ChangeStatusEndo, {
+    
+   
+  
+   maxHeight: '100vh',   // only limit, not fixed height
+    data: data || null
+  });
+
+   dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+    this.getAllFile();
+  }
+    });
+  }
+
+
 }
 
