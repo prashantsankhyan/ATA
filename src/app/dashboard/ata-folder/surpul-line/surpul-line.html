@@ -66,20 +66,26 @@
                  
                  <th style="width: 500px;">Description</th>
                   <th style="width: 150px;">Date </th>
+                  <th style="width: 150px;">Status </th>
                  <th style="width: 150px;">Attached By </th>
                  <th style="width: 20px;"></th>
                 
                </tr>
              </thead>
              <tbody>
-               <tr *ngFor="let data of filteredAttachments"
-  (click)="onRowClick(data)">
+               <tr *ngFor="let data of filteredAttachments">
               
-                 <td style="width: 350px;">{{data.FileName}}</td>
+                 <td style="width: 350px;"(click)="onRowClick(data)">{{data.FileName}}</td>
                  
                 
                 <td style="width: 500px;">{{data.Description}}</td>
                 <td style="width: 150px;">{{data.EnteredDate | date :'MM/dd/yyyy'}}</td>
+                 <td style="width: 150px;"(click)="changeStatus(data)"[ngClass]="{
+    'expired-row': data.Expired,
+    'normal-row': !data.Expired
+  }" >
+  {{ data.Current || '' }}{{ data.Current && data.Expired ? ' ' : '' }}{{ data.Expired || '' }}
+</td>
                 <td style="width: 150px;">{{data.EnteredBy}}</td>
                 
                 <td>

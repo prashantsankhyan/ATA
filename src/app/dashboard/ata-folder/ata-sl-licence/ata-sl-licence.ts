@@ -10,16 +10,16 @@ import { ApiUrl } from '../../../_core/apiUrl';
 import { AllApiService } from '../../../_service/all-api.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { AddEditSurpul } from './add-edit-surpul/add-edit-surpul';
-import { UpdateSurpulLineStatus } from './update-surpul-line-status/update-surpul-line-status';
+import { AddATASL } from './add-atasl/add-atasl';
+import { UpdateATASL } from './update-atasl/update-atasl';
 
 @Component({
-  selector: 'app-surpul-line',
+  selector: 'app-ata-sl-licence',
   imports: [CommonModule,MatButtonModule,FormsModule,MaterialModule],
-  templateUrl: './surpul-line.html',
-  styleUrl: './surpul-line.scss',
+  templateUrl: './ata-sl-licence.html',
+  styleUrl: './ata-sl-licence.scss',
 })
-export class SurpulLine {
+export class AtaSlLicence {
 showSpiner = true
   listOfAllFatchData:any[] =[];
   accountId:any;
@@ -40,10 +40,7 @@ allAttachments: any[] = [];
 };
 
   constructor( private http:AllApiService,private router:Router,public dialog: MatDialog,private cdr: ChangeDetectorRef) { 
-    this.http.listen().subscribe((m:any)=>{
-      console.log(m)
-      this.getAllFile()
-    })
+   
    }
   
 ngOnInit(): void {
@@ -73,7 +70,7 @@ ngOnInit(): void {
 
   getAllFile() {
   this.http
-    .getAllData(ApiUrl.getSurpul)
+    .getAllData(ApiUrl.getATASL)
     .subscribe(data => {
       this.showSpiner = false;
 
@@ -186,7 +183,7 @@ trackByFile(index: number, item: any): any {
   addEditAttachement(data:any) {
     
    
-    const dialogRef = this.dialog.open(AddEditSurpul, {
+    const dialogRef = this.dialog.open(AddATASL, {
       width: '800px',
       
     
@@ -194,9 +191,11 @@ trackByFile(index: number, item: any): any {
     
   })
 }
+
+
 changeStatus(data?: any) {
 
-  const dialogRef = this.dialog.open(UpdateSurpulLineStatus, {
+  const dialogRef = this.dialog.open(UpdateATASL, {
     maxHeight: '100vh',
     data: data || null
   });
@@ -212,3 +211,4 @@ changeStatus(data?: any) {
   });
 }
 }
+

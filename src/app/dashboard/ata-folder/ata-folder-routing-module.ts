@@ -22,6 +22,14 @@ const routes: Routes = [
         loadChildren:()=>import('./licence-ata/licence-ata-module').then(m=>m.LicenceAtaModule)
      
       },
+
+
+       {
+        
+        path:'ATASL',
+        loadChildren:()=>import('./ata-sl-licence/ata-sl-licence-module').then(m=>m.AtaSlLicenceModule)
+     
+      },
        {
         
         path:'surpulLine',
@@ -32,6 +40,12 @@ const routes: Routes = [
         
         path:'pardeep',
         loadChildren:()=>import('./pardeep/pardeep-module').then(m=>m.PardeepModule)
+     
+      },
+       {
+        
+        path:'pardeepSlLicence',
+        loadChildren:()=>import('./pardeep-sl-licenses/pardeep-sl-licenses-module').then(m=>m.PardeepSlLicensesModule)
      
       },
       {

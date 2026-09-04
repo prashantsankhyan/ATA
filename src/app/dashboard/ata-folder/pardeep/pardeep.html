@@ -80,7 +80,10 @@
                 
                 <td style="width: 500px;">{{data.Description}}</td>
                 <td style="width: 150px;">{{data.EnteredDate | date :'MM/dd/yyyy'}}</td>
-                     <td style="width: 150px;"(click)="changeStatus(data)" >
+                     <td style="width: 150px;"(click)="changeStatus(data)"[ngClass]="{
+    'expired-row': data.Expired,
+    'normal-row': !data.Expired
+  }" >
   {{ data.Current || '' }}{{ data.Current && data.Expired ? ' ' : '' }}{{ data.Expired || '' }}
 </td>
                 <td style="width: 150px;">{{data.EnteredBy}}</td>

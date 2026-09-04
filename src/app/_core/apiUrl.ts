@@ -325,6 +325,7 @@ getStuff:'FAttachmentReportTeam/GetAllStuff',
 
  addSurpul:'FAttachmentPM/UploadMultiFilesSurpulLine',
  getSurpul:'FAttachmentPM/GetAllFileSurpulLine',
+ updateSurpul:'FAttachmentPM/UpdateLicenceSurpulLine',
 
  addPardeep:'FAttachmentPM/UploadMultiFilesPardeep',
  getPardeep:'FAttachmentPM/GetAllFilePardeep',
@@ -365,7 +366,16 @@ getStuff:'FAttachmentReportTeam/GetAllStuff',
 
  addATAPay:'FAttachmentPM/UploadMultiFilesATAPay',
  getATAPay:'FAttachmentPM/GetAllFileATAPay',
- updateStagePayment:'FAttachmentPM/UpdateFileATAPay'
+ updateStagePayment:'FAttachmentPM/UpdateFileATAPay',
+
+ addPareepSL:'FAttachmentPM/UploadMultiFilesPardeepSLLicence',
+ getPardeepSL:'FAttachmentPM/GetAllFilePardeepSLLicence',
+ updatePardeepSl:'FAttachmentPM/UpdateLicencePardeepSLLicence',
+
+
+ addATASl:'FAttachmentPM/UploadMultiFilesATASLLicence',
+ getATASL:'FAttachmentPM/GetAllFileATASLLicence',
+ updateATLSL:'FAttachmentPM/UpdateATASLLicence'
 
 
 

@@ -1,0 +1,75 @@
+<div class="container p-3">
+
+  <h4>Change Status</h4>
+
+  <div class="row">
+
+    <!-- Current -->
+    <div class="col-md-6">
+      <mat-form-field appearance="outline" class="w-100">
+
+        <mat-select
+          [(ngModel)]="currentValue"
+          name="Current"
+          (selectionChange)="currentChanged($event.value)">
+
+          <mat-option [value]="null">
+            -- None --
+          </mat-option>
+
+          <mat-option value="Current">
+            Current
+          </mat-option>
+
+        </mat-select>
+
+      </mat-form-field>
+    </div>
+
+
+    <!-- Expired -->
+    <div class="col-md-6">
+      <mat-form-field appearance="outline" class="w-100">
+
+        <mat-select
+          [(ngModel)]="expiredValue"
+          name="Expired"
+          (selectionChange)="expiredChanged($event.value)">
+
+          <mat-option [value]="null">
+            -- None --
+          </mat-option>
+
+          <mat-option value="Expired">
+            Expired
+          </mat-option>
+
+        </mat-select>
+
+      </mat-form-field>
+    </div>
+
+  </div>
+
+
+  <div class="text-end mt-3">
+
+    <button
+      mat-button
+      type="button"
+      (click)="dialogRef.close()">
+      Cancel
+    </button>
+
+    <button
+      *ngIf="!isSubmitting"
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="submit()">
+      Submit
+    </button>
+
+  </div>
+
+</div>

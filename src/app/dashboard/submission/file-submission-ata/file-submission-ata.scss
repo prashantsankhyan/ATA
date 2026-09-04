@@ -11,3 +11,22 @@
  height:600px;  
  overflow:scroll;
 }
+
+.payment-input {
+  width: 200px;
+  border: none;
+  border-bottom: 1px solid #555;
+  outline: none;
+  background: transparent;
+  padding: 0 2px;
+  font-size: inherit;
+  height: 20px;
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+
+.payment-input:focus {
+  border-bottom: 1px solid #007bff;
+
+}

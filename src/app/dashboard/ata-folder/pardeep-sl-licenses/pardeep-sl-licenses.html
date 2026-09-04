@@ -32,7 +32,7 @@
     </div>
      <div class="col-md-3 text-end"  >
     <button class="btn btn-add" (click)="addEditAttachement($event)">
-      <i class="fa fa-plus me-1"></i> Add Sarbjit File
+      <i class="fa fa-plus me-1"></i>  Pardeep  SL Licence
     </button>
        </div>
       
@@ -52,7 +52,7 @@
    
    <div class="table-container shadow-sm">
   <div class="table-header">
-    <h5 class="mb-0">Sarbjit Licence </h5>
+    <h5 class="mb-0">Pardeep  SL Licence  FILE</h5>
   </div>
 
   <div class="scrollingPolicy">
@@ -66,8 +66,8 @@
                  
                  <th style="width: 500px;">Description</th>
                   <th style="width: 150px;">Date </th>
-                 <th style="width: 150px;">Status </th>
-                 <th style="width: 20px;"></th>
+                 <th style="width: 150px;"> Status </th>
+                 <th style="width: 20px;">Attached By</th>
                 
                </tr>
              </thead>
@@ -80,10 +80,10 @@
                 
                 <td style="width: 500px;">{{data.Description}}</td>
                 <td style="width: 150px;">{{data.EnteredDate | date :'MM/dd/yyyy'}}</td>
-                <td style="width: 150px;"(click)="changeStatus(data)" [ngClass]="{
+                     <td style="width: 150px;"(click)="changeStatus(data)"[ngClass]="{
     'expired-row': data.Expired,
     'normal-row': !data.Expired
-  }">
+  }" >
   {{ data.Current || '' }}{{ data.Current && data.Expired ? ' ' : '' }}{{ data.Expired || '' }}
 </td>
                 <td style="width: 150px;">{{data.EnteredBy}}</td>

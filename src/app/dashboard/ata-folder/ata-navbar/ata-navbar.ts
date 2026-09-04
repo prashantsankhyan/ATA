@@ -13,4 +13,6 @@ export class AtaNavbar {
   licenseOpen = false;
   appointmentOpne = false;
 
+slLicenseOpen = false;
+
 }

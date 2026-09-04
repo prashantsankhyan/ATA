@@ -8,12 +8,12 @@ import { AllApiService } from '../../../../_service/all-api.service';
 import { ApiUrl } from '../../../../_core/apiUrl';
 
 @Component({
-  selector: 'app-add-edit-surpul',
+  selector: 'app-add-atasl',
  imports: [CommonModule,MaterialModule,RouterModule,ReactiveFormsModule],
-  templateUrl: './add-edit-surpul.html',
-  styleUrl: './add-edit-surpul.scss',
+  templateUrl: './add-atasl.html',
+  styleUrl: './add-atasl.scss',
 })
-export class AddEditSurpul {
+export class AddATASL {
 addEditAttachmentForm!:FormGroup ;
   submit = false ;
   accountId:any;
@@ -33,7 +33,7 @@ addEditAttachmentForm!:FormGroup ;
    teamName:any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,private fb: FormBuilder, private http:AllApiService,private cRouter:ActivatedRoute,
-  private router: Router,public dialog: MatDialog,public dialogRef: MatDialogRef<AddEditSurpul>){
+  private router: Router,public dialog: MatDialog,public dialogRef: MatDialogRef<AddATASL>){
  
   }
   ngOnInit(): void {
@@ -57,7 +57,7 @@ addEditAttachmentForm!:FormGroup ;
    
   }
   getAllFileDetail(){
-    this.http.getAllData(ApiUrl.getSurpul).subscribe(
+    this.http.getAllData(ApiUrl.getATASL).subscribe(
       data=>{
        let response  = JSON.stringify(data)
        let obj = JSON.parse(response)
@@ -72,6 +72,7 @@ addEditAttachmentForm!:FormGroup ;
       Description:['',[Validators.required,]],
       Current:['Current'],
       Expired:[''],
+      
       EnteredBy:[this.userName],
     });
   }
@@ -101,6 +102,8 @@ addEditAttachmentForm!:FormGroup ;
     productFormData.append('AccountID',this.addEditAttachmentForm.get('AccountID')?.value);
 
     productFormData.append('Description',this.addEditAttachmentForm.get('Description')?.value);
+    productFormData.append('Current',this.addEditAttachmentForm.get('Current')?.value);
+     productFormData.append('Expired',this.addEditAttachmentForm.get('Expired')?.value);
     productFormData.append('EnteredBy',this.addEditAttachmentForm.get('EnteredBy')?.value);
    
 
@@ -117,7 +120,7 @@ addEditAttachmentForm!:FormGroup ;
 
     private _addProduct(productData: FormData): void {
       this.changeLocation()
-    this.http.addEditFormData(ApiUrl.addSurpul,productData).pipe().subscribe(
+    this.http.addEditFormData(ApiUrl.addATASl,productData).pipe().subscribe(
         data => {
 
          this.changeLocation()

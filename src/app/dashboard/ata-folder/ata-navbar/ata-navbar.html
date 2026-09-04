@@ -18,13 +18,8 @@
   </a>
   <!-- License Dropdown -->
   <ul class="submenu-list" *ngIf="licenseOpen">
-      <li>
-      <a routerLink="./surpulLine"
-         routerLinkActive="active"
-         class="collapse-item">
-        📄 SL License
-      </a>
-    </li>
+     
+    
      <li>
       <a routerLink="./pardeep"
          routerLinkActive="active"
@@ -50,13 +45,60 @@
       </a>
     </li>
 
-   
+    <!-- License Dropdown -->
+ 
 
 
 
   </ul>
 
 </li>
+<ul class="submenu-list" *ngIf="licenseOpen">
+
+  <!-- SL License -->
+  <li class="menu-parent">
+
+    <a href="javascript:void(0)"
+           routerLinkActive="active"
+       class="collapse-item">
+      📄 Surplus Line License
+      <span class="float-end">
+        ▼
+      </span>
+    </a>
+
+    <!-- SL License Sub Folder - Always Open -->
+    <ul class="submenu-list">
+
+      <!-- <li>
+        <a routerLink="./surpulLine"
+           routerLinkActive="active"
+           class="collapse-item">
+          📄 Surplus Line License
+        </a>
+      </li> -->
+
+      <li>
+        <a routerLink="./pardeepSlLicence"
+           routerLinkActive="active"
+           class="collapse-item">
+          📄 Pardeep SL Licenses
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="./ATASL"
+           routerLinkActive="active"
+           class="collapse-item">
+          📄 ATA SL License
+        </a>
+      </li>
+
+    </ul>
+
+  </li>
+
+</ul>
 
 
  <li class="menu-parent">
