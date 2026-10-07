@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './logout.scss',
 })
 export class Logout {
-showSpinner = false; // Spinner visibility flag
+ showSpinner = false; // Spinner visibility flag
   confirmLogin!: FormGroup;
   submit = false;
   messageSuccess = true;

@@ -108,7 +108,7 @@
       <!-- DETAILS TABLE -->
        <div >
  <div class="mt-4 border p-3"   *ngIf="data?.VehicleDetails?.length > 0 &&
-            !data.Detail?.some(d => d.TransCode === 'NEW Policy')">>
+            !data.Detail?.some(d => d.TransCode === 'NEW Policy')">
           <h2 style="text-decoration: underline;"> Vehicle Details</h2>
         <table class="table table-borderless">
           <thead>
@@ -116,8 +116,8 @@
               <th>Sr No</th>
               <th>Vehicle Description</th>
               <th>TransCode</th>
-              <th>Change Date</th>
-              <th>Policy Number</th>
+              <th>View</th>
+              <th>Date</th>
              
              
             </tr>
@@ -152,7 +152,7 @@
        </div>
        
       <div class="mt-4 border p-3">
-        <h2 style="text-decoration: underline;"> Biiling Details</h2>
+        <h2 style="text-decoration: underline;"> Biling Details</h2>
         <table class="table table-borderless">
           <thead>
             <tr style="background-color:black; color:white;">
@@ -170,9 +170,9 @@
             <ng-container *ngFor="let data1 of data.Detail; let i=index">
 
               <tr>
-                <td>{{i+1}} {{data1.TransCode}}</td>
+                <td>{{i+1}}  {{ data1.TransCode === 'DELET' ? 'Delete' : data1.TransCode }}</td>
                 <td>{{data1.Effective | date:'MM/dd/yyyy'}} - {{data1.Expiration | date:'MM/dd/yyyy'}}</td>
-                <td>{{data1.TransCode}}</td>
+                <td>  {{ data1.TransCode === 'DELET' ? 'Delete' : data1.TransCode }}</td>
                 <td>{{data1.EffectiveDate | date:'MM/dd/yyyy'}}</td>
                 <td>{{data1.ChildPolicyName}}</td>
 

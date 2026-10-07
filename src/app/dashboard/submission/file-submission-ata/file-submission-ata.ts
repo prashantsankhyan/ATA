@@ -248,11 +248,37 @@ onBlur(field: FeeField) {
   WV: { taxRate: 4.550, stampingFee: 0.000 },
   WY: { taxRate: 3.000, stampingFee: 0.175 }
 };
+manualStampingFee = false;
+manualStateTax = false;
 
+onStampingFeeBlur(event: FocusEvent): void {
+  const input = event.target as HTMLInputElement;
+  const value = Number(input.value.replace(/,/g, ''));
 
+  if (input.value.trim() !== '' && Number.isFinite(value)) {
+    this.manualStampingFee = true;
+    this.CaliforniaStampingFee = value;
+    this.calculateCharges();
+  }
 
-calculateCharges() {
-    // For MTC always use 0
+  input.value = this.CaliforniaStampingFee.toFixed(2);
+}
+
+onStateTaxBlur(event: FocusEvent): void {
+  const input = event.target as HTMLInputElement;
+  const value = Number(input.value.replace(/,/g, ''));
+
+  if (input.value.trim() !== '' && Number.isFinite(value)) {
+    this.manualStateTax = true;
+    this.CaliforniaStateTax = value;
+    this.calculateCharges();
+  }
+
+  input.value = this.CaliforniaStateTax.toFixed(2);
+}
+
+calculateCharges(): void {
+  // For MTC always use 0
   if (this.LineShortName?.trim().toUpperCase() === 'MTC') {
     this.InsuranceCarrierPolicyFee = 0;
     this.InsuranceCarrierPolicyFeeInput = this.formatNumber(0);
@@ -265,26 +291,29 @@ calculateCharges() {
   }
 
   const { taxRate, stampingFee } = this.stateData[state];
-
   const premium = Number(this.premium) || 0;
 
-  // State Tax
-  this.CaliforniaStateTax = Number(
-    ((premium * taxRate) / 100).toFixed(2)
-  );
+  // Auto calculate only until user manually changes State Tax
+  if (!this.manualStateTax) {
+    this.CaliforniaStateTax = Number(
+      ((premium * taxRate) / 100).toFixed(2)
+    );
+  }
 
-  // Stamping Fee
-  this.CaliforniaStampingFee = Number(
-    ((premium * stampingFee) / 100).toFixed(2)
-  );
- const triaAmount = Number(
+  // Auto calculate only until user manually changes Stamping Fee
+  if (!this.manualStampingFee) {
+    this.CaliforniaStampingFee = Number(
+      ((premium * stampingFee) / 100).toFixed(2)
+    );
+  }
+
+  const triaAmount = Number(
     ((premium * (Number(this.Tria) || 0)) / 100).toFixed(2)
   );
 
   const flatTriaAmount = Number(this.Flat_Tira) || 0;
 
-  // TOTAL
- this.Total = Number(
+  this.Total = Number(
     (
       premium +
       triaAmount +
@@ -296,15 +325,15 @@ calculateCharges() {
       (Number(this.InsuranceCarrierPolicyFee) || 0)
     ).toFixed(2)
   );
-   console.log('LineShortName:', this.LineShortName);
+
+  console.log('LineShortName:', this.LineShortName);
   console.log('InsuranceCarrierPolicyFee:', this.InsuranceCarrierPolicyFee);
   console.log('Total:', this.Total);
   console.log('State:', state);
-console.log('Premium:', premium);
-console.log('Tax Rate:', taxRate);
-console.log('Tax:', this.CaliforniaStateTax);
+  console.log('Premium:', premium);
+  console.log('Tax Rate:', taxRate);
+  console.log('Tax:', this.CaliforniaStateTax);
 }
-
 
 
 

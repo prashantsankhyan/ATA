@@ -70,6 +70,8 @@ DateTo: any = null;
 Count: number = 0;
 StageType:any;
 TriaAmount: number = 0;
+stampingFeeInput = '';
+stateTaxInput = '';
   constructor(
     private http: AllApiService,
     private route: ActivatedRoute,
@@ -92,12 +94,35 @@ TriaAmount: number = 0;
     this.getListOfPolicy();
   }
 
-  initInputs() {
-    this.premiumInput = this.formatNumber(this.premium);
-    this.CarrierFeeInput = this.formatNumber(this.CarrierFee);
-    this.GuardianExpertsFeeInput = this.formatNumber(this.GuardianExpertsFee);
-    this.InsuranceCarrierPolicyFeeInput = this.formatNumber(this.InsuranceCarrierPolicyFee);
-  }
+  // initInputs() {
+  //   this.premiumInput = this.formatNumber(this.premium);
+  //   this.CarrierFeeInput = this.formatNumber(this.CarrierFee);
+  //   this.GuardianExpertsFeeInput = this.formatNumber(this.GuardianExpertsFee);
+  //   this.InsuranceCarrierPolicyFeeInput = this.formatNumber(this.InsuranceCarrierPolicyFee);
+  // }
+
+  initInputs(): void {
+  this.premiumInput = this.formatNumber(this.premium);
+  this.CarrierFeeInput = this.formatNumber(this.CarrierFee);
+  this.GuardianExpertsFeeInput = this.formatNumber(this.GuardianExpertsFee);
+  this.InsuranceCarrierPolicyFeeInput =
+    this.formatNumber(this.InsuranceCarrierPolicyFee);
+
+  this.stampingFeeInput = this.formatNumber(this.CaliforniaStampingFee);
+  this.stateTaxInput = this.formatNumber(this.CaliforniaStateTax);
+}
+
+onStampingFeeBlur(): void {
+  this.CaliforniaStampingFee = this.parseNumber(this.stampingFeeInput);
+  this.stampingFeeInput = this.formatNumber(this.CaliforniaStampingFee);
+  this.calculateTotal();
+}
+
+onStateTaxBlur(): void {
+  this.CaliforniaStateTax = this.parseNumber(this.stateTaxInput);
+  this.stateTaxInput = this.formatNumber(this.CaliforniaStateTax);
+  this.calculateTotal();
+}
 
   // ================= FORMAT =================
   formatNumber(value: number): string {
@@ -140,7 +165,7 @@ onBlur(field: FeeField) {
     this.InsuranceCarrierPolicyFeeInput = this.formatNumber(this.InsuranceCarrierPolicyFee);
   }
 
-  this.calculateCharges();
+  this.calculateTotal();
 }
 
   // ================= API =================
@@ -171,7 +196,6 @@ onBlur(field: FeeField) {
                 this.formatDate(item.Effective) + ' - ' +
                 this.formatDate(item.Expiration);
 
-              this.calculateCharges();
             }
           }
 
@@ -300,7 +324,23 @@ onBlur(field: FeeField) {
 
 //with tira
 
+calculateTotal(): void {
+  const premium = Number(this.premium) || 0;
+  const triaAmount = Number(
+    ((premium * (Number(this.Tria) || 0)) / 100).toFixed(2)
+  );
 
+  this.Total = Number((
+    premium +
+    triaAmount +
+    (Number(this.Flat_Tira) || 0) +
+    (Number(this.CaliforniaStateTax) || 0) +
+    (Number(this.CaliforniaStampingFee) || 0) +
+    (Number(this.CarrierFee) || 0) +
+    (Number(this.GuardianExpertsFee) || 0) +
+    (Number(this.InsuranceCarrierPolicyFee) || 0)
+  ).toFixed(2));
+}
 
 
 calculateCharges() {

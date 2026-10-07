@@ -15,7 +15,7 @@ import { MaterialModule } from '../material.module';
   styleUrl: './permission.scss',
 })
 export class Permission {
-showSpiner = true;
+ showSpiner = true;
 
   listOfAllLoginDetail: any[] = [];
   filteredLoginList: any[] = [];
