@@ -166,6 +166,13 @@ getListOfPolicy() {
     this.router.navigate(['/dashboard/submission/fileSubmission',ChildPolicyID])
   }
 
+  nextToAdmited(data:any){
+    
+       let ChildPolicyID= data.ChildPolicyID
+    localStorage.setItem('LineShortName', data.LineShortName);
+    this.router.navigate(['/dashboard/submission/admited',ChildPolicyID])
+  }
+
 
    extandPolicy(data:any){
    let AccountID= data.AccountID
