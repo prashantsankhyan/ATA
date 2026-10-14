@@ -45,10 +45,10 @@ getListOfDara() {
   this.http.getAllData(ApiUrl.getAllSubCarrier).subscribe({
     next: (res: any) => {
 
-    if (res && res.Response === 1 && Array.isArray(res.SubCarrier)) {
+    if (res && res.response === 1 && Array.isArray(res.subCarrier)) {
   this.showSpiner = false;
-  this.listOfCarrier = res.SubCarrier;
-  this.originalList = [...res.SubCarrier];
+  this.listOfCarrier = res.subCarrier;
+  this.originalList = [...res.subCarrier];
 } else {
   this.listOfCarrier = [];
   this.originalList = [];
@@ -79,7 +79,7 @@ getListOfDara() {
     }
 
     this.listOfCarrier = this.originalList.filter(item =>
-      item.Address?.toLowerCase().includes(text)
+      item.address?.toLowerCase().includes(text)
     );
   }
 

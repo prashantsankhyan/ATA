@@ -58,6 +58,22 @@ export class AllApiService {
     return this.http.get(url, { headers });
   }
 
+  private toCamelCase(value: any): any {
+  if (Array.isArray(value)) {
+    return value.map(item => this.toCamelCase(item));
+  }
+
+  if (value !== null && typeof value === 'object') {
+    return Object.keys(value).reduce((result: any, key: string) => {
+      const camelKey = key.charAt(0).toLowerCase() + key.slice(1);
+      result[camelKey] = this.toCamelCase(value[key]);
+      return result;
+    }, {});
+  }
+
+  return value;
+}
+
   addEditData(url:string,json:JSON,):Observable<any>{
     const apiUrl = `${environment.apiBaseUrl}${url}`;
     var params  = json;
@@ -149,6 +165,21 @@ addEditDataATA(url: string, json: any): Observable<any> {
     )
   }
 
+ 
+addEditFormDataNew(
+  url: string,
+  productData: FormData
+): Observable<any> {
+
+  const apiUrl = `${environment.apiBaseUrl}${url}`;
+
+  return this.http.post(apiUrl, productData, {
+    responseType: 'text'
+  });
+}
+
+
+
   delete(url:string,id?:any, name?:any):Observable<any>{
     const apiUrl =`${environment.apiBaseUrl}${url}/${id}//${name}`;
     return this.http.post(apiUrl ,id ,name) .pipe((data=>{
@@ -159,18 +190,25 @@ addEditDataATA(url: string, json: any): Observable<any> {
 
 
  // 🔥 DELETE (normal mark delete)
-deleteDriverFile(url: string, id: number): Observable<any> {
-  return this.http.post(`${environment.apiBaseUrl}${url}/${id}`, {});
-}
+// deleteDriverFile(url: string, id: number): Observable<any> {
+//   return this.http.post(`${environment.apiBaseUrl}${url}/${id}`, {});
+// }
 
-// 🔥 PERMANENT DELETE
-deleteDriverFilePermanent(url: string, id: number): Observable<any> {
-  return this.http.post(`${environment.apiBaseUrl}${url}/${id}`, {});
-}
+// // 🔥 PERMANENT DELETE
+// deleteDriverFilePermanent(url: string, id: number): Observable<any> {
+//   return this.http.post(`${environment.apiBaseUrl}${url}/${id}`, {});
+// }
+
 
   // =========================
   // 🔹 DELETE (PERMANENT)
   // =========================
+
+
+  deleteDriverFile(url: string, id: number): Observable<string> 
+  { return this.http.post( `${environment.apiBaseUrl}${url}/${id}`, {}, { responseType: 'text' } ); }
+  deleteDriverFilePermanent(url: string, id: number): Observable<string> 
+  { return this.http.post( `${environment.apiBaseUrl}${url}/${id}`, {}, { responseType: 'text' } ); }
   deletePermanent(url: string, id: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}${url}/${id}`);
   }

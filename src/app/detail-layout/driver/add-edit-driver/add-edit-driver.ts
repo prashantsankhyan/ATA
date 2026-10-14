@@ -87,12 +87,12 @@ export class AddEditDriver {
   makeForm() {
   this.addEditAttachmentForm = this.fb.group({
     abc: ['', Validators.required],
-    ChildPolicyId: [this.ChildPolicyId, Validators.required],
-    EndorsementId: [this.EndrosementId],
-     Remarks:[this.saveEndrosement],
-    DriverDescription: [''],
-    AttachedBy:[''],
-    EnteredBy: [this.LoginUserName]
+    childPolicyId: [this.ChildPolicyId, Validators.required],
+    endorsementId: [this.EndrosementId],
+     remarks:[this.saveEndrosement],
+    driverDescription: [''],
+    attachedBy:[''],
+    enteredBy: [this.LoginUserName]
 
   });
 }
@@ -121,12 +121,12 @@ export class AddEditDriver {
   });
 
   // append actual form values
-  formData.append('ChildPolicyId', this.f['ChildPolicyId'].value);
-  formData.append('EndorsementId', this.f['EndorsementId'].value);
-  formData.append('DriverDescription', this.f['DriverDescription'].value);
-  formData.append('Remarks', this.f['Remarks'].value);
-  formData.append('AttachedBy', this.f['AttachedBy'].value);
-  formData.append('EnteredBy', this.f['EnteredBy'].value);
+  formData.append('childPolicyId', this.f['childPolicyId'].value);
+  formData.append('endorsementId', this.f['endorsementId'].value);
+  formData.append('driverDescription', this.f['driverDescription'].value);
+  formData.append('remarks', this.f['remarks'].value);
+  formData.append('attachedBy', this.f['attachedBy'].value);
+  formData.append('enteredBy', this.f['enteredBy'].value);
 
   // optional localStorage values
   
@@ -138,7 +138,7 @@ export class AddEditDriver {
 
     private _addProduct(productData: FormData): void {
       
-    this.http.addEditFormData(ApiUrl.addDriverAttachment,productData).pipe().subscribe(
+    this.http.addEditFormDataNew(ApiUrl.addDriverAttachment,productData).pipe().subscribe(
         data => {
 
         

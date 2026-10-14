@@ -63,20 +63,20 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let item of listOfSale" [class.selected-row]="item.AccountName === searchText">
-          <td class="fw-semibold"(dblclick)="goToAttachment(item)">{{item.AccountName}}</td>
-          <td>{{ item.DOT ? item.DOT : 'Individual' }}</td>
-          <td>{{item.AgentName}}</td>
-          <td>{{item.MobileNumber}}</td>
-          <td>{{item.EmailID}}</td>
+        <tr *ngFor="let item of listOfSale" [class.selected-row]="item.accountName === searchText">
+          <td class="fw-semibold"(dblclick)="goToAttachment(item)">{{item.accountName}}</td>
+          <td>{{ item.dOT ? item.dOT : 'Individual' }}</td>
+          <td>{{item.agentName}}</td>
+          <td>{{item.mobileNumber}}</td>
+          <td>{{item.emailID}}</td>
           
           
           <td>
   <span >
-    {{ fixDate(item.EffectiveDate) | date:'MM-dd-yyyy' }}
+    {{ fixDate(item.effectiveDate) | date:'MM-dd-yyyy' }}
   </span>
 </td>
-<td>{{item.EnteredBy}}</td>
+<td>{{item.enteredBy}}</td>
 
 
 <td>

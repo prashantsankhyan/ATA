@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './add-edit-registration.scss',
 })
 export class AddEditRegistration {
-showSpiner = true
+ showSpiner = true
   addEditRegistrationForm!:FormGroup ;
   submit = false ;
   loginId =''
@@ -40,11 +40,11 @@ showSpiner = true
   makeForm() {
     this.addEditRegistrationForm = this.fb.group({
       loginId: ['0'],
-      Team: ['Admin', [Validators.required]],
-      TeamType: [''],
-      UserName: [''],
-      Password: [''],
-      EmailID: [''],
+      team: ['Admin', [Validators.required]],
+      teamType: [''],
+      userName: [''],
+      password: [''],
+      emailID: [''],
     });
   
     
@@ -79,10 +79,10 @@ showSpiner = true
       let response  = JSON.stringify(data)
       let obj  = JSON.parse(response)
       this.addEditRegistrationForm.controls['loginId'].setValue(obj.loginId)
-      this.addEditRegistrationForm.controls['Team'].setValue(obj.Team)
-      this.addEditRegistrationForm.controls['UserName'].setValue(obj.UserName)
-      this.addEditRegistrationForm.controls['Password'].setValue(obj.Password)
-      this.addEditRegistrationForm.controls['EmailID'].setValue(obj.EmailID)
+      this.addEditRegistrationForm.controls['team'].setValue(obj.Team)
+      this.addEditRegistrationForm.controls['userName'].setValue(obj.UserName)
+      this.addEditRegistrationForm.controls['password'].setValue(obj.Password)
+      this.addEditRegistrationForm.controls['emailID'].setValue(obj.EmailID)
 
      }
   }
@@ -171,13 +171,13 @@ showSpiner = true
         let response = JSON.stringify(data);
         var obj = JSON.parse(response);
 
-        if (obj.Data.Response == '1') {
+        if (obj.response == '1') {
 
-          this.alertMessage = obj.Data.ErrorMessage;
+          this.alertMessage = obj.errorMessage;
 
           // Success message
           const message =
-            obj?.Data?.ErrorMessage ||
+            obj?.errorMessage ||
             (this.loginId
               ? 'Registration updated successfully'
               : 'Registration added successfully');
@@ -192,12 +192,12 @@ showSpiner = true
 
         } else {
 
-          this.alertMessage = obj.Data.ErrorMessage;
+          this.alertMessage = obj.errorMessage;
           this.messageSuccess = true;
 
           // Error message
           this.snackBar.open(
-            obj?.Data?.ErrorMessage ||
+            obj?.errorMessage ||
             'Failed to save registration',
             'Close',
             { duration: 3000 }

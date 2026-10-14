@@ -48,8 +48,8 @@ export class Agent {
   this.http.getAllData(ApiUrl.getAllAgent).subscribe({
     next: (res: any) => {
 
-      if (res?.Response === 1) {
-        this.listOfAgent = res.Agent || [];
+      if (res?.response === 1) {
+        this.listOfAgent = res.agent || [];
          this.showSpiner = false;
         this.originalList = [...this.listOfAgent];
       } else {
@@ -79,13 +79,13 @@ export class Agent {
     }
 
     this.listOfAgent = this.originalList.filter(item =>
-      item.AgentName?.toLowerCase().includes(text)
+      item.agentName?.toLowerCase().includes(text)
     );
   }
 
     goTOAgentAttachemnt(data:any){
-     localStorage.setItem('carrierID', data.AgentID);
-     localStorage.setItem('CarrierName', data.AgentName);
+     localStorage.setItem('carrierID', data.agentID);
+     localStorage.setItem('CarrierName', data.agentName);
    
      this.router.navigate(['/dashboard/agent/agentAttachment']);
   }

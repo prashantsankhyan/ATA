@@ -64,14 +64,14 @@ addEditAttachmentForm!:FormGroup ;
   makeForm(){
     this.addEditAttachmentForm = this.fb.group({
       abc:['',[Validators.required,]],
-      Id:[this.id ,[Validators.required,]],
-      AgencyEarned:[''],
-      AgencyStatement:['',],
-      HowToMakePayment:[''],
-      Payments:[''],
-      ParmjitDocuments:[''],
-       SandyDocuments:[''],
-       EnteredBy:[this.userName],
+      id:[this.id ,[Validators.required,]],
+      agencyEarned:[''],
+      agencyStatement:['',],
+      howToMakePayment:[''],
+      payments:[''],
+      parmjitDocuments:[''],
+       sandyDocuments:[''],
+       enteredBy:[this.userName],
        
       
      
@@ -104,16 +104,16 @@ addEditAttachmentForm!:FormGroup ;
       
     }
    
-    productFormData.append('Id',this.addEditAttachmentForm.get('Id')?.value);
+    productFormData.append('id',this.addEditAttachmentForm.get('id')?.value);
     // productFormData.append('FolderID',this.addEditAttachmentForm.get('FolderID')?.value);
-    productFormData.append('AgencyEarned',this.addEditAttachmentForm.get('AgencyEarned')?.value);
-    productFormData.append('AgencyStatement',this.addEditAttachmentForm.get('AgencyStatement')?.value);
+    productFormData.append('agencyEarned',this.addEditAttachmentForm.get('agencyEarned')?.value);
+    productFormData.append('agencyStatement',this.addEditAttachmentForm.get('agencyStatement')?.value);
     // productFormData.append('ChangeType',this.addEditAttachmentForm.get('ChangeType')?.value);
-    productFormData.append('HowToMakePayment',this.addEditAttachmentForm.get('HowToMakePayment')?.value);
-    productFormData.append('Payments',this.addEditAttachmentForm.get('Payments')?.value);
-    productFormData.append('ParmjitDocuments',this.addEditAttachmentForm.get('ParmjitDocuments')?.value);
-    productFormData.append('SandyDocuments',this.addEditAttachmentForm.get('SandyDocuments')?.value);
-    productFormData.append('EnteredBy',this.addEditAttachmentForm.get('EnteredBy')?.value);
+    productFormData.append('howToMakePayment',this.addEditAttachmentForm.get('howToMakePayment')?.value);
+    productFormData.append('payments',this.addEditAttachmentForm.get('payments')?.value);
+    productFormData.append('parmjitDocuments',this.addEditAttachmentForm.get('parmjitDocuments')?.value);
+    productFormData.append('sandyDocuments',this.addEditAttachmentForm.get('sandyDocuments')?.value);
+    productFormData.append('enteredBy',this.addEditAttachmentForm.get('enteredBy')?.value);
 
     // Object.keys(this.productForm).map((key) =>{
     //   productFormData.append(key,this.productForm[key].value);
@@ -127,7 +127,7 @@ addEditAttachmentForm!:FormGroup ;
 
 
  private _addProduct(productData: FormData): void {
-  this.http.addEditFormData(ApiUrl.carrierUploadFiles, productData)
+  this.http.addEditFormDataNew(ApiUrl.carrierUploadFiles, productData)
     .subscribe({
       next: (data) => {
         console.log('Saved successfully', data);

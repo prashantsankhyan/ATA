@@ -44,10 +44,10 @@
              </div>
              <div class="mt-3 mb-1"> 
                  <label>Description</label>
-                 <textarea class="form-control" rows="2"formControlName="Description"></textarea>
+                 <textarea class="form-control" rows="2"formControlName="description"></textarea>
              
-                 <div *ngIf ="submit && f['Description'].errors" class="invalid-feedback">
-                     <div *ngIf ="f['Description'].errors">Description is required</div>
+                 <div *ngIf ="submit && f['description'].errors" class="invalid-feedback">
+                     <div *ngIf ="f['description'].errors">Description is required</div>
                  </div>
                  
              </div>
@@ -56,7 +56,7 @@
                  <label>Date</label>
                  <input type="text"
        class="form-control form-control-sm custom-input"
-       formControlName="AttachmentDate"
+       formControlName="attachmentDate"
        placeholder="MM-DD-YYYY">
                  
              </div>
@@ -65,14 +65,14 @@
               <div class="col-md-8">
   <label>Agent Name</label>
 
-<select class="form-select form-control form-control-sm custom-input" formControlName="AgentID"  [ngClass]= "{ 'is-invalid': submit && f['agentID'].errors }">
+<select class="form-select form-control form-control-sm custom-input" formControlName="agentID"  [ngClass]= "{ 'is-invalid': submit && f['agentID'].errors }">
   <option value="">Select</option>
-  <option *ngFor="let a of listOfAgent" [value]="a.AgentID.toString()">
-    {{ a.AgentName }} - ({{a.AgencyName}}) -{{a.AgentCode}}
+  <option *ngFor="let a of listOfAgent" [value]="a.agentID.toString()">
+    {{ a.agentName }} - ({{a.agencyName}}) -{{a.agentCode}}
   </option>
 </select>
   <div *ngIf ="submit && f['agentID'].errors" class="invalid-feedback">
-                         <div *ngIf ="f['agentID'].errors">DriverName is required</div>
+                         <div *ngIf ="f['agentID'].errors">Agent is required</div>
                      </div>
 </div>
                

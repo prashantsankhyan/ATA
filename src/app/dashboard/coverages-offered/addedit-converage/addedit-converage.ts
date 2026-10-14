@@ -41,7 +41,7 @@ showSpiner = false;
   ngOnInit(): void {
     
      this.LoginUserName = sessionStorage.getItem('UserName');
-  this.ID = this.data?.ID;
+  this.ID = this.data?.id;
   
    
   
@@ -61,10 +61,10 @@ showSpiner = false;
   this.http.getAllData(ApiUrl.getAllCarrier).subscribe({
     next: (res: any) => {
 
-      if (res && res.Response === 1 && Array.isArray(res.Carrier)) {
+      if (res && res.response === 1 && Array.isArray(res.carrier)) {
          this.showSpiner = false;
-        this.listOfCarrier = res.Carrier;
-        this.originalList = [...res.Carrier];
+        this.listOfCarrier = res.carrier;
+        this.originalList = [...res.carrier];
       } else {
         this.listOfCarrier = [];
         this.originalList = [];
@@ -89,12 +89,12 @@ showSpiner = false;
   // ✅ FORM CREATE
   makeForm() {
     this.addEditCarrierForm = this.fb.group({
-      ID: ['0'],
+      id: ['0'],
     
-      CarrierID: ['', Validators.required],
-      NAIC: [''],
-      Address: [''],
-      Commission: [''],
+      carrierID: ['', Validators.required],
+      naic: [''],
+      address: [''],
+      commission: [''],
       
       
     });
@@ -108,7 +108,7 @@ showSpiner = false;
       .subscribe({
         next: (res: any) => {
 
-          const carrierList = res?.SubCarrier || [];
+          const carrierList = res?.subCarrier || [];
 
           if (carrierList.length === 0) {
             this.snackBar.open('No Carrier Data Found', 'Close', { duration: 3000 });
@@ -119,18 +119,18 @@ showSpiner = false;
 
           // ✅ PATCH FORM
           this.addEditCarrierForm.patchValue({
-            ID: this.ID,
-            CarrierID: carrier.CarrierID,
+            id: this.ID,
+            carrierID: carrier.carrierID,
           
-            Commission:carrier.Commission,
+            commission:carrier.commission,
             
           
-            PhoneNumber: carrier.PhoneNumber,
-            ContactNumber:carrier.ContactNumber,
-            NAIC: carrier.NAIC,
-            Address: carrier.Address,
-            EmailID: carrier.EmailID,
-            FaxNo: carrier.FaxNo
+            phoneNumber: carrier.phoneNumber,
+            contactNumber:carrier.contactNumber,
+            naic: carrier.naic,
+            address: carrier.address,
+            emailID: carrier.emailID,
+            faxNo: carrier.faxNo
           });
 
        
@@ -154,10 +154,10 @@ onSubmit() {
 
   let payload = {
     ...this.addEditCarrierForm.value,
-    EnteredBy: this.LoginUserName || 'Admin'
+    enteredBy: this.LoginUserName || 'Admin'
   };
 
-  this.isLoading = true;
+  
 
   this.http.addEditData(ApiUrl.subCarrier, payload)
     .pipe(
@@ -166,10 +166,10 @@ onSubmit() {
     .subscribe({
       next: (res: any) => {
 
-        if (res?.Data?.Response === 1) {
+        if (res?.response === 1) {
 
           this.snackBar.open(
-            res.Data.ErrorMessage,
+            res.errorMessage,
             'Close',
             { duration: 3000 }
           );

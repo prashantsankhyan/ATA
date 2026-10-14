@@ -156,29 +156,31 @@ onBlur(field: FeeField) {
     this.http.getAllDataId(ApiUrl.bindingFile,this.ChildPolicys)
       .subscribe({
         next: (res: any) => {
-          if (res?.Response === 1) {
-            this.listOfFile = res.ChildPolicys || [];
+          if (res?.response === 1) {
+            this.listOfFile = res.childPolicys || [];
 
             if (this.listOfFile.length > 0) {
               const item = this.listOfFile[0];
 
-              this.From1 = item.AgentName || '';
-              this.RE = item.AccountName || '';
-              this.city = item.City || '';
-              this.StageType = item.StageType || '';
+              this.From1 = item.agentName || '';
+              this.RE = item.accountName || '';
+              this.city = item.city || '';
+              this.StageType = item.stageType || '';
 
-              this.ChildPolicyName = item.ChildPolicyName || '';
-              this.PolicyType = item?.LineName || '';
-              this.CarrierName = item?.CarrierName || '';
+              this.ChildPolicyName = item.childPolicyName || '';
+              this.PolicyType = item?.lineName || '';
+              this.CarrierName = item?.carrierName || '';
              
               this.CarrierAddress = item?.carrier_Address || '';
-              this.Address = item?.Address || '';
+              this.Address = item?.address || '';
               
 
               this.Plolcitterm =
-                this.formatDate(item.Effective) + ' - ' +
-                this.formatDate(item.Expiration);
+                this.formatDate(item.effective) + ' - ' +
+                this.formatDate(item.expiration);
+this.city = (item.city || '').trim().toUpperCase();
 
+console.log('Detected State:', this.city);
               this.calculateCharges();
             }
           }
@@ -277,62 +279,124 @@ onStateTaxBlur(event: FocusEvent): void {
   input.value = this.CaliforniaStateTax.toFixed(2);
 }
 
+// calculateCharges(): void {
+//   // For MTC always use 0
+//   if (this.LineShortName?.trim().toUpperCase() === 'MTC') {
+//     this.InsuranceCarrierPolicyFee = 0;
+//     this.InsuranceCarrierPolicyFeeInput = this.formatNumber(0);
+//   }
+
+//   const state = this.city?.toUpperCase();
+
+//   if (!state || !this.stateData[state]) {
+//     return;
+//   }
+
+//   const { taxRate, stampingFee } = this.stateData[state];
+//   const premium = Number(this.premium) || 0;
+
+//   // Auto calculate only until user manually changes State Tax
+//   if (!this.manualStateTax) {
+//     this.CaliforniaStateTax = Number(
+//       ((premium * taxRate) / 100).toFixed(2)
+//     );
+//   }
+
+//   // Auto calculate only until user manually changes Stamping Fee
+//   if (!this.manualStampingFee) {
+//     this.CaliforniaStampingFee = Number(
+//       ((premium * stampingFee) / 100).toFixed(2)
+//     );
+//   }
+
+//   const triaAmount = Number(
+//     ((premium * (Number(this.Tria) || 0)) / 100).toFixed(2)
+//   );
+
+//   const flatTriaAmount = Number(this.Flat_Tira) || 0;
+
+//   this.Total = Number(
+//     (
+//       premium +
+//       triaAmount +
+//       flatTriaAmount +
+//       this.CaliforniaStateTax +
+//       this.CaliforniaStampingFee +
+//       (Number(this.CarrierFee) || 0) +
+//       (Number(this.GuardianExpertsFee) || 0) +
+//       (Number(this.InsuranceCarrierPolicyFee) || 0)
+//     ).toFixed(2)
+//   );
+
+//   console.log('LineShortName:', this.LineShortName);
+//   console.log('InsuranceCarrierPolicyFee:', this.InsuranceCarrierPolicyFee);
+//   console.log('Total:', this.Total);
+//   console.log('State:', state);
+//   console.log('Premium:', premium);
+//   console.log('Tax Rate:', taxRate);
+//   console.log('Tax:', this.CaliforniaStateTax);
+// }
+
+
 calculateCharges(): void {
-  // For MTC always use 0
   if (this.LineShortName?.trim().toUpperCase() === 'MTC') {
     this.InsuranceCarrierPolicyFee = 0;
     this.InsuranceCarrierPolicyFeeInput = this.formatNumber(0);
   }
 
-  const state = this.city?.toUpperCase();
+  const state = (this.city || '').trim().toUpperCase();
+  const premium = Number(this.premium) || 0;
+  const stateInfo = this.stateData[state];
 
-  if (!state || !this.stateData[state]) {
+  console.log('Detected State:', state);
+  console.log('Premium:', premium);
+  console.log('State Info:', stateInfo);
+
+  // State detect nahi hui to tax calculation nahi hogi
+  if (!stateInfo) {
+    console.warn('State code missing or invalid:', state);
     return;
   }
 
-  const { taxRate, stampingFee } = this.stateData[state];
-  const premium = Number(this.premium) || 0;
+  const { taxRate, stampingFee } = stateInfo;
 
-  // Auto calculate only until user manually changes State Tax
+  // Auto calculate until user manually enters a value
   if (!this.manualStateTax) {
     this.CaliforniaStateTax = Number(
       ((premium * taxRate) / 100).toFixed(2)
     );
   }
 
-  // Auto calculate only until user manually changes Stamping Fee
   if (!this.manualStampingFee) {
-    this.CaliforniaStampingFee = Number(
-      ((premium * stampingFee) / 100).toFixed(2)
-    );
+    if (state === 'OR' || state === 'PA') {
+      // Flat stamping fee
+      this.CaliforniaStampingFee = stampingFee;
+    } else {
+      this.CaliforniaStampingFee = Number(
+        ((premium * stampingFee) / 100).toFixed(2)
+      );
+    }
   }
 
   const triaAmount = Number(
     ((premium * (Number(this.Tria) || 0)) / 100).toFixed(2)
   );
 
-  const flatTriaAmount = Number(this.Flat_Tira) || 0;
+  this.Total = Number((
+    premium +
+    triaAmount +
+    (Number(this.Flat_Tira) || 0) +
+    this.CaliforniaStateTax +
+    this.CaliforniaStampingFee +
+    (Number(this.CarrierFee) || 0) +
+    (Number(this.GuardianExpertsFee) || 0) +
+    (Number(this.InsuranceCarrierPolicyFee) || 0)
+  ).toFixed(2));
 
-  this.Total = Number(
-    (
-      premium +
-      triaAmount +
-      flatTriaAmount +
-      this.CaliforniaStateTax +
-      this.CaliforniaStampingFee +
-      (Number(this.CarrierFee) || 0) +
-      (Number(this.GuardianExpertsFee) || 0) +
-      (Number(this.InsuranceCarrierPolicyFee) || 0)
-    ).toFixed(2)
-  );
-
-  console.log('LineShortName:', this.LineShortName);
-  console.log('InsuranceCarrierPolicyFee:', this.InsuranceCarrierPolicyFee);
-  console.log('Total:', this.Total);
-  console.log('State:', state);
-  console.log('Premium:', premium);
   console.log('Tax Rate:', taxRate);
-  console.log('Tax:', this.CaliforniaStateTax);
+  console.log('State Tax:', this.CaliforniaStateTax);
+  console.log('Stamping Fee:', this.CaliforniaStampingFee);
+  console.log('Total:', this.Total);
 }
 
 
@@ -350,62 +414,63 @@ getListOfPolicy() {
 
       console.log('API Response', res);
 
-      const responseData = res?.Data;
+      const responseData = res;
 
-      if (responseData?.Response === 1) {
+      if (responseData?.response === 1) {
 
         const data =
-          responseData?.ChildPolicyTerms;
+          responseData?.childPolicyTerms;
 
         if (data) {
 
            this.Count =
-    Number(data.Count) || 0;
+    Number(data.count) || 0;
 
-          this.DateFrom = data.DateFrom;
-          this.DateTo = data.DateTo;
+          this.DateFrom = data.dateFrom;
+          this.DateTo = data.dateTo;
 
           this.premium =
-            Number(data.Premium) || 0;
+            Number(data.premium) || 0;
 
           this.CarrierFee =
-            Number(data.CarrierFee) || 0;
+            Number(data.carrierFee) || 0;
 
           this.GuardianExpertsFee =
-            Number(data.ATAFee) || 0;
+            Number(data.ataFee) || 0;
 
          if (this.LineShortName === 'MTC') {
   this.InsuranceCarrierPolicyFee = 0;
 } else {
   this.InsuranceCarrierPolicyFee =
-    Number(data.InsuranceCarrierPolicyFee) || 0;
+    Number(data.insuranceCarrierPolicyFee) || 0;
 }
 
           this.CaliforniaStampingFee =
-            Number(data.StampingFees) || 0;
+            Number(data.stampingFees) || 0;
             
             this.Tria =
-            Number(data.Tria) || 0;
+            Number(data.tria) || 0;
 
              this.Flat_Tira =
-            Number(data.Flat_Tira) || 0;
+            Number(data.flat_Tira) || 0;
 
           this.CaliforniaStateTax =
-            Number(data.IAStateTax) || 0;
+            Number(data.iaStateTax) || 0;
 
           this.Total =
-            Number(data.Total) || 0;
+            Number(data.total) || 0;
 
           this.Commission =
-            `${data.Commission || 10}%`;
+            `${data.commission || 10}%`;
 
          this.MinimumPercednt =
-  Number(data.MinimumEarnedPercent) || 25;
+  Number(data.minimumEarnedPercent) || 25;
 
 this.MinimumannualEarnedPercent =
-  Number(data.MinimumannualEarnedPercent) || 0;
+  Number(data.minimumannualEarnedPercent) || 0;
 
-           
+          this.manualStampingFee = true;
+this.manualStateTax = true;
 
 
           if (this.DateFrom && this.DateTo) {
@@ -585,8 +650,8 @@ saveChildPolicyTerm() {
 
     Premium: Number(this.premium) || 0,
     StampingFees: Number(this.CaliforniaStampingFee) || 0,
-     Tria: Number(this.Tria) || 0,
-     Flat_Tira: Number(this.Flat_Tira) || 0,
+     Tria: String(this.Tria) || 0,
+     Flat_Tira: String(this.Flat_Tira) || 0,
     IAStateTax: Number(this.CaliforniaStateTax) || 0,
     CarrierFee: Number(this.CarrierFee) || 0,
     ATAFee: Number(this.GuardianExpertsFee) || 0,

@@ -78,14 +78,14 @@ export class ListOfPolicyAttachemnt {
 
       const obj = JSON.parse(JSON.stringify(data));
 
-      let attachments = obj.AttachmentDetail || [];
+      let attachments = obj.attachmentDetail || [];
 
       // Filter by PolicyType
       if (this.LineName && this.LineName.trim() !== '') {
         attachments = attachments.filter((x: any) =>
-          !x.PolicyType ||                     // null, undefined, ''
-          x.PolicyType.trim() === '' ||
-          x.PolicyType.trim().toLowerCase() === this.LineName!.trim().toLowerCase()
+          !x.policyType ||                     // null, undefined, ''
+          x.policyType.trim() === '' ||
+          x.policyType.trim().toLowerCase() === this.LineName!.trim().toLowerCase()
         );
       }
 
@@ -162,9 +162,9 @@ export class ListOfPolicyAttachemnt {
 // }
 
 onRowClick(file: any) {
-  if (!file?.FileUrl) return;
+  if (!file?.fileUrl) return;
 
-  let url = file.FileUrl.trim();
+  let url = file.fileUrl.trim();
 
   // Convert http to https
   if (url.startsWith('http://')) {

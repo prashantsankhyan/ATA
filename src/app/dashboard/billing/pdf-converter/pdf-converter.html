@@ -29,11 +29,11 @@
             <div style="margin-top:20px;">
               <h4>AGENT DETAIL</h4>
             <p style="margin:0;">
-              Agency  : <span style="font-weight:500;">{{data.AgencyName}}</span><br/>
-              Agent   :- <span style="font-weight:500;">{{data.AgentName}}</span><br/>
+              Agency  : <span style="font-weight:500;">{{data.agencyName}}</span><br/>
+              Agent   :- <span style="font-weight:500;">{{data.agentName}}</span><br/>
              
-               Address :- <span style="font-weight:500;">{{data.Agent_Address}}</span><br/>
-                Number :- <span style="font-weight:500;">{{data.Agent_PhoneNumber}}</span><br/>
+               Address :- <span style="font-weight:500;">{{data.agent_Address}}</span><br/>
+                Number :- <span style="font-weight:500;">{{data.agent_PhoneNumber}}</span><br/>
               <!-- City :- <span style="font-weight:500;">{{data.City}}</span><br/>
               State :- <span style="font-weight:500;">{{data.State}}</span> -->
             </p>
@@ -42,9 +42,9 @@
           <div style="margin-top:20px;">
              <h4>ACCOUNT DETAIL</h4>
             <p >
-              Account Name :- <span style="font-weight:500;">{{data.AccountName}}</span><br/>
-              Phone :- <span style="font-weight:500;">{{data.MobileNumber}}</span><br/>
-              Address :- <span style="font-weight:500;">{{data.MailingAddress}}</span><br/>
+              Account Name :- <span style="font-weight:500;">{{data.accountName}}</span><br/>
+              Phone :- <span style="font-weight:500;">{{data.mobileNumber}}</span><br/>
+              Address :- <span style="font-weight:500;">{{data.mailingAddress}}</span><br/>
               <!-- City :- <span style="font-weight:500;">{{data.City}}</span><br/>
               State :- <span style="font-weight:500;">{{data.State}}</span> -->
             </p>
@@ -54,7 +54,7 @@
         <div class="col-sm-4 offset-sm-2">
           <h3>Invoice#: 
             <span style="font-weight:600;">
-              {{InvoiceID}}{{data.AccountName | slice:0:3 }}
+              {{InvoiceID}}{{data.accountName | slice:0:3 }}
             </span>
           </h3>
 
@@ -68,7 +68,7 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{data.DOT}}</td>
+                <td>{{data.dot}}</td>
                 <td>{{currentDate | date:'MM/dd/yyyy'}}</td>
               </tr>
             </tbody>
@@ -82,7 +82,7 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{data.ARDue | date:'MM/dd/yyyy'}}</td>
+                <td>{{data.arDue | date:'MM/dd/yyyy'}}</td>
               </tr>
             </tbody>
           </table>
@@ -96,8 +96,8 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{data.ReceiveAmount | currency}}</td>
-                <td>{{data.TotalOpeningBalance | currency}}</td>
+                <td>{{data.receiveAmount | currency}}</td>
+                <td>{{data.totalOpeningBalance | currency}}</td>
               </tr>
             </tbody>
           </table>
@@ -107,8 +107,8 @@
 
       <!-- DETAILS TABLE -->
        <div >
- <div class="mt-4 border p-3"   *ngIf="data?.VehicleDetails?.length > 0 &&
-            !data.Detail?.some(d => d.TransCode === 'NEW Policy')">
+ <div class="mt-4 border p-3"   *ngIf="data?.vehicleDetails?.length > 0 &&
+            !data.Detail?.some(d => d.transCode === 'NEW Policy')">
           <h2 style="text-decoration: underline;"> Vehicle Details</h2>
         <table class="table table-borderless">
           <thead>
@@ -124,16 +124,16 @@
           </thead>
 
           <tbody>
-            <ng-container *ngFor="let vehicle of data.VehicleDetails; let v=index">
+            <ng-container *ngFor="let vehicle of data.vehicleDetails; let v=index">
 
               <tr>
                 <td>{{v+1}}</td>
-                <td>{{vehicle.VehicleDescription }}</td>
-                <td>{{vehicle.FileName}}</td>
-                <td> <a [href]="vehicle.FileUrl" target="_blank">
+                <td>{{vehicle.vehicleDescription }}</td>
+                <td>{{vehicle.fileName}}</td>
+                <td> <a [href]="vehicle.fileUrl" target="_blank">
     View File
   </a></td>
-                <td>{{vehicle.AttachmentDate | date:'MM/dd/yyyy'}}</td>
+                <td>{{vehicle.attachmentDate | date:'MM/dd/yyyy'}}</td>
 
                 
 
@@ -167,14 +167,14 @@
           </thead>
 
           <tbody>
-            <ng-container *ngFor="let data1 of data.Detail; let i=index">
+            <ng-container *ngFor="let data1 of data.detail; let i=index">
 
               <tr>
-                <td>{{i+1}}  {{ data1.TransCode === 'DELET' ? 'Delete' : data1.TransCode }}</td>
-                <td>{{data1.Effective | date:'MM/dd/yyyy'}} - {{data1.Expiration | date:'MM/dd/yyyy'}}</td>
-                <td>  {{ data1.TransCode === 'DELET' ? 'Delete' : data1.TransCode }}</td>
-                <td>{{data1.EffectiveDate | date:'MM/dd/yyyy'}}</td>
-                <td>{{data1.ChildPolicyName}}</td>
+                <td>{{i+1}}  {{ data1.transCode === 'DELET' ? 'Delete' : data1.transCode }}</td>
+                <td>{{data1.effective | date:'MM/dd/yyyy'}} - {{data1.expiration | date:'MM/dd/yyyy'}}</td>
+                <td>  {{ data1.transCode === 'DELET' ? 'Delete' : data1.transCode }}</td>
+                <td>{{data1.effectiveDate | date:'MM/dd/yyyy'}}</td>
+                <td>{{data1.childPolicyName}}</td>
 
                 <td>
                   Premium <br/>
@@ -190,12 +190,12 @@
                 </td>
 
                 <td>
-                  <span style="color:red;">{{ data1.Amount | currency:'USD' }}</span><br/>
-                  <span style="color:red;">{{ data1.PolicyFee | currency:'USD' }}</span><br/>
+                  <span style="color:red;">{{ data1.amount | currency:'USD' }}</span><br/>
+                  <span style="color:red;">{{ data1.policyFee | currency:'USD' }}</span><br/>
                   <span style="color:red;">{{ getCalculatedValues(data1).surpluxValue | currency:'USD' }}</span><br/>
                   <span style="color:red;">{{ getCalculatedValues(data1).stamingValue | currency:'USD' }}</span><br/>
                   <!-- <span style="color:red;">{{ data1.CompanyFinanced | currency:'USD' }}</span><br/> -->
-                  <span style="color:red;">{{ data1.AgencyFees | currency:'USD' }}</span><br/>
+                  <span style="color:red;">{{ data1.agencyFees | currency:'USD' }}</span><br/>
                    <span style="color:red; font-weight:800;">
                     {{ totalPremium| currency:'USD' }}
                   </span><br/>
@@ -210,10 +210,10 @@
               </tr>
 
               <!-- TRANSACTIONS -->
-              <tr *ngFor="let transaction of data1.TransactionDetails">
+              <tr *ngFor="let transaction of data1.transactionDetails">
                 <td></td><td></td><td></td><td></td><td></td>
-                <td >{{transaction.Notes}} - {{transaction.CurDate | date:'MM/dd/yyyy'}}</td>
-                <td style="color:red;">({{transaction.RecieveAmount | currency}})</td>
+                <td >{{transaction.notes}} - {{transaction.curDate | date:'MM/dd/yyyy'}}</td>
+                <td style="color:red;">({{transaction.recieveAmount | currency}})</td>
               </tr>
 
             </ng-container>
@@ -223,7 +223,7 @@
               <td colspan="5"></td>
               <td>Due Amount</td>
               <td style="font-weight:600; color:red;">
-                {{data.TotalOpeningBalance | currency}}
+                {{data.totalOpeningBalance | currency}}
               </td>
             </tr>
 

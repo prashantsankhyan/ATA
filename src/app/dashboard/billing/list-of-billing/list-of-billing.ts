@@ -151,8 +151,8 @@ return (
        let response = JSON.stringify(data)
        let obj  = JSON.parse(response)
        
-       this.listOfTransactions = obj.TransactionNews
-       this.TotalBalance =obj.TotalBalance
+       this.listOfTransactions = obj.transactionNews
+       this.TotalBalance =obj.totalBalance
        this.cdr.detectChanges(); // 🔥 force update
 
       }
@@ -282,7 +282,7 @@ return (
     maxWidth: '1500px',
      height: '100vh',        // 👈 add this
   maxHeight: '100vh',
-    data: {TransactionID:data.TransactionID  }
+    data: {TransactionID:data.transactionID  }
     // data: {
     //   TransactionID: data.TransactionID,   // ✅ always pass
     //   editData: data || null       // ✅ for update case
@@ -324,7 +324,7 @@ return (
     this.dialog.open(ManageBalance ,{
       width: '400px',
       height:'400px',
-      data: {InvoiceID:data.InvoiceID,AccountID:data.AccountID,TransactionID:data.TransactionID
+      data: {InvoiceID:data.invoiceID,AccountID:data.accountID,TransactionID:data.transactionID
        }
     });
   }
@@ -345,7 +345,7 @@ return (
     maxWidth: '1500px',
     height:'700px',
     maxHeight: '100vh',
-      data: {InvoiceID:data.InvoiceID,AccountID:data.AccountID,Service:data.Service}
+      data: {InvoiceID:data.invoiceID,AccountID:data.accountID,Service:data.service}
     });
   }
 
@@ -356,7 +356,7 @@ return (
     maxWidth: '1500px',
     height:'700px',
     maxHeight: '100vh',
-      data: {InvoiceID:data.InvoiceID,AccountID:data.AccountID,Service:data.Service}
+      data: {InvoiceID:data.invoiceID,AccountID:data.accountID,Service:data.service}
     });
   }
 
@@ -366,7 +366,7 @@ return (
     maxWidth: '1500px',
     height:'700px',
     maxHeight: '100vh',
-      data: {InvoiceID:data.InvoiceID,AccountID:data.AccountID,Service:data.Service,GenerateInvoice:data.GenerateInvoice}
+      data: {InvoiceID:data.invoiceID,AccountID:data.accountID,Service:data.service,GenerateInvoice:data.generateInvoice}
     });
   }
 

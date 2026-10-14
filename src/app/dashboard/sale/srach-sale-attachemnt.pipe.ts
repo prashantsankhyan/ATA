@@ -15,11 +15,11 @@ export class SrachSaleAttachemntPipe implements PipeTransform {
     console.log('Filtering with criteria:', criteria);
 
     return items.filter(item => {
-      const matchesAttachmentDate = AttachmentDate ? this.dateMatches(item.AttachmentDate, AttachmentDate) : true;
-      const matchesEnteredBy = EnteredBy ? (item.EnteredBy ? item.EnteredBy.toLowerCase().includes(EnteredBy.toLowerCase()) : false) : true;
-      const matchesDescription = Description ? (item.Description ? item.Description.toLowerCase().includes(Description.toLowerCase()) : false) : true;
-      const matchesFileName = FileName ? (item.FileName ? item.FileName.toLowerCase().includes(FileName.toLowerCase()) : false) : true;
-      const matchesPolicyType = PolicyType ? (item.PolicyType ? item.PolicyType.toLowerCase().includes(PolicyType.toLowerCase()) : false) : true;
+      const matchesAttachmentDate = AttachmentDate ? this.dateMatches(item.attachmentDate, AttachmentDate) : true;
+      const matchesEnteredBy = EnteredBy ? (item.enteredBy ? item.enteredBy.toLowerCase().includes(EnteredBy.toLowerCase()) : false) : true;
+      const matchesDescription = Description ? (item.description ? item.description.toLowerCase().includes(Description.toLowerCase()) : false) : true;
+      const matchesFileName = FileName ? (item.fileName ? item.fileName.toLowerCase().includes(FileName.toLowerCase()) : false) : true;
+      const matchesPolicyType = PolicyType ? (item.policyType ? item.policyType.toLowerCase().includes(PolicyType.toLowerCase()) : false) : true;
 
       const result = matchesAttachmentDate && matchesEnteredBy && matchesDescription && matchesFileName && matchesPolicyType;
 

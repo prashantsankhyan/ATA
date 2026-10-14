@@ -22,21 +22,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor ="let data of listOfPolicy ;let idx=index; " [ngClass] = "{'selected-row' :data.ChildPolicyID == Policy}"   (click)="getServiceId(data);" >
-              <td     >{{data.LineName}}/{{data.LineShortName}}</td>
-              <td  >{{data.CarrierName}}</td>
+            <tr *ngFor ="let data of listOfPolicy ;let idx=index; " [ngClass] = "{'selected-row' :data.childPolicyID == Policy}"   (click)="getServiceId(data);" >
+              <td     >{{data.lineName}}/{{data.lineShortName}}</td>
+              <td  >{{data.carrierName}}</td>
              
               
               
               
-              <td  >{{data.Effective | date:'MM/dd/yyyy'}} - {{data.Expiration | date:'MM/dd/yyyy'}}</td>
-              <td >{{data.ChildPolicyName}}</td>
+              <td  >{{data.effective | date:'MM/dd/yyyy'}} - {{data.expiration | date:'MM/dd/yyyy'}}</td>
+              <td >{{data.childPolicyName}}</td>
             </tr>
            
           </tbody>
         </table>
      
-      <input type="text" [(ngModel)]="Policy" formControlName ="Policy" class="form-control" style="display: none;">
+      <input type="text" [(ngModel)]="Policy" formControlName ="policy" class="form-control" style="display: none;">
      </div>
      <div style="text-align: center;">
       <div *ngIf ="showSpinnerOnLoadEndroesement" class="spinner-border mb-5 mt-5"  role="status">
@@ -78,12 +78,12 @@
 
   <!-- Status -->
   <td>
-    {{ data.VehicleDescription }}
+    {{ data.vehicleDescription }}
   </td>
 
   <!-- Stage -->
   <td>
-    {{ data.isPolicy ? data.FileName : data.FileName }}
+    {{ data.isPolicy ? data.FileName : data.fileName }}
   </td>
 
   <!-- Effective -->
@@ -91,7 +91,7 @@
     {{
       data.isPolicy
       ? (data.Effective | date:'MM/dd/yyyy')
-      : data.AttachmentDate | date:'MM/dd/yyyy'
+      : data.attachmentDate | date:'MM/dd/yyyy'
     }}
   </td>
 
@@ -178,7 +178,7 @@
       <div class="col-sm-3 ">
         <label>Code</label>
        
-        <select class="form-select formControl" formControlName ="TransCode"   aria-label="Default select example"  >
+        <select class="form-select formControl" formControlName ="transCode"   aria-label="Default select example"  >
           <option hidden value="" disabled selected  > Select Code</option>
          <option value="NEW Policy">NEW Policy</option>
          <option value="ADD-ENDROSEMENT">ADD-ENDROSEMENT</option>
@@ -196,7 +196,7 @@
        <div class="col-sm-3 ">
         <label>Payment Mode</label>
        
-        <select class="form-select formControl" formControlName ="PaymentMode"   aria-label="Default select example"  >
+        <select class="form-select formControl" formControlName ="paymentMode"   aria-label="Default select example"  >
           <option hidden value="" disabled selected  > Select Mode</option>
          <option value="Monthly">Monthly </option>
        
@@ -207,7 +207,7 @@
       
       <div class="col-sm-3">
         <label> Amount</label>
-        <input type="number" class="form-control"[(ngModel)]="Amount" formControlName="Amount" >
+        <input type="number" class="form-control"[(ngModel)]="amount" formControlName="amount" >
      
       </div>
 
@@ -215,7 +215,7 @@
   <label>State </label>
 
   
-   <select class="form-select formControl" formControlName="State" aria-label="Default select example"(change)="onStateChange($any($event.target).value)">
+   <select class="form-select formControl" formControlName="state" aria-label="Default select example"(change)="onStateChange($any($event.target).value)">
     <option hidden value="" disabled selected>Select State</option>
 
   <option value="TaxManual">TaxManual</option>
@@ -278,7 +278,7 @@
      
       <div class="col-sm-3">
         <label>Policy Fee</label>
-        <input type="number" class="form-control"[(ngModel)]="PolicyFee" formControlName ="PolicyFee">
+        <input type="number" class="form-control"[(ngModel)]="policyFee" formControlName ="policyFee">
        
       </div>
       <!-- <div class="col-sm-3">
@@ -290,7 +290,7 @@
         <div class="row">
           <div class="col-sm-6">
             <label>Surplus Tax</label>
-        <input type="number" class="form-control" formControlName ="SurpluxTax"
+        <input type="number" class="form-control" formControlName ="surpluxTax"
          [readonly]="addEditTransactionForm.get('State')?.value !== 'TaxManual'" >
           </div>
            <div class="col-sm-6" style="margin-top: 25px;">
@@ -304,16 +304,16 @@
       </div>
       <div class="col-sm-3">
         <label>Company Financed</label>
-        <input type="number" class="form-control" formControlName ="CompanyFinanced" >
+        <input type="number" class="form-control" formControlName ="companyFinanced" >
        
       </div>
       <div class="col-sm-3">
         <label>Agency Discount</label>
-        <input type="number" class="form-control" formControlName ="AgencyDiscount" >
+        <input type="number" class="form-control" formControlName ="agencyDiscount" >
       </div>
       <div class="col-sm-3">
         <label>Agency Fees</label>
-        <input type="number" class="form-control" formControlName ="AgencyFees" >
+        <input type="number" class="form-control" formControlName ="agencyFees" >
       </div>
     
 <!-- <div class="col-sm-3">
@@ -330,7 +330,7 @@
        
          <input type="number"
          class="form-control"
-         formControlName="StamingFee"
+         formControlName="stamingFee"
           [readonly]="addEditTransactionForm.get('State')?.value !== 'TaxManual'">
           </div>
  <div class="col-sm-6" style="margin-top: 25px;">
@@ -348,7 +348,7 @@
       <div class="col-sm-3">
   <label>Tria</label>
 
-  <select class="form-control" formControlName="Tria">
+  <select class="form-control" formControlName="tria">
     <option [ngValue]="0">Select Tax</option>
      
       <option [ngValue]="2">2%</option>
@@ -370,7 +370,7 @@
        
          <input type="number"
          class="form-control"
-         formControlName="Flat_Tira"
+         formControlName="flat_Tira"
          >
         
       
@@ -379,40 +379,40 @@
         <label>Commission</label>
          <input type="number"
          class="form-control"
-         formControlName="Commission"
+         formControlName="commission"
          >
        
         </div>
       <div class="col-sm-3">
         <label>Change Date </label>
-        <input type="text" class="form-control" [(ngModel)]="EffectiveDate"  formControlName="EffectiveDate" (ngModelChange)="onEffectiveDateChange($event)" bsDatepicker  >
+        <input type="text" class="form-control" [(ngModel)]="EffectiveDate"  formControlName="effectiveDate" (ngModelChange)="onEffectiveDateChange($event)" bsDatepicker  >
         </div>
         
     
       <!-- <input type="number" class="form-control mt-1"[(ngModel)]="Total" formControlName ="Total" style="display:none" > -->
-      <input type="number" class="form-control"[(ngModel)]="OpeningBalance" formControlName ="OpeningBalance" style="display:none" >
+      <input type="number" class="form-control"[(ngModel)]="openingBalance" formControlName ="openingBalance" style="display:none" >
     
        
          
-        <input type="text" [(ngModel)]="MarkedPolicyID" formControlName ="MarkedPolicyID" class="form-control" style="display: none;">
+        <input type="text" [(ngModel)]="MarkedPolicyID" formControlName ="markedPolicyID" class="form-control" style="display: none;">
         <div class="col-sm-3">
           <label class=""> Invoice Date</label>
-          <input type="text" class="form-control "[(ngModel)] ="GenerateInvoice" formControlName="GenerateInvoice" (ngModelChange) = "setArDate()" bsDatepicker   [ngClass]= "{ 'is-invalid': submit && f['GenerateInvoice'].errors }">
-          <div *ngIf ="submit && f['GenerateInvoice'].errors" class="invalid-feedback">
-            <div *ngIf ="f['GenerateInvoice'].errors">GenerateInvoice is required</div>
+          <input type="text" class="form-control "[(ngModel)] ="generateInvoice" formControlName="generateInvoice" (ngModelChange) = "setArDate()" bsDatepicker   [ngClass]= "{ 'is-invalid': submit && f['generateInvoice'].errors }">
+          <div *ngIf ="submit && f['generateInvoice'].errors" class="invalid-feedback">
+            <div *ngIf ="f['generateInvoice'].errors">generateInvoice is required</div>
         </div> 
         </div>
     
         <div class="col-sm-3">
           <label>Invoice Due </label>
-          <input type="text" class="form-control" [(ngModel)] ="ARDue"  formControlName="ARDue" [ngClass]= "{ 'is-invalid': submit && f['ARDue'].errors }">
-          <div *ngIf ="submit && f['ARDue'].errors" class="invalid-feedback">
-            <div *ngIf ="f['ARDue'].errors">EffectiveDate is required</div>
+          <input type="text" class="form-control" [(ngModel)] ="arDue"  formControlName="arDue" [ngClass]= "{ 'is-invalid': submit && f['arDue'].errors }">
+          <div *ngIf ="submit && f['arDue'].errors" class="invalid-feedback">
+            <div *ngIf ="f['arDue'].errors">EffectiveDate is required</div>
         </div> 
         </div>
           <div class="col-sm-3 mb-2">
           <label>Note</label>
-          <textarea class="form-control" rows="3" formControlName="Notes"></textarea>
+          <textarea class="form-control" rows="3" formControlName="notes"></textarea>
          
          
         </div>
@@ -443,7 +443,7 @@
     
        
     
- {{Total}}
+ {{total}}
    
   
    

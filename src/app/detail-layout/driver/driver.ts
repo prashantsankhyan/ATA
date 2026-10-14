@@ -61,7 +61,7 @@ lookupCode:any;
         this.showSpiner = false;
 
         const obj = JSON.parse(JSON.stringify(data));
-        this.listOfAllFatchData = obj.AttachmentDetail || [];
+        this.listOfAllFatchData = obj.attachmentDetail || [];
           this.cdr.detectChanges();
         // Latest AttachmentDate on top
      
@@ -147,7 +147,7 @@ deleteData(row: any, action: 'DELETE' | 'PERMANENT') {
     width: '360px',
     disableClose: true,
     data: {
-      fileId: row.FileID,
+      fileId: row.fileID,
       actionType: action
     }
   });

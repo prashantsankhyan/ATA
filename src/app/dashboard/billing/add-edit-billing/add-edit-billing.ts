@@ -71,8 +71,8 @@ export class AddEditBilling {
   Date2:any
   Date1 =new Date()
   setGenerateInvoice= new Date();
-  GenerateInvoice:any;
-  ARDue:any;
+  generateInvoice:any;
+  arDue:any;
   BillingEffective:any;
   CompFin_EffectiveDate:any;
   CompFin_Description:any;
@@ -92,14 +92,14 @@ export class AddEditBilling {
   listOfDrviverSevices:any[]=[];
   LoginUserName:any;
   CompanyFinanced =0;
-  PolicyFee =0;
-  StamingFee =0;
-  SurpluxTax =0;
-  Amount =0;
-  Total =0;
-  AgencyDiscount =0;
-  AgencyFees =0;
-  OpeningBalance =0;
+  policyFee =0;
+  stamingFee =0;
+  surpluxTax =0;
+  amount =0;
+  total =0;
+  agencyDiscount =0;
+  agencyFees =0;
+  openingBalance =0;
   selectedIndex: number = -1;
   fileID:any;
   ChildPolicyID:any;
@@ -184,20 +184,20 @@ commissionAmount = 0;
 
       const californiaDate = this.getCaliforniaDate();
 
-  this.GenerateInvoice = this.formatDate(californiaDate);
+  this.generateInvoice = this.formatDate(californiaDate);
 
   this.addEditTransactionForm.patchValue({
-    GenerateInvoice: this.GenerateInvoice
+    generateInvoice: this.generateInvoice
   });
   
   }
 
 
     subtractOrAddSimbe(){
-      if (this.Amount  <0) {
-    this.CompanyFinanced = Math.abs(this.Amount); // Use the absolute value of amount1
-  } else if (this.Amount >0) {
-    this.CompanyFinanced = -Math.abs(this.Amount); // Use the negative absolute value of amount1
+      if (this.amount  <0) {
+    this.CompanyFinanced = Math.abs(this.amount); // Use the absolute value of amount1
+  } else if (this.amount >0) {
+    this.CompanyFinanced = -Math.abs(this.amount); // Use the negative absolute value of amount1
   } else {
     // Set the agencyDiscount value for other cases
     // For example:
@@ -207,11 +207,11 @@ commissionAmount = 0;
 
 addAmount(){
   this.CompanyFinanced = 0;
-  this.PolicyFee =0;
-  this.SurpluxTax =0 ;
-  this.AgencyFees =0
-  this.AgencyDiscount =0
-  this.StamingFee =0
+  this.policyFee =0;
+  this.surpluxTax =0 ;
+  this.agencyFees =0
+  this.agencyDiscount =0
+  this.stamingFee =0
 
 }
 
@@ -220,7 +220,7 @@ addAmount(){
 // getTotal() {
 
 //   const amount = Number(this.addEditTransactionForm.value.Amount) || 0;
-//   const policyFee = Number(this.addEditTransactionForm.value.PolicyFee) || 0;
+//   const policyFee = Number(this.addEditTransactionForm.value.policyFee) || 0;
 //   const surpluxTaxRate = Number(this.addEditTransactionForm.value.SurpluxTax) || 0; // %
 //   const agencyDiscount = Number(this.addEditTransactionForm.value.AgencyDiscount) || 0;
 //   const agencyFees = Number(this.addEditTransactionForm.value.AgencyFees) || 0;
@@ -250,7 +250,7 @@ addAmount(){
 // getTotal() {
 
 //   const amount = Number(this.addEditTransactionForm.value.Amount) || 0;
-//   const policyFee = Number(this.addEditTransactionForm.value.PolicyFee) || 0;
+//   const policyFee = Number(this.addEditTransactionForm.value.policyFee) || 0;
 //   const surpluxTaxRate = Number(this.addEditTransactionForm.value.SurpluxTax) || 0;
 //   const agencyDiscount = Number(this.addEditTransactionForm.value.AgencyDiscount) || 0;
 //   const agencyFees = Number(this.addEditTransactionForm.value.AgencyFees) || 0;
@@ -291,24 +291,24 @@ addAmount(){
 
 getTotal() {
 
-  const amount = Number(this.addEditTransactionForm.value.Amount) || 0;
-  const policyFee = Number(this.addEditTransactionForm.value.PolicyFee) || 0;
-  const surpluxTaxRate = Number(this.addEditTransactionForm.value.SurpluxTax) || 0;
-  const agencyDiscount = Number(this.addEditTransactionForm.value.AgencyDiscount) || 0;
-  const agencyFees = Number(this.addEditTransactionForm.value.AgencyFees) || 0;
-  const stampingRate = Number(this.addEditTransactionForm.value.StamingFee) || 0;
+  const amount = Number(this.addEditTransactionForm.value.amount) || 0;
+  const policyFee = Number(this.addEditTransactionForm.value.policyFee) || 0;
+  const surpluxTaxRate = Number(this.addEditTransactionForm.value.surpluxTax) || 0;
+  const agencyDiscount = Number(this.addEditTransactionForm.value.agencyDiscount) || 0;
+  const agencyFees = Number(this.addEditTransactionForm.value.agencyFees) || 0;
+  const stampingRate = Number(this.addEditTransactionForm.value.stamingFee) || 0;
 
   // Commission %
-  const commissionRate = Number(this.addEditTransactionForm.value.Commission) || 0;
+  const commissionRate = Number(this.addEditTransactionForm.value.commission) || 0;
 
   // TRIA %
-  const triaRate = Number(this.addEditTransactionForm.value.Tria) || 0;
+  const triaRate = Number(this.addEditTransactionForm.value.tria) || 0;
 
   // TRIA Amount
   const triaAmount = amount * (triaRate / 100);
 
   // Flat TRIA entered manually
-  const flatTira = Number(this.addEditTransactionForm.value.Flat_Tira) || 0;
+  const flatTira = Number(this.addEditTransactionForm.value.flat_Tira) || 0;
 
   // Tax Amounts
   this.surplusTaxAmount = amount * (surpluxTaxRate / 100);
@@ -329,40 +329,103 @@ getTotal() {
  this.commissionAmount = amount * (commissionRate / 100);
 
   // Final Total
-  this.Total = totalBeforeCommission - this.commissionAmount;
+  this.total = totalBeforeCommission - this.commissionAmount;
 
   this.addEditTransactionForm.patchValue(
     {
-      Total: this.Total.toFixed(2)
+      total: this.total.toFixed(2)
     },
     { emitEvent: false }
   );
 }
 
-getOpeningBalance() {
+// getTotal() {
+//   const form = this.addEditTransactionForm;
 
-  const total = Number(this.Total) || 0;
-  let companyFinanced = Number(
-    this.addEditTransactionForm.get('CompanyFinanced')?.value
-  ) || 0;
+//   const amount = Number(form.get('amount')?.value) || 0;
+//   const policyFee = Number(form.get('policyFee')?.value) || 0;
+//   const surpluxTaxRate = Number(form.get('surpluxTax')?.value) || 0;
+//   const agencyDiscount = Number(form.get('agencyDiscount')?.value) || 0;
+//   const agencyFees = Number(form.get('agencyFees')?.value) || 0;
+//   const stampingRate = Number(form.get('stamingFee')?.value) || 0;
+//   const commissionRate = Number(form.get('commission')?.value) || 0;
+//   const triaRate = Number(form.get('tria')?.value) || 0;
+//   const flatTira = Number(form.get('flat_Tira')?.value) || 0;
+
+//   this.surplusTaxAmount = amount * surpluxTaxRate / 100;
+//   this.stampingAmount = amount * stampingRate / 100;
+
+//   const triaAmount = amount * triaRate / 100;
+
+//   const totalBeforeCommission =
+//     amount +
+//     this.surplusTaxAmount +
+//     this.stampingAmount +
+//     policyFee +
+//     triaAmount +
+//     flatTira -
+//     agencyDiscount +
+//     agencyFees;
+
+//   this.commissionAmount = amount * commissionRate / 100;
+//   this.total = totalBeforeCommission - this.commissionAmount;
+
+//   form.patchValue({
+//     total: this.total.toFixed(2)
+//   }, { emitEvent: false });
+// }
+
+
+
+// getOpeningBalance() {
+
+//   const total = Number(this.Total) || 0;
+//   let companyFinanced = Number(
+//     this.addEditTransactionForm.get('CompanyFinanced')?.value
+//   ) || 0;
 
  
-  const negativeValue = -Math.abs(companyFinanced);
+//   const negativeValue = -Math.abs(companyFinanced);
 
-  if (companyFinanced !== negativeValue) {
-    this.addEditTransactionForm.patchValue(
-      { CompanyFinanced: negativeValue },
-      { emitEvent: false }
-    );
+//   if (companyFinanced !== negativeValue) {
+//     this.addEditTransactionForm.patchValue(
+//       { CompanyFinanced: negativeValue },
+//       { emitEvent: false }
+//     );
 
-    companyFinanced = negativeValue;
-  }
+//     companyFinanced = negativeValue;
+//   }
 
 
-  this.OpeningBalance = total + companyFinanced;
+//   this.OpeningBalance = total + companyFinanced;
   
  
+// }
+
+
+
+getOpeningBalance() {
+  const form = this.addEditTransactionForm;
+
+  const total = Number(form.get('total')?.value) || 0;
+  let companyFinanced =
+    Number(form.get('companyFinanced')?.value) || 0;
+
+  companyFinanced = -Math.abs(companyFinanced);
+
+  if (Number(form.get('companyFinanced')?.value) !== companyFinanced) {
+    form.patchValue({
+      companyFinanced
+    }, { emitEvent: false });
+  }
+
+  this.openingBalance = total + companyFinanced;
+
+  form.patchValue({
+    openingBalance: this.openingBalance
+  }, { emitEvent: false });
 }
+
 
 
 
@@ -377,11 +440,11 @@ getOpeningBalance() {
   selectedDate.setDate(selectedDate.getDate() + 15);
 
   // ✅ Format using your existing method
-  this.ARDue = this.formatDate(selectedDate);
+  this.arDue = this.formatDate(selectedDate);
 
   // ✅ Sync with reactive form (important)
   this.addEditTransactionForm.patchValue({
-    ARDue: this.ARDue
+    arDue: this.arDue
   });
 }
 
@@ -399,8 +462,8 @@ getAllPolicyListByAccontId() {
   this.http.getAllDataId(ApiUrl.getPolicByAccountId, this.AccountID)
     .subscribe(data => {
 
-      this.listOfPolicy = (data?.ChildPolicys || []).filter(
-        (policy: any) => policy.StageType === 'Issue'
+      this.listOfPolicy = (data?.childPolicys || []).filter(
+        (policy: any) => policy.stageType === 'Issue'
       );
 
       this.showSpiner = false;
@@ -412,12 +475,12 @@ getAllPolicyListByAccontId() {
   this.TransactionID = this.data.TransactionID;
   this.showSpiner = true;
 
-  this.http.getAllDataId(ApiUrl.getTracnsagionByUpdate, this.TransactionID)
+  this.http.getAllDataId(ApiUrl.getTracnsagionByUpdate,this.TransactionID)
     .subscribe((res: any) => {
 
       this.showSpiner = false;
 
-      const data = res?.TransactionNews || [];
+      const data = res?.transactionNews || [];
       if (!data.length) return;
 
       const first = data[0];
@@ -434,38 +497,54 @@ getAllPolicyListByAccontId() {
       };
 
       // ================= FORM PATCH =================
-      this.addEditTransactionForm.patchValue({
-        TransactionID: first.TransactionID,
-        AccountID: first.AccountID,
-        InvoiceID: first.InvoiceID,
-        MarkedPolicyID: first.MarkedPolicyID,
-        EffectiveDate:formatDate(first.EffectiveDate),
-        GenerateInvoice: formatDate(first.GenerateInvoice),
-        
-        ARDue: formatDate(first.ARDue),
-        AccountMonth: new Date(first.AccountMonth),
-        ProductionMonth: new Date(first.ProductionMonth),
-        UpdatedBy: this.LoginUserName,
-        Department: first.Department,
-        Amount: first.Amount,
-        TransCode: first.TransCode,
-        PolicyFee: first.PolicyFee,
-        SurpluxTax: first.SurpluxTax,
-        AgencyDiscount: first.AgencyDiscount,
-        AgencyFees: first.AgencyFees,
-        PaymentMode: first.PaymentMode,
-        State: first.State,
-        StamingFee: first.StamingFee,
-        Notes: first.Notes,
-        Commission:first.Commission,
-        Tria:first.Tria,
-        Flat_Tira:first.Flat_Tira,
-        CompanyFinanced: first.CompanyFinanced,
-        Total: first.Total,
-        OpeningBalance: first.OpeningBalance,
-        Service: first.Service || '',
-        DriverService: first.DriverService || ''
-      });
+    this.addEditTransactionForm.patchValue({
+  transactionID: first.transactionID ?? '0',
+  accountID: first.accountID ?? this.AccountID,
+  invoiceID: first.invoiceID ?? null,
+  markedPolicyID: first.markedPolicyID ?? null,
+
+  effectiveDate: first.effectiveDate
+    ? this.formatDate(new Date(first.effectiveDate))
+    : '',
+
+  generateInvoice: first.generateInvoice
+    ? this.formatDate(new Date(first.generateInvoice))
+    : '',
+
+  arDue: first.arDue
+    ? this.formatDate(new Date(first.arDue))
+    : '',
+
+  accountMonth: first.accountMonth
+    ? new Date(first.accountMonth)
+    : null,
+
+  productionMonth: first.productionMonth
+    ? new Date(first.productionMonth)
+    : null,
+
+  updatedBy: this.LoginUserName,
+  department: first.department ?? 'COMMERCIAL Line',
+  amount: first.amount ?? 0,
+  policy: first.policy ?? '',
+  transCode: first.transCode ?? '',
+  policyFee: first.policyFee ?? 0,
+  surpluxTax: first.surpluxTax ?? 0,
+  agencyDiscount: first.agencyDiscount ?? 0,
+  agencyFees: first.agencyFees ?? 0,
+  paymentMode: first.paymentMode ?? '',
+  state: first.state ?? '',
+  stamingFee: first.stamingFee ?? 0,
+  notes: first.notes ?? '',
+  commission: first.commission ?? 0,
+  tria: first.tria ?? 0,
+  flat_Tira: first.flat_Tira ?? 0,
+  companyFinanced: first.companyFinanced ?? 0,
+  total: first.total ?? 0,
+  openingBalance: first.openingBalance ?? 0,
+  service: first.service ?? '',
+  driverservice: first.driverservice ?? first.driverService ?? null
+});
 
       // ================= VEHICLES =================
 this.http.getAllDataId(ApiUrl.getAllVehcileDetailsByPolicyId, this.Policy)
@@ -487,21 +566,21 @@ this.http.getAllDataId(ApiUrl.getAllVehcileDetailsByPolicyId, this.Policy)
 
   this.listOfSevices = [
     ...policyRow,
-    ...(vehRes.Vehicles || []).map((x: any) => ({
+    ...(vehRes.vehicles || []).map((x: any) => ({
       ...x,
       isPolicy: false
     }))
   ];
 
-  console.log('Saved Service:', first.Service);
+  console.log('Saved Service:', first.service);
   console.log('Vehicle List:', this.listOfSevices);
 
-  if (first.Service) {
+  if (first.service) {
 
     const selectedIdx = this.listOfSevices.findIndex(
       (x: any) =>
-        String(x.fileID) === String(first.Service) ||
-        String(x.ChildPolicyID) === String(first.Service)
+        String(x.fileID) === String(first.service) ||
+        String(x.childPolicyID) === String(first.service)
     );
 
     console.log('Selected Index:', selectedIdx);
@@ -509,10 +588,10 @@ this.http.getAllDataId(ApiUrl.getAllVehcileDetailsByPolicyId, this.Policy)
     if (selectedIdx !== -1) {
       this.selectedIndex = selectedIdx;
 
-      this.Service = first.Service;
+      this.Service = first.service;
 
       this.addEditTransactionForm.patchValue({
-        Service: first.Service
+        service: first.service
       });
 
       this.cd.detectChanges();
@@ -522,12 +601,12 @@ this.http.getAllDataId(ApiUrl.getAllVehcileDetailsByPolicyId, this.Policy)
       // ================= DRIVERS =================
       this.http.getAllDataId(ApiUrl.driverGetForService, this.Policy)
         .subscribe((drvRes: any) => {
-          this.listOfDrviverSevices = drvRes?.Vehicles || [];
+          this.listOfDrviverSevices = drvRes?.vehicles || [];
           this.cd.detectChanges();
         });
 
       // ================= LOCAL VARIABLES =================
-      this.Service = first.Service;
+      this.Service = first.service;
       this.driverService = first.DriverService;
 
       // ================= OPTIONAL LOGIC =================
@@ -543,7 +622,7 @@ this.http.getAllDataId(ApiUrl.getAllVehcileDetailsByPolicyId, this.Policy)
   getServiceId(data:any){
 
     // this.MarkedPolicyID  = data.MarkedPolicyID
-    this.Policy = data.ChildPolicyID;
+    this.Policy = data.childPolicyID;
    
     // this.showSpinnerOnLoadEndroesement = true;
     this.getAllEndrosementByMarkedPolicyById();
@@ -582,7 +661,7 @@ getIdFromData(data: any) {
   this.Service = this.fileID;
 
   this.addEditTransactionForm.patchValue({
-    Service: this.Service
+    service: this.Service
   });
 
   console.log('Selected ID:', this.fileID);
@@ -594,7 +673,7 @@ getIdFromData(data: any) {
      this.fileID = data.fileID
      this.driverService = data.fileID;
      this.addEditTransactionForm.patchValue({
-     Driverservice: this.driverService
+     driverservice: this.driverService
   });
 
   }
@@ -603,45 +682,56 @@ changeTableRowColor(index: number) {
   this.selectedIndex = index;
 }
  
-  getAllEndrosementByMarkedPolicyById() {
 
-  this.http.getAllDataId(ApiUrl.getAllVehcileDetailsByPolicyId, this.Policy)
-    .subscribe(data => {
+getAllEndrosementByMarkedPolicyById() {
+  this.http
+    .getAllDataId(ApiUrl.getAllVehcileDetailsByPolicyId, this.Policy)
+    .subscribe({
+      next: (data: any) => {
+        this.showSpinnerOnLoadEndroesement = false;
 
-      this.showSpinnerOnLoadEndroesement = false;
+        // API response directly use karein
+        const obj = data;
 
-      let response = JSON.stringify(data);
-      let obj = JSON.parse(response);
+        const policyRow: any[] = [];
 
-      let policyRow = [];
+        // Child policy ko first row mein show karein
+        if (obj?.child_Policies) {
+          const policy = obj.child_Policies;
 
-      // Add child_Policies as first row
-      if (obj.child_Policies) {
-        policyRow.push({
-          isPolicy: true,
-          VehicleDescription: obj.child_Policies.ChildPolicyName,
-          FileName: obj.child_Policies.StageType,
-          EndorsementID: '',
-          ChildPolicyID: obj.child_Policies.ChildPolicyID,
-          Effective: obj.child_Policies.Expiration,
-          fileID: 'policyRow'
-        });
+          policyRow.push({
+            isPolicy: true,
+            VehicleDescription: policy.childPolicyName,
+            FileName: policy.stageType,
+            EndorsementID: policy.endorsementId,
+            ChildPolicyID: policy.childPolicyID,
+            Effective: policy.expiration,
+            fileID: 'policyRow'
+          });
+        }
+
+        // Vehicles ko policy row ke neeche show karein
+        this.listOfSevices = [
+          ...policyRow,
+          ...(Array.isArray(obj?.vehicles)
+            ? obj.vehicles.map((x: any) => ({
+                ...x,
+                isPolicy: false
+              }))
+            : [])
+        ];
+
+        console.log('Final Data:', this.listOfSevices);
+
+        this.cd.detectChanges();
+      },
+      error: (err: any) => {
+        this.showSpinnerOnLoadEndroesement = false;
+        console.error('Error loading policy and vehicles:', err);
       }
-
-      // Add vehicles below
-      this.listOfSevices = [
-        ...policyRow,
-        ...(obj.Vehicles || []).map((x: any) => ({
-          ...x,
-          isPolicy: false
-        }))
-      ];
-
-      this.cd.detectChanges();
-
-      console.log("Final Data:", this.listOfSevices);
     });
 }
+
 
   getAllDriverForServieById(){
     this.http.getAllDataId(ApiUrl.driverGetForService,this.Policy).subscribe(
@@ -674,10 +764,10 @@ changeTableRowColor(index: number) {
 
   // if you still need it
 setArDate(){
-  let dte = new Date(this.GenerateInvoice);
+  let dte = new Date(this.generateInvoice);
   let newdate  = dte.setDate(dte.getDate() + 15); // ✅ FIXED
   let arDate= new Date(newdate);
-  this.ARDue = this.formatDate(arDate);
+  this.arDue = this.formatDate(arDate);
 }
 
   formatDate(date: Date): string {
@@ -781,15 +871,34 @@ setArDate(){
 //   }
 // }
 
+// onStateChange(state: string) {
+
+//   if (state === 'TaxManual') {
+
+//     this.addEditTransactionForm.patchValue({
+//       SurpluxTax: 0,
+//       StamingFee: 0
+//     });
+
+//     return;
+//   }
+
+//   const selected = this.stateData[state];
+
+//   if (selected) {
+//     this.addEditTransactionForm.patchValue({
+//       SurpluxTax: selected.taxRate,
+//       StamingFee: selected.stampingFee
+//     });
+//   }
+// }
+
 onStateChange(state: string) {
-
   if (state === 'TaxManual') {
-
     this.addEditTransactionForm.patchValue({
-      SurpluxTax: 0,
-      StamingFee: 0
+      surpluxTax: 0,
+      stamingFee: 0
     });
-
     return;
   }
 
@@ -797,11 +906,13 @@ onStateChange(state: string) {
 
   if (selected) {
     this.addEditTransactionForm.patchValue({
-      SurpluxTax: selected.taxRate,
-      StamingFee: selected.stampingFee
+      surpluxTax: selected.taxRate,
+      stamingFee: selected.stampingFee
     });
   }
 }
+
+
 
 
   getAllCode(){
@@ -874,87 +985,393 @@ onStateChange(state: string) {
 
 
 
-  makeForm(){
+  // makeForm(){
    
-    this.addEditTransactionForm = this.fb.group({
-      TransactionID:['0'],
-      MarkedPolicyID:[this.MarkedPolicyID],
-      AccountID:[this.AccountID],
-      InvoiceID:[''],
-      GenerateInvoice:[''],
-      AccountMonth:[this.AccountMonth],
-      ARDue:[''],
-      BillingEffective:[''],
-      Department:['COMMERCIAL Line'],
-      ProductionMonth:[this.ProductionMonth],
-      EnteredBy:[this.LoginUserName],
+  //   this.addEditTransactionForm = this.fb.group({
+  //     TransactionID:['0'],
+  //     MarkedPolicyID:[this.MarkedPolicyID],
+  //     AccountID:[this.AccountID],
+  //     InvoiceID:[''],
+  //     GenerateInvoice:[''],
+  //     AccountMonth:[this.AccountMonth],
+  //     ARDue:[''],
+  //     BillingEffective:[''],
+  //     Department:['COMMERCIAL Line'],
+  //     ProductionMonth:[this.ProductionMonth],
+  //     EnteredBy:[this.LoginUserName],
 
-      UpdatedBy:[''],
-      Amount:[''],
-      Policy:[''],
-      Driverservice:[''],
-      Service:[''],
-      TransCode:[''],
-      PaymentMode:[''],
-      State:[''],
-      StamingFee:[''],
-      Notes:[''],
-      Commission:[''],
-      PolicyFee:[''],
-      SurpluxTax:[''],
-      AgencyFees:[''],
-      Flat_Tira:[''],
-      Tria:[''],
-      CompanyFinanced:[''],
-      AgencyDiscount:[''],
-      EffectiveDate:[''],
-      Total:[''],
-      OpeningBalance:[''],
-    });
-  }
+  //     UpdatedBy:[''],
+  //     Amount:[''],
+  //     Policy:[''],
+  //     Driverservice:[''],
+  //     Service:[''],
+  //     TransCode:[''],
+  //     PaymentMode:[''],
+  //     State:[''],
+  //     StamingFee:[''],
+  //     Notes:[''],
+  //     Commission:[''],
+  //     policyFee:[''],
+  //     SurpluxTax:[''],
+  //     AgencyFees:[''],
+  //     Flat_Tira:[''],
+  //     Tria:[''],
+  //     CompanyFinanced:[''],
+  //     AgencyDiscount:[''],
+  //     EffectiveDate:[''],
+  //     Total:[''],
+  //     OpeningBalance:[''],
+  //   });
+  // }
+
+ 
+makeForm() {
+  this.addEditTransactionForm = this.fb.group({
+    transactionID: ['0'],
+    markedPolicyID: [this.MarkedPolicyID],
+    accountID: [this.AccountID, Validators.required],
+
+    invoiceID: [null],
+    generateInvoice: ['', Validators.required],
+    accountMonth: [this.AccountMonth],
+    arDue: ['', Validators.required],
+    billingEffective: [this.BillingEffective,],
+    department: ['COMMERCIAL Line'],
+    productionMonth: [this.ProductionMonth],
+    enteredBy: [this.LoginUserName],
+    updatedBy: [''],
+
+    amount: ['',],
+    policy: ['',],
+    driverservice: [''],
+    service: ['',],
+    transCode: ['', ],
+    paymentMode: [''],
+    state: ['',],
+    stamingFee: [''],
+    notes: [''],
+    commission: [''],
+    policyFee: [0],
+    surpluxTax: [''],
+    agencyFees: [''],
+    flat_Tira: [''],
+    tria: [0],
+    companyFinanced: [''],
+    agencyDiscount: [''],
+    effectiveDate: ['', ],
+    total: [''],
+    openingBalance: [0],
+  });
+}
 
 
 
-  onSubmit() {
-    this.submit = true ; 
-    this.messageSuccess = false;
-    if(!this.addEditTransactionForm.valid){
-      this.messageSuccess = true
-      
-      return
-    }
+
+
+  // onSubmit() {
+  //   this.submit = true ; 
+  //   this.messageSuccess = false;
+  //   console.log('Submit clicked'); console.log('Form valid:', this.addEditTransactionForm.valid); console.log('Form values:', this.addEditTransactionForm.getRawValue());
+  //   if (this.addEditTransactionForm.invalid) { this.addEditTransactionForm.markAllAsTouched(); console.log('Invalid controls:'); Object.keys(this.addEditTransactionForm.controls).forEach(key => { const control = this.addEditTransactionForm.get(key); if (control?.invalid) { console.log(key, control.errors, control.value); } }); this.messageSuccess = true; return; }
    
 
-   let obj = JSON.parse(JSON.stringify(this.addEditTransactionForm.value))
+  //  let obj = JSON.parse(JSON.stringify(this.addEditTransactionForm.value))
 
-   if(this.TransactionID){
-    obj['TransactionID'] = this.TransactionID
-  }
+  //  if(this.TransactionID){
+  //   obj['TransactionID'] = this.TransactionID
+  // }
 
-    this.http.addEditData(ApiUrl.addEditNewTransaction,obj).pipe().subscribe(
-      data => {
-        let response  = JSON.stringify(data)
-        var obj = JSON.parse(response);
-        this.dataResponse =obj.Data.Response;
+  //   this.http.addEditData(ApiUrl.addEditNewTransaction,obj).pipe().subscribe(
+  //     data => {
+  //       let response  = JSON.stringify(data)
+  //       var obj = JSON.parse(response);
+  //       this.dataResponse =obj.Data.Response;
         
        
-        if(this.dataResponse == '0'){
-          this.errorMessage = obj.Data.ErrorMessage
-          this.error()
+  //       if(this.dataResponse == '0'){
+  //         this.errorMessage = obj.Data.ErrorMessage
+  //         this.error()
         
-        }
-        else{
-          this.alertMessage = obj.Data.ErrorMessage
-          this.showSuccess()
-        }
+  //       }
+  //       else{
+  //         this.alertMessage = obj.Data.ErrorMessage
+  //         this.showSuccess()
+  //       }
      
-        this.onNoClick1()
-        console.log(obj)
+  //       this.onNoClick1()
+  //       console.log(obj)
         
-      }
+  //     }
     
-    )
+  //   )
+  // }
+
+private toApiDate(value: any): string | null {
+  if (!value) return null;
+
+  const date = value instanceof Date ? value : new Date(value);
+
+  if (isNaN(date.getTime())) {
+    return null;
   }
+
+  return date.toISOString();
+}
+
+
+
+onSubmit() {
+  this.submit = true;
+  this.messageSuccess = false;
+
+  const form = this.addEditTransactionForm;
+
+  console.log('Submit clicked');
+  console.log('Form valid:', form.valid);
+  console.log('Form values:', form.getRawValue());
+
+  // 1. Validate Angular form
+  if (form.invalid) {
+    form.markAllAsTouched();
+
+    Object.keys(form.controls).forEach(key => {
+      const control = form.get(key);
+
+      if (control?.invalid) {
+        console.error(
+          'Invalid control:',
+          key,
+          control.errors,
+          control.value
+        );
+      }
+    });
+
+    this.messageSuccess = true;
+    return;
+  }
+
+  // 2. Build a separate API payload
+  const obj: any = {
+    ...form.getRawValue()
+  };
+
+  // 3. Convert date fields
+  const dateFields = [
+    'generateInvoice',
+    'arDue',
+    'billingEffective',
+    'effectiveDate',
+    'accountMonth',
+    'productionMonth'
+  ];
+
+  for (const field of dateFields) {
+    const value = obj[field];
+
+    if (value === '' || value === null || value === undefined) {
+      obj[field] = null;
+      continue;
+    }
+
+    const convertedDate = this.toApiDate(value);
+
+    if (!convertedDate) {
+      console.error('Invalid date:', field, value);
+      this.errorMessage = `Please enter a valid date for ${field}.`;
+      this.error();
+      return;
+    }
+
+    obj[field] = convertedDate;
+  }
+
+  // 4. Convert integer fields
+  const integerFields = [
+    'transactionID',
+    'markedPolicyID',
+    'accountID',
+    'invoiceID',
+    'driverservice',
+    'service'
+  ];
+
+  for (const field of integerFields) {
+    const value = obj[field];
+
+    if (value === '' || value === null || value === undefined) {
+      obj[field] = null;
+      continue;
+    }
+
+    const numberValue = Number(value);
+
+    if (!Number.isSafeInteger(numberValue)) {
+      console.error('Invalid integer field:', field, value);
+      this.errorMessage = `${field} must be a valid integer.`;
+      this.error();
+      return;
+    }
+
+    obj[field] = numberValue;
+  }
+
+  // 5. Convert numeric fields
+  // flat_Tira and tria are excluded because the API expects strings.
+  const numericFields = [
+    'amount',
+    'policyFee',
+    'surpluxTax',
+    'agencyFees',
+    'commission',
+    'companyFinanced',
+    'agencyDiscount',
+    'total',
+    'openingBalance',
+    'stamingFee'
+  ];
+
+  for (const field of numericFields) {
+    const value = obj[field];
+
+    if (value === '' || value === null || value === undefined) {
+      obj[field] = null;
+      continue;
+    }
+
+    const numberValue = Number(value);
+
+    if (!Number.isFinite(numberValue)) {
+      console.error('Invalid numeric field:', field, value);
+      this.errorMessage = `${field} must be a valid number.`;
+      this.error();
+      return;
+    }
+
+    obj[field] = numberValue;
+  }
+
+  // 6. Convert string fields expected by the API
+  const stringFields = [
+    'flat_Tira',
+    'tria',
+    'companyFinanced'
+  ];
+
+  for (const field of stringFields) {
+    const value = obj[field];
+
+    if (value === null || value === undefined || value === '') {
+      obj[field] = null;
+    } else {
+      obj[field] = String(value);
+    }
+  }
+
+  // 7. Ensure the correct transaction ID when editing
+  if (
+    this.TransactionID !== null &&
+    this.TransactionID !== undefined &&
+    String(this.TransactionID).trim() !== '' &&
+    String(this.TransactionID) !== '0'
+  ) {
+    const id = Number(this.TransactionID);
+
+    if (!Number.isSafeInteger(id)) {
+      console.error('Invalid TransactionID:', this.TransactionID);
+      this.errorMessage = 'Invalid Transaction ID.';
+      this.error();
+      return;
+    }
+
+    obj.transactionID = id;
+  }
+
+  // 8. Log payload and data types
+  console.log('Final API payload:', obj);
+  console.log('Payload JSON:', JSON.stringify(obj));
+
+  console.log('Field types:', {
+    transactionID: typeof obj.transactionID,
+    markedPolicyID: typeof obj.markedPolicyID,
+    accountID: typeof obj.accountID,
+    invoiceID: typeof obj.invoiceID,
+    driverservice: typeof obj.driverservice,
+    service: typeof obj.service,
+    flat_Tira: typeof obj.flat_Tira,
+    tria: typeof obj.tria,
+    commission: typeof obj.commission,
+    companyFinanced: typeof obj.companyFinanced
+  });
+
+  // 9. Submit to API
+  this.http.addEditData(ApiUrl.addEditNewTransaction, obj)
+    .subscribe({
+      next: (data: any) => {
+        console.log('API response:', data);
+
+        const result = data?.Data ?? data?.data ?? data;
+
+        this.dataResponse =
+          result?.Response ?? result?.response;
+
+        if (
+          this.dataResponse !== undefined &&
+          String(this.dataResponse) === '0'
+        ) {
+          this.errorMessage =
+            result?.ErrorMessage ??
+            result?.errorMessage ??
+            'Unable to save transaction.';
+
+          this.error();
+          return;
+        }
+
+        this.alertMessage =
+          result?.ErrorMessage ??
+          result?.errorMessage ??
+          'Transaction saved successfully.';
+
+        this.showSuccess();
+        this.onNoClick1();
+      },
+
+      error: (err: any) => {
+        console.error('API status:', err?.status);
+        console.error('Full API error:', err?.error);
+
+        const errors = err?.error?.errors;
+        const messages: string[] = [];
+
+        if (errors) {
+          Object.entries(errors).forEach(([field, value]) => {
+            const message = Array.isArray(value)
+              ? value.join(', ')
+              : String(value);
+
+            console.error(`${field}: ${message}`);
+            messages.push(`${field}: ${message}`);
+          });
+        }
+
+        this.errorMessage =
+          messages.join('\n') ||
+          err?.error?.title ||
+          err?.error?.message ||
+          err?.message ||
+          'Failed to save transaction.';
+
+        this.error();
+      }
+    });
+}
+
+
+
+
+
+
 
   showSuccess() {
    

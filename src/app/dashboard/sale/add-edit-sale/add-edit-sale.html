@@ -21,8 +21,8 @@
 
 <select class="form-select form-control form-control-sm custom-input" formControlName="agentID"  [ngClass]= "{ 'is-invalid': submit && f['agentID'].errors }">
   <option value="">Select</option>
-  <option *ngFor="let a of listOfAgent" [value]="a.AgentID.toString()">
-    {{ a.AgentName }} - ({{a.AgencyName}}) -{{a.AgentCode}}
+  <option *ngFor="let a of listOfAgent" [value]="a.agentID.toString()">
+    {{ a.agentName }} - ({{a.agencyName}}) -{{a.agentCode}}
   </option>
 </select>
   <div *ngIf ="submit && f['agentID'].errors" class="invalid-feedback">

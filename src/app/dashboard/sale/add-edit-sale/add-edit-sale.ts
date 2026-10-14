@@ -35,7 +35,7 @@ export class AddEditSale {
 
   // ================= INIT =================
   ngOnInit(): void {
-     this.AccountID = this.data?.AccountID;
+     this.AccountID = this.data?.accountID;
      this.userName = sessionStorage.getItem('UserName');
      
    
@@ -72,7 +72,7 @@ export class AddEditSale {
       MobileNumber:[''],
       yearInBusiness: [''],
       effectiveDate: [this.formatToDisplayDate(usaDate), Validators.required],
-      enteredBy: [''],
+      enteredBy: [this.userName],
       no_of_Unit: [''],
       no_of_driver: [''],
       policyType: [''],
@@ -88,7 +88,7 @@ export class AddEditSale {
   getListOfAgent() {
   this.api.getAllData(ApiUrl.getAllAgent).subscribe({
     next: (res: any) => {
-      this.listOfAgent = res?.Response === 1 ? res.Agent || [] : [];
+      this.listOfAgent = res?.response === 1? res.agent || [] : [];
 
       // ✅ AFTER agents loaded → call API
       if (this.AccountID) {
@@ -129,78 +129,133 @@ export class AddEditSale {
   }
 
   // ================= DOT AUTO =================
-  loadDOTData() {
-    const dot = this.accountForm.get('DOT')?.value;
-    if (!dot) return;
+  // loadDOTData() {
+  //   const dot = this.accountForm.get('DOT')?.value;
+  //   if (!dot) return;
 
-    this.api.getAllDataId(ApiUrl.getDataByDot, dot)
-      .subscribe(res => {
-        const d = JSON.parse(res);
+  //   this.api.getAllDataId(ApiUrl.getDataByDot, dot)
+  //     .subscribe(res => {
+  //       const d = JSON.parse(res);
 
-        this.accountForm.patchValue({
-          accountName: d.LegalName || '',
-          emailID: d.EmailAddress || '',
-           mailingAddress: `${d.MailAddress || ''}, ${d.MailCity || ''}, ${d.MailState || ''}`,
-          zip: d.MailZip || '',
-          garagingAddress: d.PhyAddress || '',
-          MobileNumber:d.Phone|| '',
-        });
-      });
+  //       this.accountForm.patchValue({
+  //         accountName: d.LegalName || '',
+  //         emailID: d.EmailAddress || '',
+  //          mailingAddress: `${d.MailAddress || ''}, ${d.MailCity || ''}, ${d.MailState || ''}`,
+  //         zip: d.MailZip || '',
+  //         garagingAddress: d.PhyAddress || '',
+  //         MobileNumber:d.Phone|| '',
+  //       });
+  //     });
+  // }
+
+  loadDOTData(): void {
+
+  const dot = this.accountForm.get('DOT')?.value;
+
+  if (!dot) {
+    return;
   }
 
+  this.api.getAllDataId(ApiUrl.getDataByDot, dot)
+    .subscribe({
 
-getDataByAccountId() {
+      next: (res: any) => {
 
+        console.log('DOT API Response:', res);
+
+        // Handle both JSON object and JSON string
+        const d = typeof res === 'string'
+          ? JSON.parse(res)
+          : res;
+
+        this.accountForm.patchValue({
+
+          accountName: d.LegalName || '',
+
+          emailID: d.EmailAddress || '',
+
+          mailingAddress: [
+            d.MailAddress,
+            d.MailCity,
+            d.MailState
+          ].filter(Boolean).join(', '),
+
+          zip: d.MailZip?.trim() || '',
+
+          garagingAddress: d.PhyAddress || '',
+
+          mobileNumber: d.Phone?.trim() || ''
+
+        });
+
+      },
+
+      error: (err: any) => {
+        console.error('DOT API Error:', err);
+      }
+
+    });
+}
+
+
+getDataByAccountId(): void {
   if (!this.AccountID || this.AccountID === 'undefined') {
-    console.log('no data found');
+    console.log('No AccountID found');
     return;
   }
 
   this.api.getAllDataId(ApiUrl.getAllAccountById, this.AccountID)
     .subscribe({
       next: (res: any) => {
+        console.log('Account By ID Response:', res);
 
-        if (res?.Response === 1 && res.Accounts?.length > 0) {
+        if (res?.response === 1 && res.accounts?.length > 0) {
+          const data = res.accounts[0];
 
-          const data = res.Accounts[0];
+          this.listOfDataById = res.accounts;
 
-          this.listOfDataById = res.Accounts;
-
-          // ✅ FIND AGENT BY NAME
+          // Find agent by name
           const selectedAgent = this.listOfAgent.find(
-            (x: any) => x.AgentName?.trim() === data.AgentName?.trim()
+            (x: any) =>
+              (x.agentName ?? x.AgentName ?? '').trim().toLowerCase() ===
+              (data.agentName ?? '').trim().toLowerCase()
           );
 
-          // ✅ PATCH FORM
+          // Patch form
           this.accountForm.patchValue({
-            AccountID: data.AccountID,
-            DOT: data.DOT || '',
-            accountName: data.AccountName || '',
-            agentID: selectedAgent ? selectedAgent.AgentID.toString() : '',
-            mailingAddress: data.MailingAddress || '',
-            emailID: data.EmailID || '',
-            MobileNumber:data.MobileNumber || '',
-            zip: data.Zip || '',
-            garagingAddress: data.GaragingAddress || '',
-            radius: data.Radius || '',
-            no_of_Unit: data.No_of_Unit || '',
-            no_of_driver: data.No_of_Driver || '',
-            policyType: data.PolicyType || '',
-            lastPremium: data.LastPremium || '',
-            yearInBusiness: data.YearInBusiness || '',
-            effectiveDate: this.formatToDisplayDate(data.EffectiveDate),
+            AccountID: data.accountID ?? 0,
+            DOT: data.dot ?? '',
+            accountName: data.accountName ?? '',
+            agentID: selectedAgent
+              ? String(selectedAgent.agentID ?? selectedAgent.AgentID)
+              : '',
+            mailingAddress: data.mailingAddress ?? '',
+            emailID: data.emailID ?? '',
+            MobileNumber: data.mobileNumber ?? '',
+            zip: data.zip ?? '',
+            garagingAddress: data.garagingAddress ?? '',
+            radius: data.radius ?? '',
+            no_of_Unit: data.no_of_Unit ?? '',
+            no_of_driver: data.no_of_Driver ?? '',
+            policyType: data.policyType ?? '',
+            lastPremium: data.lastPremium ?? '',
+            yearInBusiness: data.yearInBusiness ?? '',
+            effectiveDate: this.formatToDisplayDate(data.effectiveDate)
           });
 
+          this.cdr.detectChanges();
         } else {
+          this.listOfDataById = [];
           console.log('No account data found');
         }
-
       },
-      error: (err) => {
-        console.error('API Error:', err);
+      error: (err: any) => {
+        console.error('Account API Error:', err);
       }
     });
 }
+
+
 
   // ================= SUBMIT =================
  onSubmit() {
@@ -225,9 +280,9 @@ getDataByAccountId() {
   this.api.addEditDataDetail(ApiUrl.addAccountdetail, payload)
     .subscribe((res: any) => {
 
-      this.alertMessage = res?.Data?.ErrorMessage;
+      this.alertMessage = res?.errorMessage;
 
-      if (res?.Data?.Response === 1) {
+      if (res?.response === 1) {
         this.dialogRef.close(true);
       }
     });

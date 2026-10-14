@@ -39,14 +39,12 @@ export class Billing {
 
   // ✅ GET DATA
  getlistOfSale() {
-
-
   this.http.getAllData(ApiUrl.getAllAccountDetail).subscribe({
     next: (res: any) => {
 
-      if (res?.Response === 1) {
+      if (res?.response === 1) {
         this.showSpiner = false;
-        this.listOfSale = res.Accounts || [];
+        this.listOfSale = res.accounts || [];
         this.originalList = [...this.listOfSale];
       } else {
         this.listOfSale = [];
@@ -74,7 +72,7 @@ export class Billing {
     }
 
     this.listOfSale = this.originalList.filter(item =>
-      item.AccountName?.toLowerCase().includes(text)
+      item.accountName?.toLowerCase().includes(text)
     );
   }
 
@@ -91,8 +89,8 @@ export class Billing {
 
 
 nextToListOfBilling(data:any){
-  let AccountID = data.AccountID
-  let AccountName = data.AccountName
+  let AccountID = data.accountID
+  let AccountName = data.accountName
   localStorage.setItem('AccountID', AccountID);
     localStorage.setItem('AccountName', AccountName);
   this.router.navigate(['/dashboard/billing/listOfBilling'],{ replaceUrl: true });

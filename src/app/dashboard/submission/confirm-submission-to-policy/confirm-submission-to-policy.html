@@ -18,8 +18,8 @@
 
         <select
           class="form-select"
-          formControlName="StageType"
-          [ngClass]="{ 'is-invalid': submit && f['StageType'].errors }">
+          formControlName="stageType"
+          [ngClass]="{ 'is-invalid': submit && f['stageType'].errors }">
 
           <option value="" disabled>Please select</option>
           <option value="Issue">Issue</option>
@@ -29,7 +29,7 @@
         </select>
 
         <!-- VALIDATION -->
-       <div *ngIf="submit && f['StageType']?.errors" class="invalid-feedback">
+       <div *ngIf="submit && f['stageType']?.errors" class="invalid-feedback">
   Stage Type is required
 </div>
       </div>

@@ -56,15 +56,15 @@ ngOnInit(): void {
 confirn() {
   this.showSpiner = true;
 
-  this.http.postByTwoId(ApiUrl.getConfirmBor, this.accountId, this.agentId)
+  this.http.postByTwoId(ApiUrl.getConfirmBor,this.accountId, this.agentId)
     .subscribe({
       next: (res: any) => {
         this.showSpiner = false;
 
-        if (res?.Data?.Response === 1) {
+        if (res?.response === 1) {
 
           // Show success message
-          this.snackBar.open(res.Data.ErrorMessage, 'Close', {
+          this.snackBar.open(res.errorMessage, 'Close', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'top'
@@ -82,7 +82,7 @@ confirn() {
         } else {
 
           this.snackBar.open(
-            res?.Data?.ErrorMessage || 'Something went wrong.',
+            res?.errorMessage || 'Something went wrong.',
             'Close',
             {
               duration: 3000,

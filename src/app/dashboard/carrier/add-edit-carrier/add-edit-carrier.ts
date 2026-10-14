@@ -40,7 +40,8 @@ export class AddEditCarrier implements OnInit {
   ngOnInit(): void {
     
      this.LoginUserName = sessionStorage.getItem('UserName');
-  this.carrierId = this.data?.ID;
+  this.carrierId = this.data?.id;
+  alert(this.carrierId)
   
    
   
@@ -57,15 +58,15 @@ export class AddEditCarrier implements OnInit {
     this.addEditCarrierForm = this.fb.group({
       id: ['0'],
     
-      CarrierName: ['', Validators.required],
-      PhoneNumber: [''],
-      EmailID: [''],
-      FaxNo: [''],
-      NAIC: [''],
-      Commission:[''],
-      ContactNumber:[''],
-      Address: [''],
-      EnteredBy: [this.LoginUserName],
+      carrierName: ['', Validators.required],
+      phoneNumber: [''],
+      emailID: [''],
+      faxNo: [''],
+      naic: [''],
+      commission:[''],
+      contactNumber:[''],
+      address: [''],
+      enteredBy: [this.LoginUserName],
       
     });
   }
@@ -78,7 +79,7 @@ export class AddEditCarrier implements OnInit {
       .subscribe({
         next: (res: any) => {
 
-          const carrierList = res?.Carrier || [];
+          const carrierList = res?.carrier || [];
 
           if (carrierList.length === 0) {
             this.snackBar.open('No Carrier Data Found', 'Close', { duration: 3000 });
@@ -90,16 +91,16 @@ export class AddEditCarrier implements OnInit {
           // ✅ PATCH FORM
           this.addEditCarrierForm.patchValue({
             id: this.carrierId,
-            CarrierName: carrier.CarrierName,
-            Commission:carrier.Commission,
+            carrierName: carrier.carrierName,
+            commission:carrier.commission,
             
           
-            PhoneNumber: carrier.PhoneNumber,
-            ContactNumber:carrier.ContactNumber,
-            NAIC: carrier.NAIC,
-            Address: carrier.Address,
-            EmailID: carrier.EmailID,
-            FaxNo: carrier.FaxNo
+            phoneNumber: carrier.phoneNumber,
+            contactNumber:carrier.contactNumber,
+            naic: carrier.naic,
+            address: carrier.address,
+            emailID: carrier.emailID,
+            faxNo: carrier.faxNo
           });
 
        
@@ -129,8 +130,8 @@ this.isLoading = true;
 
   this.http.addEditData(ApiUrl.addEditCarrier, payload)
     .subscribe((res: any) => {
-      if (res?.Data?.Response == 1) {
-        this.snackBar.open(res?.Data?.ErrorMessage, 'Close', { duration: 3000 });
+      if (res?.response == 1) {
+        this.snackBar.open(res?.errorMessage, 'Close', { duration: 3000 });
         this.dialogRef.close(true);
       }
     });

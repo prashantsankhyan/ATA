@@ -39,8 +39,8 @@ export class Carrier {
 
 
   goTOcarrierAttachemnt(data:any){
-     localStorage.setItem('carrierID', data.ID);
-     localStorage.setItem('CarrierName', data.CarrierName);
+     localStorage.setItem('carrierID', data.id);
+     localStorage.setItem('CarrierName', data.carrierName);
    
      this.router.navigate(['/dashboard/carrier/carrierAttachment']);
   }
@@ -52,10 +52,10 @@ getListOfCarrier() {
   this.http.getAllData(ApiUrl.getAllCarrier).subscribe({
     next: (res: any) => {
 
-      if (res && res.Response === 1 && Array.isArray(res.Carrier)) {
+      if (res && res.response === 1 && Array.isArray(res.carrier)) {
          this.showSpiner = false;
-        this.listOfCarrier = res.Carrier;
-        this.originalList = [...res.Carrier];
+        this.listOfCarrier = res.carrier;
+        this.originalList = [...res.carrier];
       } else {
         this.listOfCarrier = [];
         this.originalList = [];
@@ -86,7 +86,7 @@ getListOfCarrier() {
     }
 
     this.listOfCarrier = this.originalList.filter(item =>
-      item.CarrierName?.toLowerCase().includes(text)
+      item.carrierName?.toLowerCase().includes(text)
     );
   }
 

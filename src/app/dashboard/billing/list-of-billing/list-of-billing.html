@@ -120,17 +120,17 @@
            [matTooltip]="getTooltip(data)"
   matTooltipPosition="left"
   matTooltipClass="billing-tooltip">
-            <td style="width: 10px;">{{data.SrNo}}</td>
+            <td style="width: 10px;">{{data.srNo}}</td>
            
-             <td style="width: 10px;">{{data.InvoiceID}}</td>
-             <td >{{data.ChildLineName}}</td>
-             <td>{{data.Child_EffectiveDate |date:'MM-dd-yyyy'}}- {{data.Child_ExpirationDate | date:'MM-dd-yyyy'}}</td>
+             <td style="width: 10px;">{{data.invoiceID}}</td>
+             <td >{{data.childLineName}}</td>
+             <td>{{data.child_EffectiveDate |date:'MM-dd-yyyy'}}- {{data.child_ExpirationDate | date:'MM-dd-yyyy'}}</td>
             
-             <td>{{data.GenerateInvoice | date:'MM-dd-yyyy'}}</td>
-             <td> {{data.ARDue | date:'MM-dd-yyyy'}}</td>
+             <td>{{data.generateInvoice | date:'MM-dd-yyyy'}}</td>
+             <td> {{data.arDue | date:'MM-dd-yyyy'}}</td>
              <!-- <td >{{data.Service == 0 ? data.ChildPolicy_Description : data.Endorsement_Description}}</td> -->
-              <td>{{ data.VehicleDescription || 'Add Policy' }}</td>
-             <td >{{data.Amount  | currency:'USD':'symbol':'1.2-2'}}</td>   
+              <td>{{ data.vehicleDescription || 'Add Policy' }}</td>
+             <td >{{data.amount  | currency:'USD':'symbol':'1.2-2'}}</td>   
              <!-- <td >{{data.PolicyFee  | currency:'USD':'symbol':'1.2-2'}}</td>
              <td >{{data.SurpluxTax  | currency:'USD':'symbol':'1.2-2'}}</td>
             
@@ -141,13 +141,13 @@
              <td>{{data.AgencyDiscount  | currency:'USD':'symbol':'1.2-2'}}</td>
 
              <td>{{data.AgencyFees  | currency:'USD':'symbol':'1.2-2'}} </td>  -->
-             <td><span style="color: red; font-weight: 500;">{{data.OpeningBalance | currency:'USD':'symbol':'1.2-2'}}</span></td>
+             <td><span style="color: red; font-weight: 500;">{{data.openingBalance | currency:'USD':'symbol':'1.2-2'}}</span></td>
               
-               <td>{{data.EnteredBy }}</td>
-               <td style="color: green;">{{data.TotalRecievedAmount | currency:'USD':'symbol':'1.2-2'}}</td>
+               <td>{{data.enteredBy }}</td>
+               <td style="color: green;">{{data.totalRecievedAmount | currency:'USD':'symbol':'1.2-2'}}</td>
               
                <td > 
-                <span *ngIf ="data.OpeningBalance !== 0"style="margin-left:15px"><input type="checkbox" class="form-check-input" value="{{data.TransactionID}}" 
+                <span *ngIf ="data.OpeningBalance !== 0"style="margin-left:15px"><input type="checkbox" class="form-check-input" value="{{data.transactionID}}" 
                  (change)="cehckboxcehck($event)">
                 </span>
                <span *ngIf ="data.OpeningBalance == 0"  style="color: green;"><i class="fa fa-check" aria-hidden="true"></i></span>
@@ -169,7 +169,7 @@
                    <span >View</span>
                  </button>
                  
-                 <button *ngIf ="data.OpeningBalance !== 0" mat-menu-item (click)="manageBalance(data)">
+                 <button *ngIf ="data.openingBalance !== 0" mat-menu-item (click)="manageBalance(data)">
                    <mat-icon>balance</mat-icon>
                    <span>Manage Balance</span>
                  </button>

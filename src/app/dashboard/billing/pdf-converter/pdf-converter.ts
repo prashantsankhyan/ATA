@@ -47,7 +47,7 @@ export class PdfConverter {
 
       let obj = JSON.parse(JSON.stringify(data));
 
-      this.listForPdf = obj.Detail || [];
+      this.listForPdf = obj.detail || [];
 
       this.allNotes = [];
 
@@ -88,13 +88,13 @@ export class PdfConverter {
 totalPremium:any
 getCalculatedValues(data1: any) {
 
-  const amount = Number(data1?.Amount || 0);
-  const policyFee = Number(data1?.PolicyFee || 0);
-  const companyFinanced = Number(data1?.CompanyFinanced || 0);
-  const agencyFees = Number(data1?.AgencyFees || 0);
-  const surpluxPercent = Number(data1?.SurpluxTax || 0);
-  const stamingPercent = Number(data1?.StamingFee || 0);
-  const commissionPercent = Number(data1?.Commission || 0);
+  const amount = Number(data1?.amount || 0);
+  const policyFee = Number(data1?.policyFee || 0);
+  const companyFinanced = Number(data1?.companyFinanced || 0);
+  const agencyFees = Number(data1?.agencyFees || 0);
+  const surpluxPercent = Number(data1?.surpluxTax || 0);
+  const stamingPercent = Number(data1?.stamingFee || 0);
+  const commissionPercent = Number(data1?.commission || 0);
 
   const surpluxValue = (amount * surpluxPercent) / 100;
   const stamingValue = (amount * stamingPercent) / 100;
@@ -129,7 +129,7 @@ getCalculatedValues(data1: any) {
     this.http.getAllDataByTwoId(ApiUrl.submitChangeRequestForDriverAndVehicle, this.AccountId, this.Service)
       .subscribe(data => {
         const obj = JSON.parse(JSON.stringify(data));
-        this.ListOfAllVehicle = obj.Vehicles || [];
+        this.ListOfAllVehicle = obj.vehicles || [];
       });
   } else {
     // Optionally clear or set empty list if Service is invalid

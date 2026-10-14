@@ -9,13 +9,13 @@
     <div >
       <label style="text-transform: uppercase;">Carrier</label>
       <select class="form-control"
-          formControlName="CarrierID"
+          formControlName="carrierID"
           >
     <option value="">-- Select Carrier --</option>
 
     <option *ngFor="let item of listOfCarrier"
-            [value]="item.ID">
-      {{ item.CarrierName }}
+            [value]="item.id">
+      {{ item.carrierName }}
     </option>
   </select>
     </div>
@@ -24,9 +24,9 @@
       <label style="text-transform: uppercase;">Under Carrier</label>
       <input type="text"
              class="form-control form-control-sm custom-input"
-             formControlName="Address">
+             formControlName="address">
              
-      <small class="text-danger" *ngIf="submit && f['CarrierName'].errors">
+      <small class="text-danger" *ngIf="submit && f['address'].errors">
         Carrier is required
       </small>
     </div>
@@ -42,7 +42,7 @@
       <label>NAIC</label>
       <input type="text"
              class="form-control form-control-sm custom-input"
-             formControlName="NAIC">
+             formControlName="naic">
     </div>
 
 

@@ -65,12 +65,12 @@ export class AddEditTransactionAttachement {
   makeForm(){
     this.addEditAttachmentForm = this.fb.group({
       abc:['',[Validators.required,]],
-      AccountID:[this.accountId ,[Validators.required,]],
-      AttachedBy:[this.userName,],
-      Description:['',],
-      EnteredBy:[this.userName],
-      PolicyType:[''],
-      TransactionType:[''],
+      accountID:[this.accountId ,[Validators.required,]],
+      attachedBy:[this.userName,],
+      description:['',],
+      enteredBy:[this.userName],
+      policyType:[''],
+      transactionType:[''],
       
      
      
@@ -102,14 +102,14 @@ export class AddEditTransactionAttachement {
       
     }
    
-    productFormData.append('AccountID',this.addEditAttachmentForm.get('AccountID')?.value);
+    productFormData.append('accountID',this.addEditAttachmentForm.get('accountID')?.value);
     // productFormData.append('FolderID',this.addEditAttachmentForm.get('FolderID')?.value);
-    productFormData.append('AttachedBy',this.addEditAttachmentForm.get('AttachedBy')?.value);
-    productFormData.append('Description',this.addEditAttachmentForm.get('Description')?.value);
+    productFormData.append('attachedBy',this.addEditAttachmentForm.get('attachedBy')?.value);
+    productFormData.append('description',this.addEditAttachmentForm.get('description')?.value);
     // productFormData.append('ChangeType',this.addEditAttachmentForm.get('ChangeType')?.value);
-    productFormData.append('PolicyType',this.addEditAttachmentForm.get('PolicyType')?.value);
-    productFormData.append('TransactionType',this.addEditAttachmentForm.get('TransactionType')?.value);
-    productFormData.append('EnteredBy',this.addEditAttachmentForm.get('EnteredBy')?.value);
+    productFormData.append('policyType',this.addEditAttachmentForm.get('policyType')?.value);
+    productFormData.append('transactionType',this.addEditAttachmentForm.get('transactionType')?.value);
+    productFormData.append('enteredBy',this.addEditAttachmentForm.get('enteredBy')?.value);
 
     // Object.keys(this.productForm).map((key) =>{
     //   productFormData.append(key,this.productForm[key].value);

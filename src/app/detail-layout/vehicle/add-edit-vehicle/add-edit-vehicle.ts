@@ -47,6 +47,7 @@ addEditAttachmentForm!:FormGroup ;
      this.ChildPolicyId = localStorage.getItem('ChildPolicyID');
    this.LoginUserName = sessionStorage.getItem('UserName');
     this.EndrosementId = localStorage.getItem('EndorsementId');
+   
     if (this.EndrosementId == '0'){
       this.saveEndrosement ='fasle'
            
@@ -82,12 +83,12 @@ addEditAttachmentForm!:FormGroup ;
   makeForm() {
   this.addEditAttachmentForm = this.fb.group({
     abc: ['', Validators.required],
-    ChildPolicyId: [this.ChildPolicyId, Validators.required],
-    EndorsementId: ['1'],
-    VehicleDescription: ['',Validators.required],
-    Remarks:[this.saveEndrosement],
-    AttachedBy:[''],
-    EnteredBy: [this.LoginUserName]
+    childPolicyId: [this.ChildPolicyId, Validators.required],
+    endorsementId: ['1'],
+    vehicleDescription: ['',Validators.required],
+    remarks:[this.saveEndrosement],
+    attachedBy:[''],
+    enteredBy: [this.LoginUserName]
 
   });
 }
@@ -151,12 +152,12 @@ onSubmit(): void {
     formData.append('abc', file);
   });
 
-  formData.append('ChildPolicyId', this.f['ChildPolicyId'].value);
-  formData.append('EndorsementId', this.f['EndorsementId'].value);
-  formData.append('VehicleDescription', this.f['VehicleDescription'].value);
-  formData.append('Remarks', this.f['Remarks'].value);
-  formData.append('AttachedBy', this.f['AttachedBy'].value);
-  formData.append('EnteredBy', this.f['EnteredBy'].value);
+  formData.append('childPolicyId', this.f['childPolicyId'].value);
+  formData.append('endorsementId', this.f['endorsementId'].value);
+  formData.append('vehicleDescription', this.f['vehicleDescription'].value);
+  formData.append('remarks', this.f['remarks'].value);
+  formData.append('attachedBy', this.f['attachedBy'].value);
+  formData.append('enteredBy', this.f['enteredBy'].value);
 
   this._addProduct(formData);
 }
@@ -164,7 +165,7 @@ private _addProduct(productData: FormData): void {
 
   this.showFiv = false;
 
-  this.http.addEditFormData(
+  this.http.addEditFormDataNew(
     ApiUrl.addVehicleAttachment,
     productData
   ).subscribe({

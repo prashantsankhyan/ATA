@@ -41,7 +41,8 @@ export class AddEditAgent {
     this.LoginUserName = sessionStorage.getItem('UserName');
     
     
-    this.AgentID = this.data?.AgentID;
+    this.AgentID = this.data?.agentID;
+   
 
     this.makeForm();
 
@@ -59,15 +60,15 @@ export class AddEditAgent {
   day: '2-digit'
 }).format(new Date());
     this.addEditAgentForm = this.fb.group({
-      AgentID: ['0'],
-      AgentName: ['', Validators.required],
-      AgentCode: [''],
-      AgencyName:[''],
-       EODate:[usDate],
-      PhoneNumber:[''],
-      Email:[''],
-      Address:[''],
-      Fax:[''],
+      agentID: ['0'],
+      agentName: ['', Validators.required],
+      agentCode: [''],
+      agencyName:[''],
+       eoDate:[usDate],
+      phoneNumber:[''],
+      email:[''],
+      address:[''],
+      fax:[''],
 
       
     });
@@ -78,21 +79,21 @@ export class AddEditAgent {
   this.http.getAllDataId(ApiUrl.getAllAgentByByAgentId, this.AgentID).subscribe({
     next: (data: any) => {
 
-      const agents = data?.Agent || [];
+      const agents = data?.agent || [];
 
       if (agents.length > 0) {
         const agent = agents[0];
 
         this.addEditAgentForm.patchValue({
-          AgentID: agent.AgentID,
-          AgentName: agent.AgentName,
-          AgentCode: agent.AgentCode,
-          AgencyName:agent.AgencyName,
-          PhoneNumber:agent.PhoneNumber,
-          EODate:agent.EODate,
-          Email:agent.Email,
-          Address:agent.Address,
-          Fax:agent.Fax
+          agentID: agent.agentID,
+          agentName: agent.agentName,
+          agentCode: agent.agentCode,
+          agencyName:agent.agencyName,
+          phoneNumber:agent.phoneNumber,
+          eoDate:agent.eoDate,
+          email:agent.email,
+          address:agent.address,
+          fax:agent.fax
         });
       }
     },
@@ -127,9 +128,9 @@ this.http.addEditData(ApiUrl.addEditAgent, payload)
   .subscribe({
     next: (res: any) => {
 
-      const isSuccess = res?.Data?.Response == 1;
+      const isSuccess = res?.response == 1;
 
-      const message = res?.Data?.ErrorMessage 
+      const message = res?.errorMessage 
         || (this.AgentID ? 'Updated Successfully' : 'Added Successfully');
 
       this.snackBar.open(message, 'Close', { duration: 3000 });

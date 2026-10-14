@@ -69,12 +69,12 @@
              </thead>
              <tbody>
                <tr  *ngFor ="let data of filteredAttachments | searchTransactionFilter:searchCriteria" (click)="onRowClick(data)">
-                <td>{{data.FileName}}</td>
-                <td>{{data.AgencyEarned}}</td>
+                <td>{{data.fileName}}</td>
+                <td>{{data.agencyEarned}}</td>
                 
-                <td>{{data.EnteredDate | date: 'MM/dd/yyyy'}}</td>
+                <td>{{data.enteredDate | date: 'MM/dd/yyyy'}}</td>
              
-                <td>{{data.EnteredBy}}</td>
+                <td>{{data.enteredBy}}</td>
               
                
                

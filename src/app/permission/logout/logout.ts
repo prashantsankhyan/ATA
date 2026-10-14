@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AllApiService } from '../../_service/all-api.service';
 import { ApiUrl } from '../../_core/apiUrl';
-import { catchError, timeout } from 'rxjs';
+import { catchError, throwError, timeout } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-logout',
@@ -69,91 +69,92 @@ export class Logout {
   //     });
   // }
 
-  onSubmit() {
-  this.submit = true;
-  this.messageSuccess = false;
+ onSubmit(): void {
+this.submit = true;
 
-  if (!this.confirmLogin.valid) {
+if (this.confirmLogin.invalid) {
+this.confirmLogin.markAllAsTouched();
+
+
+this.snackBar.open(
+  'Please enter Username and Password',
+  'Close',
+  { duration: 3000 }
+);
+
+return;
+
+
+}
+
+const userCredentials = this.confirmLogin.value;
+this.showSpinner = true;
+
+this.http.addEditData(
+ApiUrl.deleteExistLoginByLogout,
+userCredentials
+).pipe(
+timeout(60000),
+catchError((error) => {
+this.showSpinner = false;
+
+
+  if (error.name === 'TimeoutError') {
+    this.snackBar.open(
+      'The request timed out. Please check your internet connection.',
+      'Close',
+      { duration: 3000 }
+    );
+  } else {
+    this.snackBar.open(
+      'An unexpected error occurred. Please try again later.',
+      'Close',
+      { duration: 3000 }
+    );
+  }
+
+  return throwError(() => error);
+})
+
+
+).subscribe({
+next: (data: any) => {
+this.showSpinner = false;
+
+
+  console.log('Logout API Response:', data);
+
+  // Support both old and new API response formats
+  const responseObj = data?.Data ?? data;
+  const responseCode = responseObj?.Response ?? responseObj?.response;
+  const errorMessage = responseObj?.ErrorMessage ?? responseObj?.errorMessage;
+
+  if (responseCode == 1) {
+    this.clearLocalStorage();
+    sessionStorage.clear();
 
     this.snackBar.open(
-      'Please enter Username and Password',
+      errorMessage || 'Logout Successfully',
       'Close',
       { duration: 3000 }
     );
 
-    return;
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 1000);
+  } else {
+    this.snackBar.open(
+      errorMessage || 'Invalid Username or Password',
+      'Close',
+      { duration: 3000 }
+    );
   }
-
-  const userCredentials = this.confirmLogin.value;
-
-  this.showSpinner = true;
-
-  this.http.addEditData(
-    ApiUrl.deleteExistLoginByLogout,
-    userCredentials
-  )
-  .pipe(
-    timeout(60000),
-    catchError((error) => {
-
-      this.showSpinner = false;
-
-      if (error.name === 'TimeoutError') {
-
-        this.snackBar.open(
-          'The request timed out. Please check your internet connection.',
-          'Close',
-          { duration: 3000 }
-        );
-
-      } else {
-
-        this.snackBar.open(
-          'An unexpected error occurred. Please try again later.',
-          'Close',
-          { duration: 3000 }
-        );
-      }
-
-      throw error;
-    })
-  )
-  .subscribe(data => {
-
-    this.showSpinner = false;
-
-    const responseObj = JSON.parse(JSON.stringify(data));
-
-    console.log('responseObj', responseObj.Data.Response);
-
-    if (responseObj.Data.Response === 1) {
-
-      this.clearLocalStorage();
-
-      // Success message
-      this.snackBar.open(
-        'Logout Successfully',
-        'Close',
-        { duration: 3000 }
-      );
-
-      sessionStorage.clear();
-
-      setTimeout(() => {
-        this.router.navigate(['/login']);
-      }, 1000);
-
-    } else {
-
-      this.snackBar.open(
-        responseObj?.Data?.ErrorMessage ||
-        'Invalid Username or Password',
-        'Close',
-        { duration: 3000 }
-      );
-    }
-  });
 }
+
+
+});
+}
+
 
   get f() {
     return this.confirmLogin.controls;

@@ -61,13 +61,12 @@ addEditAttachmentForm!:FormGroup ;
   }
 
   
-    getListOfAgent() {
+ getListOfAgent() {
   this.http.getAllData(ApiUrl.getAllAgent).subscribe({
     next: (res: any) => {
-      this.listOfAgent = res?.Response === 1 ? res.Agent || [] : [];
+      this.listOfAgent = res?.response === 1? res.agent || [] : [];
 
-      // ✅ AFTER agents loaded → call API
-    
+     
 
       this.cdr.detectChanges();
     },
@@ -76,7 +75,6 @@ addEditAttachmentForm!:FormGroup ;
     }
   });
 }
-
 makeForm() {
   const usaNow = new Date(
     new Date().toLocaleString('en-US', {
@@ -97,11 +95,11 @@ makeForm() {
 
   this.addEditAttachmentForm = this.fb.group({
     abc: ['', Validators.required],
-    AccountID: [this.accountId, Validators.required],
-    AttachmentDate: [attachmentDate], // 07/04/2026 09:36:44 AM
-    Description: ['', Validators.required],
-    AgentID: [''],
-    EnteredBy: [this.userName]
+    accountID: [this.accountId, Validators.required],
+    attachmentDate: [attachmentDate], // 07/04/2026 09:36:44 AM
+    description: ['', Validators.required],
+    agentID: [''],
+    enteredBy: [this.userName]
   });
 }
     
@@ -128,12 +126,12 @@ makeForm() {
       
     }
    
-    productFormData.append('AccountID',this.addEditAttachmentForm.get('AccountID')?.value);
+    productFormData.append('accountID',this.addEditAttachmentForm.get('accountID')?.value);
     // productFormData.append('FolderID',this.addEditAttachmentForm.get('FolderID')?.value);
-    productFormData.append('AttachmentDate',this.addEditAttachmentForm.get('AttachmentDate')?.value);
-    productFormData.append('Description',this.addEditAttachmentForm.get('Description')?.value);
-    productFormData.append('EnteredBy',this.addEditAttachmentForm.get('EnteredBy')?.value);
-    productFormData.append('AgentID',this.addEditAttachmentForm.get('AgentID')?.value);
+    productFormData.append('attachmentDate',this.addEditAttachmentForm.get('attachmentDate')?.value);
+    productFormData.append('description',this.addEditAttachmentForm.get('description')?.value);
+    productFormData.append('enteredBy',this.addEditAttachmentForm.get('enteredBy')?.value);
+    productFormData.append('agentID',this.addEditAttachmentForm.get('agentID')?.value);
 
     // Object.keys(this.productForm).map((key) =>{
     //   productFormData.append(key,this.productForm[key].value);
@@ -148,7 +146,7 @@ makeForm() {
 
     private _addProduct(productData: FormData): void {
       this.changeLocation()
-    this.http.addEditFormData(ApiUrl.addAgentBORAttachement,productData).pipe().subscribe(
+    this.http.addEditFormDataNew(ApiUrl.addAgentBORAttachement,productData).pipe().subscribe(
         data => {
 
          this.changeLocation()

@@ -48,14 +48,14 @@ displayRows: any[] = [];
 
       let obj = JSON.parse(JSON.stringify(data));
 
-      this.listForPdf = obj.Detail || [];
+      this.listForPdf = obj.detail || [];
 
       this.allNotes = [];
 
       this.listForPdf.forEach((outer: any) => {
-        outer.Detail?.forEach((inner: any) => {
-          if (inner.Notes) {
-            this.allNotes.push(inner.Notes);
+        outer.detail?.forEach((inner: any) => {
+          if (inner.notes) {
+            this.allNotes.push(inner.notes);
           }
         });
       });
@@ -88,14 +88,14 @@ displayRows: any[] = [];
 // }
 getCalculatedValues(item: any) {
 
-  const amount = Number(item?.Amount ?? 0);
-  const policyFee = Number(item?.PolicyFee ?? 0);
-  const agencyFees = Number(item?.AgencyFees ?? 0);
-  const companyFinanced = Number(item?.CompanyFinanced ?? 0);
-const agencyDiscount = Number(item?.AgencyDiscount ?? 0);
-  const surpluxPercent = Number(item?.SurpluxTax ?? 0);
-  const stampingPercent = Number(item?.StamingFee ?? 0);
-  const commissionPercent = Number(item?.Commission ?? 0);
+  const amount = Number(item?.amount ?? 0);
+  const policyFee = Number(item?.policyFee ?? 0);
+  const agencyFees = Number(item?.agencyFees ?? 0);
+  const companyFinanced = Number(item?.companyFinanced ?? 0);
+const agencyDiscount = Number(item?.agencyDiscount ?? 0);
+  const surpluxPercent = Number(item?.surpluxTax ?? 0);
+  const stampingPercent = Number(item?.stamingFee ?? 0);
+  const commissionPercent = Number(item?.commission ?? 0);
 
   // Tax Amounts
   const surpluxValue = Number(
@@ -130,9 +130,9 @@ const agencyDiscount = Number(item?.AgencyDiscount ?? 0);
   );
 
   // Total Received
-  const receivedAmount = (item?.TransactionDetails || []).reduce(
+  const receivedAmount = (item?.transactionDetails || []).reduce(
     (sum: number, payment: any) =>
-      sum + Number(payment?.RecieveAmount ?? 0),
+      sum + Number(payment?.recieveAmount ?? 0),
     0
   );
 
@@ -165,7 +165,7 @@ const agencyDiscount = Number(item?.AgencyDiscount ?? 0);
     this.http.getAllDataByTwoId(ApiUrl.submitChangeRequestForDriverAndVehicle, this.AccountId, this.Service)
       .subscribe(data => {
         const obj = JSON.parse(JSON.stringify(data));
-        this.ListOfAllVehicle = obj.Vehicles || [];
+        this.ListOfAllVehicle = obj.vehicles || [];
       });
   } else {
     // Optionally clear or set empty list if Service is invalid
@@ -265,9 +265,9 @@ getDisplayRows(item: any): any[] {
 
     // Premium
     {
-      company: item.Address,
-      classification: item.LineName,
-      transaction: item.TransCode,
+      company: item.address,
+      classification: item.lineName,
+      transaction: item.transCode,
       // description: item.ChildPolicyName,
       premium: calc.amount,
       credit: 0

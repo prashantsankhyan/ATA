@@ -63,25 +63,41 @@ ngOnInit(): void {
     this.router.navigateByUrl('/mainLayout/account')
   }
   
-  getAllFile() {
- 
+getAllFile(): void {
 
-  this.http.getAllDataId(ApiUrl.getAllFatchData, this.accountId)
-    .subscribe({
+  if (!this.accountId) {
+    this.showSpiner = false;
+    return;
+  }
+
+  this.showSpiner = true;
+
+  this.http.getAllDataId(
+    ApiUrl.getAllFatchData,
+    this.accountId
+  ).subscribe({
     next: (res: any) => {
 
-  console.log("FULL API RESPONSE:", res);
+      console.log('FULL API RESPONSE:', res);
 
-  this.listOfAllFatchData = [...(res?.AttachmentDetail || [])];
+      this.listOfAllFatchData = [
+        ...(res?.attachmentDetail || [])
+      ];
 
-  console.log("DATA SET:", this.listOfAllFatchData);
+      console.log('DATA SET:', this.listOfAllFatchData);
 
-  this.showSpiner = false;
+      this.showSpiner = false;
+      this.cdr.detectChanges();
+    },
 
-  this.cdr.detectChanges(); // ✅ FORCE UI UPDATE
-}
-      
-    });
+    error: (err: any) => {
+      console.error('Error fetching attachments:', err);
+
+      this.listOfAllFatchData = [];
+      this.showSpiner = false;
+      this.cdr.detectChanges();
+    }
+  });
 }
   updateSearchCriteria(criteria: any) {
     this.searchCriteria = { ...this.searchCriteria, ...criteria };
@@ -108,12 +124,12 @@ ngOnInit(): void {
     this.updateSearchCriteria({ PolicyType: newPolicyType });
   }
   onRowClick(file: any) {
-    const httpsFileUrl = file.FileUrl.replace('http://', 'https://');
+    const httpsFileUrl = file.fileUrl.replace('http://', 'https://');
     console.log(httpsFileUrl); // Display the HTTPS version of the FileUrl
   
     const link = document.createElement('a');
     link.href = httpsFileUrl;
-    link.download = file.FileName;
+    link.download = file.fileName;
   
     document.body.appendChild(link);
     link.click();

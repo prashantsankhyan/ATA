@@ -77,7 +77,7 @@ showSpiner = true;
 
       const obj = JSON.parse(JSON.stringify(data));
 
-      let attachments = obj.AttachmentDetail || [];
+      let attachments = obj.attachmentDetail || [];
 
       // Filter by PolicyType
       if (this.LineName && this.LineName.trim() !== '') {
@@ -161,9 +161,9 @@ showSpiner = true;
 // }
 
 onRowClick(file: any) {
-  if (!file?.FileUrl) return;
+  if (!file?.fileUrl) return;
 
-  let url = file.FileUrl.trim();
+  let url = file.fileUrl.trim();
 
   // Convert http to https
   if (url.startsWith('http://')) {

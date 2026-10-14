@@ -1,5 +1,5 @@
 export const environment = {
  production: true,
- apiBaseUrl:'https://aiaapi.in/api/',
+ apiBaseUrl:'https://atausa.in/api/',
  carrierApiBaseUrl: 'https://api.carriersoftware.com/api'
 };

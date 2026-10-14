@@ -61,16 +61,16 @@
 
       <tbody>
         <tr *ngFor="let item of listOfSale">
-          <td class="fw-semibold"(dblclick)="nextToListOfBilling(item)">{{item.AccountName}}</td>
-          <td >{{item.DOT}}</td>
-          <td>{{item.AgentName}}</td>
-          <td>{{item.MobileNumber}}</td>
+          <td class="fw-semibold"(dblclick)="nextToListOfBilling(item)">{{item.accountName}}</td>
+          <td >{{item.dOT}}</td>
+          <td>{{item.agentName}}</td>
+          <td>{{item.mobileNumber}}</td>
         
-          <td>{{item.AgentName}}</td>
+          <td>{{item.agentName}}</td>
           
           <td>
   <span >
-    {{ fixDate(item.EffectiveDate) | date:'MM-dd-yyyy' }}
+    {{ fixDate(item.effectiveDate) | date:'MM-dd-yyyy' }}
   </span>
 </td>
 

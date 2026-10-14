@@ -60,7 +60,8 @@
                  <th >File Path</th>
                  
                  <th >Policy Type</th>
-                 <th ></th>
+                 <th >Enter Date</th>
+                 <th >Enter By</th>
                   
 
 
@@ -78,12 +79,12 @@
         (click)="onRowClick(data)"
         style="cursor: pointer"
       >
-        <td>{{ data.Description || '—' }}</td>
-        <td>{{ data.FileName }}</td>
-       <td>{{data.PolicyType}}</td>
+        <td>{{ data.description || '—' }}</td>
+        <td>{{ data.fileName }}</td>
+       <td>{{data.policyType}}</td>
         
-        <td>{{ data.AttachmentDate | date:'MM/dd/yyyy' }}</td>
-        <td>{{ data.EnteredBy }}</td>
+        <td>{{ data.attachmentDate | date:'MM/dd/yyyy' }}</td>
+        <td>{{ data.enteredBy }}</td>
       </tr>
 
       <tr *ngIf="filteredAttachments.length === 0">

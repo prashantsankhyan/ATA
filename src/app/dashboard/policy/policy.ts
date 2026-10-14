@@ -60,9 +60,9 @@ onSearch(value: string): void {
 getListOfPolicy() {
   this.http.getAllData(ApiUrl.getAllPolicyRecords).subscribe({
     next: (res: any) => {
-      if (res?.Response === 1) {
+      if (res?.response === 1) {
 
-        this.originalList = (res.ChildPolicys || []).filter(
+        this.originalList = (res.childPolicys || []).filter(
           (item: any) => !item.IsDeleted
         );
 
@@ -92,20 +92,20 @@ applyFilters(): void {
   let data = [...this.originalList];
 
   // Tab filter
- data = data.filter(x => x.StageType === 'Issue');
+ data = data.filter(x => x.stageType === 'Issue');
 
   // Search filter
   if (this.searchText.trim()) {
     const search = this.searchText.toLowerCase();
 
     data = data.filter(x =>
-      (x.AccountName ?? '').toLowerCase().includes(search) ||
-      (x.LookUpCode ?? '').toLowerCase().includes(search) ||
-      (x.LineName ?? '').toLowerCase().includes(search) ||
-      (x.CarrierName ?? '').toLowerCase().includes(search) ||
-      (x.AgentName ?? '').toLowerCase().includes(search) ||
-      (x.City ?? '').toLowerCase().includes(search) ||
-      (x.ChildPolicyName ?? '').toLowerCase().includes(search)
+      (x.accountName ?? '').toLowerCase().includes(search) ||
+      (x.lookUpCode ?? '').toLowerCase().includes(search) ||
+      (x.lineName ?? '').toLowerCase().includes(search) ||
+      (x.carrierName ?? '').toLowerCase().includes(search) ||
+      (x.agentName ?? '').toLowerCase().includes(search) ||
+      (x.city ?? '').toLowerCase().includes(search) ||
+      (x.childPolicyName ?? '').toLowerCase().includes(search)
     );
   }
 
@@ -116,40 +116,41 @@ applyFilters(): void {
  
   nextToDetails(data:any){
   this.router.navigate(['/detail']);
-  localStorage.setItem('ChildPolicyID', data.ChildPolicyID);
+  localStorage.setItem('ChildPolicyID', data.childPolicyID);
   localStorage.setItem('EndorsementId', '0');
-  localStorage.setItem('AccountName', data.AccountName);
-  localStorage.setItem('LookUpCode',data.LookUpCode)
-  localStorage.setItem('StageType',data.StageType)
+  localStorage.setItem('AccountName', data.accountName);
+  localStorage.setItem('LookUpCode',data.lookUpCode)
+  localStorage.setItem('StageType',data.stageType)
   }
 
 
   nextToEndrosement(data:any){
+  
  this.router.navigate(['/detail']);
-   localStorage.setItem('ChildPolicyID', data.ChildPolicyID);
+   localStorage.setItem('ChildPolicyID', data.childPolicyID);
    localStorage.setItem('EndorsementId', '1');
-    localStorage.setItem('AccountName', data.AccountName);
-    localStorage.setItem('LookUpCode',data.LookUpCode)
-    localStorage.setItem('StageType',data.StageType)
+    localStorage.setItem('AccountName', data.accountName);
+    localStorage.setItem('LookUpCode',data.lookUpCode)
+    localStorage.setItem('StageType',data.stageType)
   }
  
   nextToAttachemnt(item:any){
-  localStorage.setItem('AccountID', item.AccountID);
-  localStorage.setItem('AccountName', item.AccountName);
+  localStorage.setItem('AccountID', item.accountID);
+  localStorage.setItem('AccountName', item.accountName);
 
-  localStorage.setItem('LineName',item.LineName)
+  localStorage.setItem('LineName',item.lineName)
       this.router.navigate(['/dashboard/policy/policyAttachment']);
     
   }
   nextToFile(data:any){
-   let ChildPolicyID= data.ChildPolicyID
-    localStorage.setItem('LineShortName', data.LineShortName);
+   let ChildPolicyID= data.childPolicyID
+    localStorage.setItem('LineShortName', data.lineShortName);
     this.router.navigate(['/dashboard/policy/file',ChildPolicyID])
   }
 
 
    extandPolicy(data:any){
-   let AccountID= data.AccountID
+   let AccountID= data.accountID
    
     this.router.navigate(['/dashboard/policy/extance',AccountID])
   }
@@ -158,7 +159,7 @@ applyFilters(): void {
     monthlyPolicy(data:any){
    
   
-   let ChildPolicyID= data.ChildPolicyID
+   let ChildPolicyID= data.childPolicyID
     this.router.navigate(['/dashboard/policy/monthy',ChildPolicyID])
   }
   addEditData(data?: any) {
@@ -177,7 +178,7 @@ applyFilters(): void {
     });
 }
 updateStage(data: any) {
-  let ChildPolicyID = data.ChildPolicyID;
+  let ChildPolicyID = data.childPolicyID;
 
   const dialogRef = this.dialog.open(AddPolicyStage, {
     width: '400px',

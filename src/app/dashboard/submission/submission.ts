@@ -87,11 +87,11 @@ this.getListOfPolicy();
 getListOfPolicy() {
   this.http.getAllData(ApiUrl.getAllPolicyRecords).subscribe({
     next: (res: any) => {
-      if (res?.Response === 1) {
+      if (res?.response === 1) {
         this.showSpiner = false;
 
-        this.listOfPolcy = (res.ChildPolicys || []).filter(
-          (item: any) => !item.IsDeleted
+        this.listOfPolcy = (res.childPolicys || []).filter(
+          (item: any) => !item.isDeleted
         );
 
         this.originalList = [...this.listOfPolcy];
@@ -125,9 +125,9 @@ getListOfPolicy() {
     }
 
     this.listOfPolcy = this.originalList.filter(item =>
-  item.AccountName?.toLowerCase().includes(text) ||
-  item.BrokerName?.toLowerCase().includes(text) ||
-  item.AccountID?.toString().includes(text)
+  item.accountName?.toLowerCase().includes(text) ||
+  item.brokerName?.toLowerCase().includes(text) ||
+  item.accountID?.toString().includes(text)
 
     );
   }
@@ -137,45 +137,44 @@ getListOfPolicy() {
  
   nextToDetails(data:any){
   this.router.navigate(['/detail']);
-   localStorage.setItem('ChildPolicyID', data.ChildPolicyID);
+   localStorage.setItem('ChildPolicyID', data.childPolicyID);
    localStorage.setItem('EndorsementId', '0');
-    localStorage.setItem('AccountName', data.AccountName);
-    localStorage.setItem('LookUpCode',data.LookUpCode)
-     localStorage.setItem('StageType',data.StageType)
+    localStorage.setItem('AccountName', data.accountName);
+    localStorage.setItem('LookUpCode',data.lookUpCode)
+     localStorage.setItem('StageType',data.stageType)
   }
 
 
   nextToEndrosement(data:any){
  this.router.navigate(['/detail']);
-   localStorage.setItem('ChildPolicyID', data.ChildPolicyID);
+   localStorage.setItem('ChildPolicyID', data.childPolicyID);
    localStorage.setItem('EndorsementId', '1');
-    localStorage.setItem('AccountName', data.AccountName);
-    localStorage.setItem('LookUpCode',data.LookUpCode)
+    localStorage.setItem('AccountName', data.accountName);
+    localStorage.setItem('LookUpCode',data.lookUpCode)
   }
  
   nextToAttachemnt(item:any){
-  localStorage.setItem('AccountID', item.AccountID);
-  localStorage.setItem('AccountName', item.AccountName);
-  localStorage.setItem('LineName',item.LineName)
+  localStorage.setItem('AccountID', item.accountID);
+  localStorage.setItem('AccountName', item.accountName);
+  localStorage.setItem('LineName',item.lineName)
   this.router.navigate(['/dashboard/submission/attachment']);  
   }
 
   nextToFile(data:any){
-   let ChildPolicyID= data.ChildPolicyID
-    localStorage.setItem('LineShortName', data.LineShortName);
+   let ChildPolicyID= data.childPolicyID
+    localStorage.setItem('LineShortName', data.lineShortName);
     this.router.navigate(['/dashboard/submission/fileSubmission',ChildPolicyID])
   }
 
   nextToAdmited(data:any){
-    
-       let ChildPolicyID= data.ChildPolicyID
-    localStorage.setItem('LineShortName', data.LineShortName);
+       let ChildPolicyID= data.childPolicyID
+    localStorage.setItem('LineShortName', data.lineShortName);
     this.router.navigate(['/dashboard/submission/admited',ChildPolicyID])
   }
 
 
    extandPolicy(data:any){
-   let AccountID= data.AccountID
+   let AccountID= data.accountID
    
     this.router.navigate(['/dashboard/policy/extance',AccountID])
   }
@@ -184,7 +183,7 @@ getListOfPolicy() {
     monthlyPolicy(data:any){
    
   
-   let ChildPolicyID= data.ChildPolicyID
+   let ChildPolicyID= data.childPolicyID
     this.router.navigate(['/dashboard/policy/monthy',ChildPolicyID])
   }
   addEditData(data?: any) {
@@ -203,7 +202,7 @@ getListOfPolicy() {
     });
 }
 updateStage(data: any) {
-  let ChildPolicyID = data.ChildPolicyID;
+  let ChildPolicyID = data.childPolicyID;
 
   const dialogRef = this.dialog.open(ConfirmSubmissionToPolicy, {
     width: '400px',

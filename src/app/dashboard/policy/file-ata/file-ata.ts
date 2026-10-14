@@ -173,28 +173,28 @@ onBlur(field: FeeField) {
     this.http.getAllDataId(ApiUrl.bindingFile,this.ChildPolicys)
       .subscribe({
         next: (res: any) => {
-          if (res?.Response === 1) {
-            this.listOfFile = res.ChildPolicys || [];
+          if (res?.response === 1) {
+            this.listOfFile = res.childPolicys || [];
 
             if (this.listOfFile.length > 0) {
               const item = this.listOfFile[0];
 
-              this.From1 = item.AgentName || '';
-              this.RE = item.AccountName || '';
-              this.city = item.City || '';
-              this.StageType = item.StageType || '';
+              this.From1 = item.agentName || '';
+              this.RE = item.accountName || '';
+              this.city = item.city || '';
+              this.StageType = item.stageType || '';
 
-              this.ChildPolicyName = item.ChildPolicyName || '';
-              this.PolicyType = item?.LineName || '';
-              this.CarrierName = item?.CarrierName || '';
+              this.ChildPolicyName = item.childPolicyName || '';
+              this.PolicyType = item?.lineName || '';
+              this.CarrierName = item?.carrierName || '';
              
               this.CarrierAddress = item?.carrier_Address || '';
-              this.Address = item?.Address || '';
+              this.Address = item?.address || '';
               
 
               this.Plolcitterm =
-                this.formatDate(item.Effective) + ' - ' +
-                this.formatDate(item.Expiration);
+                this.formatDate(item.effective) + ' - ' +
+                this.formatDate(item.expiration);
 
             }
           }
@@ -401,53 +401,53 @@ getListOfPolicy() {
 
       console.log('API Response', res);
 
-      const responseData = res?.Data;
+      const responseData = res;
 
-      if (responseData?.Response === 1) {
+      if (responseData?.response === 1) {
 
         const data =
-          responseData?.ChildPolicyTerms;
+          responseData?.childPolicyTerms;
 
         if (data) {
 
            this.Count =
-    Number(data.Count) || 0;
+    Number(data.count) || 0;
 
-          this.DateFrom = data.DateFrom;
-          this.DateTo = data.DateTo;
+          this.DateFrom = data.dateFrom;
+          this.DateTo = data.dateTo;
 
           this.premium =
-            Number(data.Premium) || 0;
+            Number(data.premium) || 0;
 
           this.CarrierFee =
-            Number(data.CarrierFee) || 0;
+            Number(data.carrierFee) || 0;
 
           this.GuardianExpertsFee =
-            Number(data.ATAFee) || 0;
+            Number(data.ataFee) || 0;
 
           this.InsuranceCarrierPolicyFee =
-            Number(data.InsuranceCarrierPolicyFee) || 0;
+            Number(data.insuranceCarrierPolicyFee) || 0;
 
           this.CaliforniaStampingFee =
-            Number(data.StampingFees) || 0;
+            Number(data.stampingFees) || 0;
             
             this.Tria =
-            Number(data.Tria) || 0;
+            Number(data.tria) || 0;
 
              this.Flat_Tira =
-            Number(data.Flat_Tira) || 0;
+            Number(data.flat_Tira) || 0;
 
           this.CaliforniaStateTax =
-            Number(data.IAStateTax) || 0;
+            Number(data.iaStateTax) || 0;
 
           this.Total =
-            Number(data.Total) || 0;
+            Number(data.total) || 0;
 
           this.Commission =
-            `${data.Commission || 10}%`;
+            `${data.commission || 10}%`;
 
           this.MinimumPercednt =
-            `${data.MinimumEarnedPercent || 25}%`;
+            `${data.minimumEarnedPercent || 25}%`;
 
           if (this.DateFrom && this.DateTo) {
 
@@ -471,10 +471,10 @@ getListOfPolicy() {
             this.listOfFile[0];
 
           this.DateFrom =
-            item.Effective;
+            item.effective;
 
           this.DateTo =
-            item.Expiration;
+            item.expiration;
 
           this.Plolcitterm =
             `${this.formatDate(item.Effective)}

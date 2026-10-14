@@ -51,12 +51,12 @@ getAllLoginList() {
 
       console.log(res);
 
-      if (res && res.LoginDetail) {
+      if (res && res.loginDetail) {
 
-        this.listOfAllLoginDetail = res.LoginDetail;
+        this.listOfAllLoginDetail = res.loginDetail;
 
         // important
-        this.filteredLoginList = [...res.LoginDetail];
+        this.filteredLoginList = [...res.loginDetail];
 
       } else {
         this.listOfAllLoginDetail = [];
@@ -87,15 +87,15 @@ getAllLoginList() {
 
     this.filteredLoginList =
       this.listOfAllLoginDetail.filter((x: any) =>
-        x.Team?.toLowerCase().includes(search) ||
-        x.UserName?.toLowerCase().includes(search) ||
-        x.EmailID?.toLowerCase().includes(search)
+        x.team?.toLowerCase().includes(search) ||
+        x.userName?.toLowerCase().includes(search) ||
+        x.emailID?.toLowerCase().includes(search)
       );
   }
 
   addEditRegistrationDetail(data: any) {
 
-    this.LoginID = data.LoginID;
+    this.LoginID = data.loginID;
 
     const dialogRef = this.dialog.open(
       AddEditRegistration,
@@ -104,10 +104,10 @@ getAllLoginList() {
         height: '350px',
         data: {
           LoginID: this.LoginID,
-          Team: data.Team,
-          UserName: data.UserName,
-          Password: data.Password,
-          EmailID: data.EmailID
+          Team: data.team,
+          UserName: data.userName,
+          Password: data.password,
+          EmailID: data.emailID
         }
       }
     );

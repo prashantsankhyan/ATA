@@ -50,94 +50,219 @@ totalNetDue = 0;
     // this.makeForm()
   
   }
-getdetailOfAllData() {
+
+getdetailOfAllData(): void {
+  this.showSpinner = true;
+
   this.http.getAllDataByTwoId(
     ApiUrl.getDatForInvoice,
     this.AccountId,
     this.InvoiceID
-  ).subscribe((data: any) => {
+  ).subscribe({
+    next: (data: any) => {
 
-    this.listForPdf = data?.Detail || [];
+      // Account and invoice response
+      this.listForPdf = data?.detail || [];
 
-    // Notes
-    this.allNotes = [];
+      // Notes from transaction details
+      this.allNotes = [];
 
-    this.listForPdf.forEach((outer: any) => {
-      outer?.Detail?.forEach((inner: any) => {
-        if (inner?.Notes) {
-          this.allNotes.push(inner.Notes);
-        }
+      this.listForPdf.forEach((outer: any) => {
+        (outer?.detail || []).forEach((inner: any) => {
+          if (inner?.notes) {
+            this.allNotes.push(inner.notes);
+          }
+        });
       });
-    });
 
-    const account = this.listForPdf?.[0];
+      // Get account and its transactions
+      const account = this.listForPdf[0];
 
-    this.invoiceDetails = account?.Detail?.map((item: any) => {
+      const transactions = account?.detail || [];
 
-      const Amount = Number(item?.Amount || 0);
-      const commissionPercent = Number(item?.Commission || 0);
+      // Map transaction details
+      this.invoiceDetails = transactions.map((item: any) => {
 
-      const commissionAmount =
-        (Amount * commissionPercent) / 100;
+        const amount = Number(item?.amount) || 0;
+        const policyFee = Number(item?.policyFee) || 0;
 
-      const netDue =
-        Amount - commissionAmount;
+        const surplusTax = Number(item?.surpluxTax) || 0;
+        const stampingFee = Number(item?.stamingFee) || 0;
 
-      return {
-        TransactionID: item.TransactionID,
-        LineName: item.LineName,
-        ARDue:item.ARDue,
-        LineShortName: item.LineShortName,
-        NAIC:item.NAIC,
-        Address:item.Address,
-        Amount: Amount,
-        Commission: commissionPercent,
-        CommissionAmount: commissionAmount,
-        NetDue: netDue
-      };
+        const commissionPercent = Number(item?.commission) || 0;
 
-    }) || [];
+        const agencyDiscount = Number(item?.agencyDiscount) || 0;
+        const agencyFees = Number(item?.agencyFees) || 0;
 
-    // Totals
-    this.totalAmountInvoiced = this.invoiceDetails.reduce(
-      (sum: number, item: any) => sum + item.Amount,
-      0
-    );
+        const companyFinanced =
+          Number(item?.companyFinanced) || 0;
 
-    this.totalCommissionAmount = this.invoiceDetails.reduce(
-      (sum: number, item: any) => sum + item.CommissionAmount,
-      0
-    );
+        const triaRate = Number(item?.tria) || 0;
+        const flatTira = Number(item?.flat_Tira) || 0;
 
-    this.totalNetDue = this.invoiceDetails.reduce(
-      (sum: number, item: any) => sum + item.NetDue,
-      0
-    );
+        // TRIA percentage amount
+        const triaAmount = amount * triaRate / 100;
 
-    // Overall Commission %
-    this.totalCommissionPercent =
-      this.totalAmountInvoiced > 0
-        ? (this.totalCommissionAmount / this.totalAmountInvoiced) * 100
-        : 0;
+        // Commission amount
+        const commissionAmount =
+          amount * commissionPercent / 100;
 
-    console.log('Invoice Details', this.invoiceDetails);
-    console.log('Total Amount', this.totalAmountInvoiced);
-    console.log('Commission Amount', this.totalCommissionAmount);
-    console.log('Net Due', this.totalNetDue);
-    console.log('Commission %', this.totalCommissionPercent);
+        // Use API total when provided.
+        // Otherwise calculate total from transaction fields.
+        const calculatedTotal =
+          amount +
+          policyFee +
+          surplusTax +
+          stampingFee +
+          companyFinanced +
+          triaAmount +
+          flatTira -
+          agencyDiscount +
+          agencyFees;
 
-    this.showSpinner = false;
-    this.cdr.detectChanges();
+        const total =
+          item?.total !== null &&
+          item?.total !== undefined &&
+          item?.total !== ''
+            ? Number(item.total) || 0
+            : calculatedTotal;
+
+        // Received amount
+        const receivedAmount =
+          Number(item?.receiveAmount) || 0;
+
+        // Remaining balance
+        const netDue = total - receivedAmount;
+
+        return {
+          TransactionID: item?.transactionID,
+          InvoiceID: item?.invoiceID,
+          LineName: item?.lineName,
+          ARDue: item?.arDue,
+
+          // API uses camelCase
+          LineShortName:
+            item?.lineShortName ?? item?.lineShortName,
+
+          NAIC: item?.naic,
+          Address: item?.address,
+
+          Amount: amount,
+          PolicyFee: policyFee,
+
+          SurplusTax: surplusTax,
+          StampingFee: stampingFee,
+
+          Commission: commissionPercent,
+          CommissionAmount: commissionAmount,
+
+          AgencyDiscount: agencyDiscount,
+          AgencyFees: agencyFees,
+
+          Tria: triaRate,
+          TriaAmount: triaAmount,
+          FlatTira: flatTira,
+
+          Total: total,
+          ReceivedAmount: receivedAmount,
+          NetDue: netDue,
+
+          Notes: item?.notes || '',
+          PaymentMode: item?.paymentMode || '',
+          TransactionDate: item?.transactionDate
+        };
+      });
+
+      // Total premium / amount
+      this.totalAmountInvoiced =
+        this.invoiceDetails.reduce(
+          (sum: number, item: any) =>
+            sum + item.Amount,
+          0
+        );
+
+      // Total commission
+      this.totalCommissionAmount =
+        this.invoiceDetails.reduce(
+          (sum: number, item: any) =>
+            sum + item.CommissionAmount,
+          0
+        );
+
+      // Total invoice amount
+      const totalInvoiceAmount =
+        this.invoiceDetails.reduce(
+          (sum: number, item: any) =>
+            sum + item.Total,
+          0
+        );
+
+      // Total received
+      const totalReceivedAmount =
+        this.invoiceDetails.reduce(
+          (sum: number, item: any) =>
+            sum + item.ReceivedAmount,
+          0
+        );
+
+      // Remaining balance
+      this.totalNetDue =
+        totalInvoiceAmount - totalReceivedAmount;
+
+      // Overall commission percentage
+      this.totalCommissionPercent =
+        this.totalAmountInvoiced > 0
+          ? (
+              this.totalCommissionAmount /
+              this.totalAmountInvoiced
+            ) * 100
+          : 0;
+
+      // Debug logs
+      console.log('Invoice Details:', this.invoiceDetails);
+      console.log('Total Premium:', this.totalAmountInvoiced);
+      console.log('Total Commission:', this.totalCommissionAmount);
+      console.log('Total Invoice:', totalInvoiceAmount);
+      console.log('Total Received:', totalReceivedAmount);
+      console.log('Remaining Due:', this.totalNetDue);
+      console.log(
+        'Commission Percentage:',
+        this.totalCommissionPercent
+      );
+
+      this.showSpinner = false;
+      this.cdr.detectChanges();
+    },
+
+    error: (error: any) => {
+      console.error(
+        'Error fetching invoice details:',
+        error
+      );
+
+      this.listForPdf = [];
+      this.invoiceDetails = [];
+      this.allNotes = [];
+
+      this.totalAmountInvoiced = 0;
+      this.totalCommissionAmount = 0;
+      this.totalCommissionPercent = 0;
+      this.totalNetDue = 0;
+
+      this.showSpinner = false;
+      this.cdr.detectChanges();
+    }
   });
 }
+
 getCalculatedValues(data1: any) {
 
-  const amount = Number(data1?.Amount || 0);
-  const policyFee = Number(data1?.PolicyFee || 0);
-  const companyFinanced = Number(data1?.CompanyFinanced || 0);
+  const amount = Number(data1?.amount || 0);
+  const policyFee = Number(data1?.policyFee || 0);
+  const companyFinanced = Number(data1?.companyFinanced || 0);
 
-  const surpluxPercent = Number(data1?.SurpluxTax || 0);
-  const stamingPercent = Number(data1?.StamingFee || 0);
+  const surpluxPercent = Number(data1?.surpluxTax || 0);
+  const stamingPercent = Number(data1?.stamingFee || 0);
 
   const surpluxValue = (amount * surpluxPercent) / 100;
   const stamingValue = (amount * stamingPercent) / 100;
@@ -158,7 +283,7 @@ getCalculatedValues(data1: any) {
     this.http.getAllDataByTwoId(ApiUrl.submitChangeRequestForDriverAndVehicle, this.AccountId, this.Service)
       .subscribe(data => {
         const obj = JSON.parse(JSON.stringify(data));
-        this.ListOfAllVehicle = obj.Vehicles || [];
+        this.ListOfAllVehicle = obj.vehicles || [];
       });
   } else {
     // Optionally clear or set empty list if Service is invalid

@@ -59,7 +59,7 @@ export class Vehicle {
         this.showSpiner = false;
 
         const obj = JSON.parse(JSON.stringify(data));
-        this.listOfAllFatchData = [...(data?.AttachmentDetail || [])]; // ✅ new reference
+        this.listOfAllFatchData = [...(data?.attachmentDetail || [])]; // ✅ new reference
           this.cdr.detectChanges();
         // Latest AttachmentDate on top
        
@@ -113,9 +113,9 @@ export class Vehicle {
 //   }
 
 onRowClick(file: any) {
-  if (!file?.FileUrl) return;
+  if (!file?.fileUrl) return;
 
-  let url = file.FileUrl.trim();
+  let url = file.fileUrl.trim();
 
   // Ensure HTTPS (only if needed)
   if (url.startsWith('http://')) {
@@ -158,7 +158,7 @@ deleteData(row: any, action: 'DELETE' | 'PERMANENT') {
     width: '360px',
     disableClose: true,
     data: {
-      fileId: row.FileID,
+      fileId: row.fileID,
       actionType: action
     }
   });

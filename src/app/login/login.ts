@@ -19,7 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './login.scss',
 })
 export class Login {
-private userInteracted = false;
+  private userInteracted = false;
      
   showSpiner = true
   confirmLogin!:FormGroup ;
@@ -73,8 +73,8 @@ startClock() {
   makeForm(){
    
     this.confirmLogin = this.fb.group({
-      UserName:[''],
-      Password:['',],
+      userName:[''],
+      password:['',],
       
     });
   }
@@ -142,14 +142,14 @@ handleStorageChange = (event: StorageEvent) => {
 //          this.loginDone = true
           
 //           this.clearTeamName()
-//           this.loginId =obj.LoginDetail[0].LoginID
+//           this.loginId =obj.loginDetail[0].LoginID
         
         
-//           let teamName =obj.LoginDetail[0].Team
-//           let Password =obj.LoginDetail[0].Password
-//           let UserName =obj.LoginDetail[0].UserName
-//           let EmailID = obj.LoginDetail[0].EmailID
-//           let TeamType =obj.LoginDetail[0].TeamType
+//           let teamName =obj.loginDetail[0].Team
+//           let Password =obj.loginDetail[0].Password
+//           let UserName =obj.loginDetail[0].UserName
+//           let EmailID = obj.loginDetail[0].EmailID
+//           let TeamType =obj.loginDetail[0].TeamType
 //           console.log('TeamName from server:', `"${teamName}"`);
          
           
@@ -264,19 +264,19 @@ onSubmit() {
 
       console.log(obj);
 
-      if (obj.Response == '1') {
+      if (obj.response == '1') {
 
         this.dispalyFull = false;
         this.loginDone = true;
 
         this.clearTeamName();
-        this.loginId = obj.LoginDetail[0].LoginID;
+        this.loginId = obj.loginDetail[0].loginID;
 
-        let teamName = obj.LoginDetail[0].Team;
-        let Password = obj.LoginDetail[0].Password;
-        let UserName = obj.LoginDetail[0].UserName;
-        let EmailID = obj.LoginDetail[0].EmailID;
-        let TeamType = obj.LoginDetail[0].TeamType;
+        let teamName = obj.loginDetail[0].team;
+        let Password = obj.loginDetail[0].password;
+        let UserName = obj.loginDetail[0].userName;
+        let EmailID = obj.loginDetail[0].emailID;
+        let TeamType = obj.loginDetail[0].teamType;
 
         console.log('TeamName from server:', `"${teamName}"`);
 
@@ -305,7 +305,7 @@ onSubmit() {
 
       } else {
 
-        if (obj.ErrorMessage === 'Already Login To Another Machine') {
+        if (obj.errorMessage === 'Already Login To Another Machine') {
 
           this.alredyExitMesssgae = true;
 
@@ -349,8 +349,8 @@ onSubmit() {
   saveUserData(): void {
     if (this.confirmLogin.valid) {
       const userData = {
-        UserName: this.confirmLogin.value.UserName,
-        Password: this.confirmLogin.value.Password
+        UserName: this.confirmLogin.value.userName,
+        Password: this.confirmLogin.value.password
       };
       
      

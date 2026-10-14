@@ -80,7 +80,7 @@ addDriverReplace:'Driver/ReplaceDriverExcelFile',
  deleteTemporaryDeletedChildPolicies:'ChildPolicy/TemporaryDeletedChildPolicies',
  getAllRenewPolicy:'ChildPolicy/GetAllChildPolicyByAccountIDOnlyReNew',
  //policy Bind Attachememt/
- uploadPolicyAndEndrosementAttachement:'/FAttachmentBindingTeam/UploadMultiFilesBindingTeam',
+ uploadPolicyAndEndrosementAttachement:'FAttachmentBindingTeam/UploadMultiFilesBindingTeam',
  getAllAttachmetOfPolicyAndEndrosement:'FAttachmentBindingTeam/GetAllFileDetailsBindingTeam',
  //Endrosement
  getAllEndrosementByPolicyId:'Endorsement/GetAllEndorsementByChildandMarkedPolicyIDWithSummary',

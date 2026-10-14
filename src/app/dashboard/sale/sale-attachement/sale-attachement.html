@@ -44,7 +44,7 @@
              </div>
              <div class="mt-3 mb-1"> 
                  <label>Description</label>
-                 <textarea class="form-control" rows="3"formControlName="Description"></textarea>
+                 <textarea class="form-control" rows="3"formControlName="description"></textarea>
                  <!-- <select class="form-select form-select-sm" formControlName="Description" aria-label=".form-select-sm example"[ngClass]= "{ 'is-invalid': submit && f['Description'].errors }">
                    
                     <option hidden value="" disabled selected  >Select Description Type</option>
@@ -61,8 +61,8 @@
                     <option value="Cab Card">Cab Card</option>
                   </select> -->
                 
-                 <div *ngIf ="submit && f['Description'].errors" class="invalid-feedback">
-                     <div *ngIf ="f['Description'].errors">Description is required</div>
+                 <div *ngIf ="submit && f['description'].errors" class="invalid-feedback">
+                     <div *ngIf ="f['description'].errors">Description is required</div>
                  </div>
                  
              </div>

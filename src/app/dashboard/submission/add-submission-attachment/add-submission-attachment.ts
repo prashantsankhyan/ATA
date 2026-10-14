@@ -73,27 +73,27 @@ addEditAttachmentForm!:FormGroup ;
     abc: ['', Validators.required],
 
     // Required
-    AccountID: [this.AccountID, Validators.required],
+    accountID: [this.AccountID, Validators.required],
 
     // Attachment metadata
-    Binding: [''],
-    Policies: [''],
-    Proposal: [''],
-    Bors: [''],
-    Notice: [''],
+    binding: [''],
+    policies: [''],
+    proposal: [''],
+    bors: [''],
+    notice: [''],
 
     // Extra info
-    FolderID: [''],
-    AttachedBy: ['1'],           // or user id
-    Description: [''],
+    folderID: [''],
+    attachedBy: ['1'],           // or user id
+    description: [''],
 
     // Classification
-    PolicyType: [this.LineName],
-    TransactionType: [''],
-    TeamName: ['Binding'],         // default as per data
+    policyType: [this.LineName],
+    transactionType: [''],
+    teamName: ['Binding'],         // default as per data
 
     // Audit
-    EnteredBy: [this.userName]
+    enteredBy: [this.userName]
 
   });
 }
@@ -122,19 +122,19 @@ addEditAttachmentForm!:FormGroup ;
       
     }
    
-    productFormData.append('AccountID',this.addEditAttachmentForm.get('AccountID')?.value);
-    productFormData.append('Policies',this.addEditAttachmentForm.get('Policies')?.value);
-    productFormData.append('Binding',this.addEditAttachmentForm.get('Binding')?.value);
-    productFormData.append('Proposal',this.addEditAttachmentForm.get('Proposal')?.value);
-    productFormData.append('EnteredBy',this.addEditAttachmentForm.get('EnteredBy')?.value);
-    productFormData.append('Bors',this.addEditAttachmentForm.get('Bors')?.value);
-    productFormData.append('Notice',this.addEditAttachmentForm.get('Notice')?.value);
-     productFormData.append('TeamName',this.addEditAttachmentForm.get('TeamName')?.value);
+    productFormData.append('accountID',this.addEditAttachmentForm.get('accountID')?.value);
+    productFormData.append('policies',this.addEditAttachmentForm.get('policies')?.value);
+    productFormData.append('binding',this.addEditAttachmentForm.get('binding')?.value);
+    productFormData.append('proposal',this.addEditAttachmentForm.get('proposal')?.value);
+    productFormData.append('enteredBy',this.addEditAttachmentForm.get('enteredBy')?.value);
+    productFormData.append('bors',this.addEditAttachmentForm.get('bors')?.value);
+    productFormData.append('notice',this.addEditAttachmentForm.get('notice')?.value);
+     productFormData.append('teamName',this.addEditAttachmentForm.get('teamName')?.value);
   
-    productFormData.append('AttachedBy',this.addEditAttachmentForm.get('AttachedBy')?.value);
-    productFormData.append('Description',this.addEditAttachmentForm.get('Description')?.value);
-    productFormData.append('PolicyType',this.addEditAttachmentForm.get('PolicyType')?.value);
-    productFormData.append('TransactionType',this.addEditAttachmentForm.get('TransactionType')?.value);
+    productFormData.append('attachedBy',this.addEditAttachmentForm.get('attachedBy')?.value);
+    productFormData.append('description',this.addEditAttachmentForm.get('description')?.value);
+    productFormData.append('policyType',this.addEditAttachmentForm.get('policyType')?.value);
+    productFormData.append('transactionType',this.addEditAttachmentForm.get('transactionType')?.value);
 
 
     // Object.keys(this.productForm).map((key) =>{
@@ -150,7 +150,7 @@ addEditAttachmentForm!:FormGroup ;
 
     private _addProduct(productData: FormData): void {
       
-    this.http.addEditFormData(ApiUrl.uploadPolicyAndEndrosementAttachement,productData).pipe().subscribe(
+    this.http.addEditFormDataNew(ApiUrl.uploadPolicyAndEndrosementAttachement,productData).pipe().subscribe(
         data => {
 
         

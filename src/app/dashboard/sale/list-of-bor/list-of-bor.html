@@ -95,15 +95,15 @@
   (click)="onRowClick(data)"
 >
               
-                 <td style="width: 350px;">{{data.FileName}}</td>
-               <td>{{ data.AttachmentDate | date:'MM/dd/yyyy hh:mm:ss a' }}</td>
+                 <td style="width: 350px;">{{data.fileName}}</td>
+               <td>{{ data.attachmentDate | date:'MM/dd/yyyy hh:mm:ss a' }}</td>
                 
-                <td style="width: 500px;">{{data.Description}}</td>
+                <td style="width: 500px;">{{data.description}}</td>
                 <td style="width: 150px;"   [ngStyle]="{
-    'background-color': data.AgentName === agentName ? '#d4edda' : '',
-    'color': data.AgentName === agentName ? '#155724' : '',
-    'font-weight': data.AgentName === agentName ? '600' : '400'
-  }">{{data.AgentName}}</td>
+    'background-color': data.agentName === agentName ? '#d4edda' : '',
+    'color': data.agentName === agentName ? '#155724' : '',
+    'font-weight': data.agentName === agentName ? '600' : '400'
+  }">{{data.agentName}}</td>
                 
                 <td>
   <a (click) ="updateBor(data); $event.stopPropagation()">

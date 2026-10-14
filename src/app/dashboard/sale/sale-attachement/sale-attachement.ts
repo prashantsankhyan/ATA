@@ -69,12 +69,12 @@ addEditAttachmentForm!:FormGroup ;
   makeForm(){
     this.addEditAttachmentForm = this.fb.group({
       abc:['',[Validators.required,]],
-      AccountID:[this.accountId ,[Validators.required,]],
+      accountID:[this.accountId ,[Validators.required,]],
       // FolderID:['',[Validators.required,]],
-      AttachedBy:['jj',],
-      Description:['',[Validators.required,]],
-      EnteredBy:[this.userName],
-      TeamName:['']
+      attachedBy:['jj',],
+      description:['',[Validators.required,]],
+      enteredBy:[this.userName],
+      teamName:['']
       
       
     });
@@ -103,12 +103,12 @@ addEditAttachmentForm!:FormGroup ;
       
     }
    
-    productFormData.append('AccountID',this.addEditAttachmentForm.get('AccountID')?.value);
+    productFormData.append('accountID',this.addEditAttachmentForm.get('accountID')?.value);
     // productFormData.append('FolderID',this.addEditAttachmentForm.get('FolderID')?.value);
-    productFormData.append('AttachedBy',this.addEditAttachmentForm.get('AttachedBy')?.value);
-    productFormData.append('Description',this.addEditAttachmentForm.get('Description')?.value);
-    productFormData.append('EnteredBy',this.addEditAttachmentForm.get('EnteredBy')?.value);
-    productFormData.append('TeamName',this.addEditAttachmentForm.get('TeamName')?.value);
+    productFormData.append('attachedBy',this.addEditAttachmentForm.get('attachedBy')?.value);
+    productFormData.append('description',this.addEditAttachmentForm.get('description')?.value);
+    productFormData.append('enteredBy',this.addEditAttachmentForm.get('enteredBy')?.value);
+    productFormData.append('teamName',this.addEditAttachmentForm.get('teamName')?.value);
 
     // Object.keys(this.productForm).map((key) =>{
     //   productFormData.append(key,this.productForm[key].value);
@@ -121,22 +121,41 @@ addEditAttachmentForm!:FormGroup ;
 
 
 
-    private _addProduct(productData: FormData): void {
-      this.changeLocation()
-    this.http.addEditFormData(ApiUrl.addEditFileAttachment,productData).pipe().subscribe(
-        data => {
+  
+private _addProduct(productData: FormData): void {
 
-         this.changeLocation()
-         const response  = JSON.stringify(data) ;
-         const  obj   = JSON.parse(response) ;
-       
-         
-         this.onNoClick1()
-      
-      },
-       
-      );
-  }
+  this.saveButtonShow = false;
+
+  this.http.addEditFormDataNew(
+    ApiUrl.addEditFileAttachment,
+    productData
+  ).subscribe({
+
+    next: (data: any) => {
+
+      console.log('Upload response:', data);
+
+      // Notify the parent list to refresh
+      this.http.filter('Register click');
+
+      // Close dialog only after successful upload
+      this.dialogRef.close(true);
+
+    },
+
+  error: (err: any) => {
+  console.error('Upload error:', err);
+  console.log('HTTP status:', err.status);
+  console.log('Response body:', err.error);
+  console.log('Error message:', err.message);
+
+  this.saveButtonShow = true;
+}
+
+  });
+}
+
+
 
   
   onFileUpload(event:any): void {

@@ -74,13 +74,19 @@ export class Sale {
 //   });
 // }
 
-getlistOfSale() {
+
+getlistOfSale(): void {
+  
+
   this.http.getAllData(ApiUrl.getAllAccountDetail).subscribe({
     next: (res: any) => {
+      console.log('Account API Response:', res);
 
-      if (res?.Response === 1) {
+      if (res?.response === 1) {
+        this.listOfSale = Array.isArray(res.accounts)
+          ? res.accounts
+          : [];
 
-        this.listOfSale = res.Accounts || [];
         this.originalList = [...this.listOfSale];
 
         // Apply search if AccountName was passed
@@ -88,26 +94,35 @@ getlistOfSale() {
           this.applyFilter();
         }
 
-        // Clear localStorage AFTER you've finished with it (optional)
         localStorage.removeItem('AccountID');
         localStorage.removeItem('AccountName');
         localStorage.removeItem('brokerName');
         localStorage.removeItem('AgentName');
+      } else {
+        this.listOfSale = [];
+        this.originalList = [];
       }
 
       this.showSpiner = false;
       this.cdr.detectChanges();
     },
-    error: () => {
+    error: (err: any) => {
+      console.error('Account API Error:', err);
+
       this.showSpiner = false;
       this.listOfSale = [];
+      this.originalList = [];
+
       this.cdr.detectChanges();
     }
   });
 }
 
+
+
   // ✅ SEARCH FILTER
-applyFilter() {
+
+applyFilter(): void {
   const text = (this.searchText || '').trim().toLowerCase();
 
   if (!text) {
@@ -116,22 +131,20 @@ applyFilter() {
   }
 
   this.listOfSale = this.originalList.filter((item: any) => {
-
-    // Show "Individual" when DOT is empty
-    const dotValue = item.DOT?.trim()
-      ? item.DOT.toLowerCase()
-      : 'individual';
+    const dotValue = String(item.dot ?? '').trim().toLowerCase() || 'individual';
 
     return (
-      item.AccountName?.toLowerCase().includes(text) ||
+      String(item.accountName ?? '').toLowerCase().includes(text) ||
       dotValue.includes(text) ||
-      item.AgentName?.toLowerCase().includes(text) ||
-      item.MobileNumber?.toLowerCase().includes(text) ||
-      item.EmailID?.toLowerCase().includes(text) ||
-      item.EnteredBy?.toLowerCase().includes(text)
+      String(item.agentName ?? '').toLowerCase().includes(text) ||
+      String(item.mobileNumber ?? '').toLowerCase().includes(text) ||
+      String(item.emailID ?? '').toLowerCase().includes(text) ||
+      String(item.enteredBy ?? '').toLowerCase().includes(text)
     );
   });
 }
+
+
 
   fixDate(date: string): Date | null {
   if (!date) return null;
@@ -150,8 +163,8 @@ applyFilter() {
   goToAttachment(item: any) {
 
   // ✅ Store AccountID in localStorage
-  localStorage.setItem('AccountID', item.AccountID);
-  localStorage.setItem('AccountName', item.AccountName);
+  localStorage.setItem('AccountID', item.accountID);
+  localStorage.setItem('AccountName', item.accountName);
 
   // ✅ Navigate to route
   this.router.navigate(['/dashboard/sale/attahment']);
@@ -174,9 +187,9 @@ applyFilter() {
 
 
 goToBor(item: any){
-   localStorage.setItem('AccountID', item.AccountID);
-  localStorage.setItem('AccountName', item.AccountName);
-  localStorage.setItem('AgentName', item.AgentName);
+   localStorage.setItem('AccountID', item.accountID);
+  localStorage.setItem('AccountName', item.accountName);
+  localStorage.setItem('AgentName', item.agentName);
   
   this.router.navigate(['/dashboard/sale/bor']);
 }

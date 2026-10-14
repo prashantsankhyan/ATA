@@ -17,9 +17,9 @@ CA,95961</h5>
 
 <div class="row mt-5" *ngFor="let data of listForPdf">
     <div class="col-sm-6">
-        Bill To: <span>{{data.AgentCode}}</span><br/>
-        {{data.AgencyName}}<br/>
- Attn: {{data.AgentName}}<br/>
+        Bill To: <span>{{data.agentCode}}</span><br/>
+        {{data.agencyName}}<br/>
+ Attn: {{data.agentName}}<br/>
 
 <span class="address-cell">
     {{data.Agent_Address}}
@@ -29,7 +29,7 @@ CA,95961</h5>
 
     </div>
      <div class="col-sm-6">
-        Attn:<span>{{data.AgentName}}</span> 
+        Attn:<span>{{data.agentName}}</span> 
        <!-- <h4>Submission No: 14448398</h4>  -->
 
     </div>
@@ -44,7 +44,7 @@ CA,95961</h5>
   </tr>
   <tr *ngFor="let data of listForPdf">
     <td>
-      <a >{{data.AgentCode}}</a>
+      <a >{{data.agentCode}}</a>
     </td>
     <td>
       <a >
@@ -98,13 +98,13 @@ CA,95961</h5>
                 <tr>
                     <td style="padding:6px 10px; border-bottom:1px solid #000; font-size:18px;">
                         <span>Insured:</span>
-                        <span style="margin-left:20px;">{{data.AccountName}}</span>
+                        <span style="margin-left:20px;">{{data.accountName}}</span>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding:6px 10px; font-size:18px;">
                         <span>DBA:</span>
-                        <span style="margin-left:45px;">{{data.AccountName}}</span>
+                        <span style="margin-left:45px;">{{data.accountName}}</span>
                     </td>
                 </tr>
             </table>
@@ -118,7 +118,7 @@ CA,95961</h5>
 
             <div style="font-size:18px;">
                 <span>Payment Due On:</span>
-                <span style="margin-left:20px;">{{data.ARDue | date:'MM/dd/yyyy'}}</span>
+                <span style="margin-left:20px;">{{data.arDue | date:'MM/dd/yyyy'}}</span>
             </div>
         </td>
     </tr>
@@ -133,22 +133,22 @@ CA,95961</h5>
   </tr>
  <ng-container *ngFor="let account of listForPdf">
 
-  <tr *ngFor="let detail of account.Detail; let i = index">
+  <tr *ngFor="let detail of account.detail; let i = index">
     
-    <td *ngIf="i === 0" [attr.rowspan]="account.Detail.length" style="text-align:left;">
-      {{ account.AccountName }}
+    <td *ngIf="i === 0" [attr.rowspan]="account.detail.length" style="text-align:left;">
+      {{ account.accountName }}
     </td>
 
     <td style="text-align:left;">
-      {{ detail.ChildPolicyName }}
+      {{ detail.childPolicyName }}
     </td>
 
     <td style="text-align: center;">
-      {{ detail.Effective | date:'MM/dd/yyyy' }}
+      {{ detail.effective | date:'MM/dd/yyyy' }}
     </td>
 
     <td  style="text-align: center;">
-      {{ detail.Expiration | date:'MM/dd/yyyy' }}
+      {{ detail.expiration | date:'MM/dd/yyyy' }}
     </td>
 
   </tr>

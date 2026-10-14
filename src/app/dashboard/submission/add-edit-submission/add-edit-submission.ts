@@ -68,37 +68,61 @@ LoginUserName:any;
       this.filteredList = !search
         ? [...this.listOfSale]
         : this.listOfSale.filter(x =>
-            x.AccountName?.toLowerCase().includes(search)
+            x.accountName?.toLowerCase().includes(search)
           );
     });
   }
 
   // ✅ API
-getlistOfSale() {
+getlistOfSale(): void {
   this.http.getAllData(ApiUrl.getAllAccountDetail).subscribe({
     next: (res: any) => {
-      this.listOfSale = res?.Accounts || [];
-      this.filteredList = [...this.listOfSale];
+      if (res?.response === 1 && Array.isArray(res.accounts)) {
+        this.listOfSale = res.accounts;
+        this.filteredList = [...this.listOfSale];
+
+        const accountId = this.addEditPolicyForm.get('accountID')?.value;
+
+        if (accountId != null) {
+          this.addEditPolicyForm.get('accountID')?.setValue(
+            Number(accountId)
+          );
+        }
+      } else {
+        this.listOfSale = [];
+        this.filteredList = [];
+      }
     },
-    error: () => {
+    error: (err: any) => {
+      console.error('Account list error:', err);
       this.listOfSale = [];
       this.filteredList = [];
     }
   });
 }
-applyFilter(value: string) {
+applyFilter(value: string): void {
+
   const search = (value ?? '').toLowerCase().trim();
 
-  this.filteredList = this.listOfSale.filter(item =>
-    item.AccountName?.toLowerCase().includes(search)
+  if (!search) {
+    this.filteredList = [...this.listOfSale];
+    return;
+  }
+
+  this.filteredList = this.listOfSale.filter((item: any) =>
+
+    (item.accountName ?? '')
+      .toLowerCase()
+      .includes(search)
+
   );
 }
 onSelectAccount(event: any) {
-  const selected = this.listOfSale.find(x => x.AccountID == event.value);
+  const selected = this.listOfSale.find(x => x.accountID == event.value);
 
-  this.selectedAccountId = selected?.AccountID;
+  this.selectedAccountId = selected?.accountID;
  
-  this.selectedAccountName = selected?.AccountName;
+  this.selectedAccountName = selected?.accountName;
 }
 
 
@@ -106,7 +130,7 @@ onSelectAccount(event: any) {
 getLineName() {
   this.http.getAllData(ApiUrl.getAllLineName).subscribe({
     next: (res: any) => {
-      this.listOFLineName = res?.LineNames || [];
+      this.listOFLineName = res?.lineNames || [];
     },
     error: () => {
       this.listOFLineName = [];
@@ -118,8 +142,8 @@ getLineName() {
   this.http.getAllData(ApiUrl.getAllBroker).subscribe({
     next: (res: any) => {
 
-      if (res?.Response === 1) {
-        this.listOfBroker = res.Brokers || [];
+      if (res?.response === 1) {
+        this.listOfBroker = res.brokers || [];
         
       } else {
         this.listOfBroker = [];
@@ -138,64 +162,51 @@ getLineName() {
   });
 }
 
-getListOfCarrier() {
- 
 
+getListOfCarrier(): void {
   this.http.getAllData(ApiUrl.getAllCarrier).subscribe({
     next: (res: any) => {
-
-      if (res && res.Response === 1 && Array.isArray(res.Carrier)) {
-        this.listOfCarrier = res.Carrier;
-      
-      } else {
-        this.listOfCarrier = [];
-      
-      }
-
-     
-      this.cdr.detectChanges(); // force UI refresh
+      this.listOfCarrier =
+        res?.response === 1 && Array.isArray(res.carrier)
+          ? res.carrier
+          : [];
     },
-
-    error: (err) => {
-      console.error('API Error:', err);
-
-      
+    error: (err: any) => {
+      console.error('Carrier API Error:', err);
       this.listOfCarrier = [];
-    
-
-      this.cdr.detectChanges();
     }
   });
 }
-getListOfSuCarrierb(subCarrierId?: any) {
 
-  const carrierId = this.addEditPolicyForm.get('CarrierSubmissionID')?.value;
+getListOfSuCarrierb(subCarrierId?: any): void {
+  const id = this.addEditPolicyForm.get('carrierSubmissionID')?.value;
 
-  if (!carrierId) {
+  console.log('CarrierSubmissionID:', id);
+
+  if (!id) {
     this.listOfSubCarrier = [];
+    this.addEditPolicyForm.patchValue({ subCarrierID: '' });
     return;
   }
 
-  this.http.getAllDataId(ApiUrl.suCarrierByCarrier, carrierId)
-    .subscribe({
-      next: (res: any) => {
+  this.http.getAllDataId(ApiUrl.suCarrierByCarrier, id).subscribe({
+    next: (res: any) => {
+      this.listOfSubCarrier =
+        res?.response === 1 && Array.isArray(res.subCarrier)
+          ? res.subCarrier
+          : [];
 
-        this.listOfSubCarrier =
-          res?.Response === 1 ? res.SubCarrier : [];
-
-        // Select value after dropdown is loaded
-        if (subCarrierId != null) {
-          this.addEditPolicyForm.patchValue({
-            SubCarrierID: subCarrierId
-          });
-        }
-
-        this.cdr.detectChanges();
-      },
-      error: () => {
-        this.listOfSubCarrier = [];
+      if (subCarrierId != null) {
+        this.addEditPolicyForm.patchValue({
+          subCarrierID: Number(subCarrierId)
+        });
       }
-    });
+    },
+    error: (err: any) => {
+      console.error('Sub-carrier API Error:', err);
+      this.listOfSubCarrier = [];
+    }
+  });
 }
 
 
@@ -226,9 +237,10 @@ availableMarkets = [
 
 
 
-update() {
 
-  this.ChildPolicyID = this.data?.ChildPolicyID;
+update(): void {
+
+  this.ChildPolicyID = this.data?.childPolicyID;
 
   if (!this.ChildPolicyID || this.ChildPolicyID == '0') {
     return;
@@ -240,46 +252,46 @@ update() {
   ).subscribe({
     next: (res: any) => {
 
-      const policy = res?.ChildPolicys?.[0];
+      const policy = res?.childPolicys?.[0];
 
-      if (!policy) {
+      if (res?.response !== 1 || !policy) {
+        console.error('Policy data not found:', res);
         return;
       }
 
       this.addEditPolicyForm.patchValue({
-        ChildPolicyID: policy.ChildPolicyID,
-        AccountID: policy.AccountID,
-        EndorsementId: policy.EndorsementId,
-        CarrierSubmissionID: policy.CarrierSubmissionID,
-        SubPolicy: policy.SubPolicy,
-        Type: policy.Type,
-        LineID: policy.LineID,
-        Description: policy.Description,
-        ChildPolicyName: policy.ChildPolicyName,
-        BrokerID: policy.BrokerID,
-        IssuingCompany: policy.IssuingCompany,
-        Policy_Status: policy.Policy_Status,
-        BillType: policy.BillType,
-        City: policy.City,
-        IsDeleted: false,
-        Effective: this.formatDate(policy.Effective),
-        Expiration: this.formatDate(policy.Expiration)
+        childPolicyID: policy.childPolicyID,
+        accountID: policy.accountID,
+        endorsementId: policy.endorsementId,
+        carrierSubmissionID: policy.carrierSubmissionID,
+        subPolicy: policy.subPolicy,
+        type: policy.type,
+        lineID: policy.lineID,
+        description: policy.description,
+        childPolicyName: policy.childPolicyName,
+        brokerID: policy.brokerID,
+        issuingCompany: policy.issuingCompany,
+        policy_Status: policy.policy_Status,
+        billType: policy.billType,
+        city: policy.city,
+        isDeleted: false,
+        effective: this.formatDate(policy.effective),
+        expiration: this.formatDate(policy.expiration)
       });
 
-      this.selectedAccountId = policy.AccountID;
-      this.selectedAccountName = policy.AccountName;
+      this.selectedAccountId = policy.accountID;
+      this.selectedAccountName = policy.accountName;
 
-      console.log('SubCarrierID =', policy.SubCarrierID);
+      console.log('SubCarrierID =', policy.subCarrierID);
 
       // Load sub-carrier list and select current value
-      this.getListOfSuCarrierb(policy.SubCarrierID);
-
+      this.getListOfSuCarrierb(policy.subCarrierID);
     },
-    error: (err) => {
+
+    error: (err: any) => {
       console.error('Update API error:', err);
     }
   });
-
 }
  currentDate(){
     let dte = new Date(this.setEffective)
@@ -299,14 +311,51 @@ update() {
      let newdate  =month + "/" + day + "/" + year
      this.Expiration = newdate 
   }
-formatDate(date: Date): string {
-  const d = new Date(date);
+formatDate(date: Date | string): string {
+  if (!date) return '';
 
-  const month = (d.getMonth() + 1).toString().padStart(2, '0');
-  const day = d.getDate().toString().padStart(2, '0');
+  // Already MM/dd/yyyy
+  if (typeof date === 'string' &&
+      /^\d{2}\/\d{2}\/\d{4}$/.test(date)) {
+    return date;
+  }
+
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return '';
+
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
   const year = d.getFullYear();
 
   return `${month}/${day}/${year}`;
+}
+convertDateForApi(value: string): string | null {
+  if (!value) return null;
+
+  // MM/dd/yyyy -> yyyy-MM-dd
+  const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+
+  if (match) {
+    const [, month, day, year] = match;
+
+    const m = Number(month);
+    const d = Number(day);
+    const y = Number(year);
+
+    const check = new Date(y, m - 1, d);
+
+    if (
+      check.getFullYear() !== y ||
+      check.getMonth() !== m - 1 ||
+      check.getDate() !== d
+    ) {
+      return null;
+    }
+
+    return `${year}-${month}-${day}`;
+  }
+
+  return null;
 }
 onEffectiveChange() {
   const value = this.addEditPolicyForm.get('Effective')?.value;
@@ -344,79 +393,122 @@ onEffectiveChange() {
 
   const expirationDate = this.formatDate(expirationDateObj);
     this.addEditPolicyForm = this.fb.group({
-      ChildPolicyID:['0'],
-      EndorsementId:['0'],
-      AccountID:[''],
-      CarrierSubmissionID:[''],
-      MarkedPolicyID:['',],
-      PremiumPayableID:['4'],
-      SelectPayableID:['4',],
-      LineID:[''],
-      ChildPolicyName:['',],
-      Description:['',],
-       Effective: [effectiveDate],
-      Expiration: [expirationDate],
-      IssuingCompany:[''],
-      Source:['any'],
-      SubmitType:['Pro'],
-      Policy_Status:['New'],
-      Type:[''],
-      SubPolicy:[''],
-      City:[''],
-      BrokerID:[''],
-      SubCarrierID:[''],
+      childPolicyID:['0'],
+      endorsementId:['0'],
+      accountID:[''],
+      carrierSubmissionID:['0'],
+      markedPolicyID:['0',],
+      premiumPayableID:['4'],
+      selectPayableID:['4',],
+      lineID:[''],
+      childPolicyName:['',],
+      description:['',],
+       effective: [effectiveDate],
+      expiration: [expirationDate],
+      issuingCompany:[''],
+      source:['any'],
+      submitType:['Pro'],
+      policy_Status:['New'],
+      type:[''],
+      subPolicy:[''],
+      city:[''],
+      brokerID:[''],
+      subCarrierID:[''],
 
-      BillType:['',],
-      StageType:['In-Process',],
-      EnteredBy:[this.LoginUserName],
-      IsDeleted:[''],
-      UpdatedBy:[''],
+      billType:['',],
+      stageType:['In-Process',],
+      enteredBy:[this.LoginUserName],
+      isDeleted:[''],
+      updatedBy:[''],
       
       
       
     });
   }
- onSubmit() {
+onSubmit() {
   this.submit = true;
 
-  if (!this.addEditPolicyForm.valid) {
+  if (this.addEditPolicyForm.invalid) {
     return;
   }
 
-  let obj = this.addEditPolicyForm.getRawValue();
+  const obj = this.addEditPolicyForm.getRawValue();
+
+  // Convert dates: MM/dd/yyyy -> yyyy-MM-dd
+  obj.effective = this.convertDateForApi(obj.effective);
+  obj.expiration = this.convertDateForApi(obj.expiration);
+
+  // Convert nullable IDs
+  const nullableIds = [
+    'brokerID',
+    'subCarrierID',
+    'accountID',
+    'carrierSubmissionID',
+    'lineID',
+    'endorsementId',
+    'childPolicyID'
+  ];
+
+  nullableIds.forEach(key => {
+    const value = obj[key];
+
+    obj[key] =
+      value === '' || value === null || value === undefined
+        ? null
+        : Number(value);
+  });
+
+  // Convert Boolean field
+  const deleted = obj.isDeleted;
+
+  obj.isDeleted =
+    deleted === true || deleted === 'true'
+      ? true
+      : deleted === false || deleted === 'false'
+        ? false
+        : null;
+
+  // Convert numeric fields
+  obj.markedPolicyID = Number(obj.markedPolicyID || 0);
+  obj.premiumPayableID = Number(obj.premiumPayableID || 0);
+  obj.selectPayableID = Number(obj.selectPayableID || 0);
 
   if (this.ChildPolicyID) {
-    obj['ChildPolicyID'] = this.ChildPolicyID; // UPDATE
+    obj.childPolicyID = Number(this.ChildPolicyID);
   }
-this.isLoading = true; 
-  this.http.addEditData(ApiUrl.addEditPolicy, obj).subscribe({
-    next: (data: any) => {
 
-      const response = data?.Data;
+  // Check exact payload before sending
+  console.log('Final API payload:', obj);
+  console.log('isDeleted type:', typeof obj.isDeleted);
 
-      if (response?.Response == 1) {
+  this.isLoading = true;
 
-        // ✅ SUCCESS MESSAGE
-        this.alertMessage = response.ErrorMessage;
+  this.http.addEditData(ApiUrl.addEditPolicy, obj)
+    .pipe(finalize(() => this.isLoading = false))
+    .subscribe({
+      next: (data: any) => {
+        const response = data?.Data ?? data?.data ?? data;
+        const success = response?.Response ?? response?.response;
+        const message =
+          response?.ErrorMessage ??
+          response?.errorMessage ??
+          'Something went wrong';
 
-        // (optional) snackbar instead of alertMessage
-        // this.snackBar.open(response.ErrorMessage, 'Close', { duration: 3000 });
-
-        // ✅ CLOSE DIALOG AFTER SUCCESS
-        this.dialogRef.close(true);
+        if (success == 1) {
+          this.alertMessage = message;
+          this.dialogRef.close(true);
+        } else {
+          this.alertMessage = message;
+        }
+      },
+      error: (err: any) => {
+        console.error('Update error:', err.error || err);
+        this.alertMessage =
+          err.error?.title || 'Server error occurred';
       }
-      else {
-        this.alertMessage = response?.ErrorMessage || 'Something went wrong';
-      }
-
-    },
-
-    error: (err) => {
-      console.error(err);
-      this.alertMessage = 'Server error occurred';
-    }
-  });
+    });
 }
+
   closeModel() {
     this.dialogRef.close(true);
   }

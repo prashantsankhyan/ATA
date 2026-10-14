@@ -89,7 +89,7 @@ getAllFile() {
       console.log('API RAW:', data); // ✅ check here
 
       const obj = data as any; // ❌ don't stringify/parse
-      this.listOfAllFatchData = obj?.AttachmentDetail || [];
+      this.listOfAllFatchData = obj?.attachmentDetail || [];
 
       console.log('LIST:', this.listOfAllFatchData); // ✅ confirm array
 
@@ -144,9 +144,9 @@ getAllFile() {
   // }
 
   onRowClick(file: any) {
-  if (!file?.FileUrl) return;
+  if (!file?.fileUrl) return;
 
-  let url = file.FileUrl.trim();
+  let url = file.fileUrl.trim();
 
   // Ensure HTTPS (only if needed)
   if (url.startsWith('http://')) {

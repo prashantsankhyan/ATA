@@ -66,23 +66,23 @@
       <tbody>
         <tr *ngFor ="let data of listOfPolcy">
           <td class="fw-semibold"  class="fw-semibold"
-  [ngClass]="{ 'disabled-cell': data.StageType === 'Issue' }"
-  (click)="data.StageType !== 'Issue' && nextToDetails(data)">{{data.AccountName}}</td>
-          <td>{{data.LookUpCode}}</td>
-          <td>{{data.LineName}}</td>
+  [ngClass]="{ 'disabled-cell': data.stageType === 'Issue' }"
+  (click)="data.stageType !== 'Issue' && nextToDetails(data)">{{data.accountName}}</td>
+          <td>{{data.lookUpCode}}</td>
+          <td>{{data.lineName}}</td>
     
-          <td>{{data.Effective | date:'MM-dd-yyyy'}}- {{data.Expiration | date:'MM-dd-yyyy'}}</td>
+          <td>{{data.effective | date:'MM-dd-yyyy'}}- {{data.expiration | date:'MM-dd-yyyy'}}</td>
           
          
-          <td>{{data.CarrierName}}</td>
-           <td>{{data.AgentName}}</td>
-            <td>{{data.City}}</td>
+          <td>{{data.carrierName}}</td>
+           <td>{{data.agentName}}</td>
+            <td>{{data.city}}</td>
               <td>
   <span 
     [ngClass]="{
-      'stage-btn': data.StageType === 'Issue'
+      'stage-btn': data.stageType === 'Issue'
     }">
-    {{ data.ChildPolicyName }}
+    {{ data.childPolicyName }}
   </span>
 </td>
          <td>
@@ -99,7 +99,7 @@
     <span>CONFIRM</span>
   </button>
 
-  <button mat-menu-item   *ngIf="data.StageType === 'Issue'" (click)="nextToEndrosement(data)" style="background-color: white;">
+  <button mat-menu-item   *ngIf="data.stageType === 'Issue'" (click)="nextToEndrosement(data)" style="background-color: white;">
     <mat-icon>add</mat-icon>
     <span>ENDORSEMENT</span>
   </button>

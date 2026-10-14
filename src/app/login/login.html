@@ -37,10 +37,10 @@
   <h2 [routerLink]="['/permission/logout']" style="cursor: pointer;">Welcome Team</h2>
   <form [formGroup]="confirmLogin" >
     <div class="input-field">
-      <input type="text" formControlName="UserName" placeholder="Username" />
+      <input type="text" formControlName="userName" placeholder="Username" />
     </div>
     <div class="input-field">
-      <input type="password" formControlName="Password" placeholder="Password"  (keydown)="onKeydown($event)"/>
+      <input type="password" formControlName="password" placeholder="Password"  (keydown)="onKeydown($event)"/>
     </div>
     <button type="submit" (click)="onSubmit()"> LOGIN</button>
   </form>
@@ -62,10 +62,7 @@
         Your browser does not support the video tag.
       </video>
     </div> -->
-   <div *ngIf="showWrongPassword" class="sad-error-box">
-  <div class="emoji">🥺</div>
-  <div class="error-text" *ngIf="alredyExitMesssgae" style="color: white;">Alerady  Login In Another Device </div>
-</div>
+ 
 
 
 

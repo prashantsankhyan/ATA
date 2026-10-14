@@ -65,37 +65,49 @@ ngOnInit(): void {
     this.router.navigateByUrl('/mainLayout/account')
   }
   
-getAllFile() {
-  this.http.getAllDataId(ApiUrl.getBorAttachemnt, this.accountId)
-    .subscribe({
-      next: (res: any) => {
+getAllFile(): void {
+  this.showSpiner = true;
 
-        this.allFiles = res?.AttachmentDetail || [];
-        this.listOfAllFatchData = [...this.allFiles];
+  this.http.getAllDataId(
+    ApiUrl.getBorAttachemnt,
+    this.accountId
+  ).subscribe({
+    next: (res: any) => {
+      this.allFiles = res?.attachmentDetail || [];
+      this.listOfAllFatchData = [...this.allFiles];
 
-        this.showSpiner = false;
-        this.cdr.detectChanges();
-      }
-    });
+      this.filterData();
+
+      this.showSpiner = false;
+      this.cdr.detectChanges();
+    },
+    error: (err: any) => {
+      console.error('Error fetching attachments:', err);
+
+      this.allFiles = [];
+      this.listOfAllFatchData = [];
+      this.showSpiner = false;
+      this.cdr.detectChanges();
+    }
+  });
 }
-filterData() {
-
+filterData(): void {
   this.listOfAllFatchData = this.allFiles.filter(item => {
 
     const fileNameMatch =
       !this.searchCriteria.FileName ||
-      (item.FileName ?? '')
+      (item.fileName ?? '')
         .toLowerCase()
         .includes(this.searchCriteria.FileName.toLowerCase());
 
     const descriptionMatch =
       !this.searchCriteria.Description ||
-      (item.Description ?? '')
+      (item.description ?? '')
         .toLowerCase()
         .includes(this.searchCriteria.Description.toLowerCase());
 
-    const attachmentDate = item.AttachmentDate
-      ? new Date(item.AttachmentDate).toLocaleDateString('en-US', {
+    const attachmentDate = item.attachmentDate
+      ? new Date(item.attachmentDate).toLocaleDateString('en-US', {
           month: '2-digit',
           day: '2-digit',
           year: 'numeric'
@@ -108,7 +120,6 @@ filterData() {
 
     return fileNameMatch && descriptionMatch && dateMatch;
   });
-
 }
 
 
@@ -133,12 +144,12 @@ onAttachmentDateChange(newAttachmentDate: string) {
   this.filterData();
 }
   onRowClick(file: any) {
-    const httpsFileUrl = file.FileUrl.replace('http://', 'https://');
+    const httpsFileUrl = file.fileUrl.replace('http://', 'https://');
     console.log(httpsFileUrl); // Display the HTTPS version of the FileUrl
   
     const link = document.createElement('a');
     link.href = httpsFileUrl;
-    link.download = file.FileName;
+    link.download = file.fileName;
   
     document.body.appendChild(link);
     link.click();
@@ -163,8 +174,8 @@ updateBor(data: any) {
   const dialogRef = this.dialog.open(ConfirmBor, {
     width: '450px',
     data: {
-      accountId: data.AccountID,
-      agentId: data.AgentID
+      accountId: data.accountID,
+      agentId: data.agentID
     }
   });
 

@@ -31,16 +31,17 @@ export class ConfirmSubmissionToPolicy {
 
   ngOnInit(): void {
     this.ChildPolicyID = this.data?.ChildPolicyID;
+    
     this.makeForm();
   }
 
   // ✅ FORM INIT
   makeForm() {
     this.updateForm = this.fb.group({
-      ChildPolicyID: [this.ChildPolicyID],
-      StageType: ['', Validators.required],
-      StageChangedBy: [''],
-      UpdatedBy: ['']
+      childPolicyID: [this.ChildPolicyID],
+      stageType: ['', Validators.required],
+      stageChangedBy: [''],
+      updatedBy: ['']
     });
   }
 
@@ -54,21 +55,21 @@ export class ConfirmSubmissionToPolicy {
 
     const payload = {
       ...this.updateForm.value,
-      ChildPolicyID: this.ChildPolicyID
+      childPolicyID: this.ChildPolicyID
     };
 
     this.http.addEditData(ApiUrl.updateStage, payload).subscribe({
      next: (res: any) => {
-  const response = res?.Data;
+  const response = res;
 
-  if (response?.Response == 1) {
+  if (response?.response === 1) {
     this.snackBar.open('Stage changed successfully ✅', 'Close', {
       duration: 1000
     });
 
     this.dialogRef.close(true);
   } else {
-    this.snackBar.open(response?.ErrorMessage || 'Something went wrong', 'Close', {
+    this.snackBar.open(response?.errorMessage || 'Something went wrong', 'Close', {
       duration: 1000
     });
   }

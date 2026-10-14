@@ -63,22 +63,22 @@
           <tr *ngFor="let item of listOfAgent" (dblclick)="goTOAgentAttachemnt(item)">
             
             <td class="fw-semibold">
-              {{ item.AgencyName || '-' }}
+              {{ item.agencyName || '-' }}
             </td>
             
 
             <td class="fw-semibold">
-              {{ item.AgentName || '-' }}
+              {{ item.agentName || '-' }}
             </td>
 
             <td>
-              {{ item.AgentCode || '-' }}
+              {{ item.agentCode || '-' }}
             </td>
               <td>
-              {{ item.EODate || '-' }}
+              {{ item.eoDate || '-' }}
             </td>
              <td>
-              {{ item.Address || '-' }}
+              {{ item.address || '-' }}
             </td>
            
             <td style="text-align: right;">
